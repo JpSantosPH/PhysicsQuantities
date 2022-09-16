@@ -4,6 +4,9 @@ using Test
 function (A::Unitful.FreeUnits)(m::Real)
     return m * A
 end
+function Unitful.dimension(PS::PhysicsScalar)
+    return dimension(PS.magnitude)
+end
 
 abstract type PhysicsScalar <: Real end
     function Base.:+(a::T, b::T) where {T<:PhysicsScalar}
@@ -32,14 +35,29 @@ abstract type PhysicsScalar <: Real end
         end
     end
 
-@testset "PhysicsScalar Functionalities" begin
+    struct Mass <: PhysicsScalar
+        magnitude::typeof(1.0u"kg")
+    end
+
+@testset "Unitful added Functionalities" begin
     @test 12.3u"m/s" == u"m/s"(12.3)
+    @test dimension(Speed(12)) == dimension(12u"m/s")
+end
+
+@testset "PhysicsScalar Functionalities" begin
+
     @test Speed(12.3) + Speed(44.4) == Speed(56.7)
     @test PhysicsScalar(12u"m/s") == Speed(12.0)
 end
 
 @testset "Speed Functionalities" begin
+    @test dimension(12u"kg") == dimension(u"kg")
     @test Speed(12u"m/s") == Speed(12.0u"m/s")
     @test Speed(12u"mm/s") == Speed(12u"m/ks")
     @test Speed(12.3) == Speed(12.3u"m/s")
 end
+
+@testset "Mass Functionalities" begin
+    @test dimension(Mass(12u"kg")) == dimension(u"kg")
+end
+
