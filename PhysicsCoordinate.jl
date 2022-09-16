@@ -1,7 +1,13 @@
 using LinearAlgebra
 using Test
 abstract type Coordinate <:AbstractVector{Real} end
-
+    function Coordinate(x, y, z)
+        return CartesianCoordinate(x, y, z)
+    end
+    function Coordinate( (x, y, z) )
+        return Coordinate(x, y, z)
+    end
+    
     struct CartesianCoordinate{T<:Float64} <: Coordinate
         x::T
         y::T
@@ -52,4 +58,6 @@ abstract type Coordinate <:AbstractVector{Real} end
         a = normalize(CartesianCoordinate( (1÷1, 2//1, 3/1) ))
         norm(a) ≈ 1 && isa(a, CartesianCoordinate)
     end
+    @test isa(Coordinate(1÷1, 2//1, 3/1), CartesianCoordinate)
+    @test isa(Coordinate([1÷1, 2//1, 3/1]), CartesianCoordinate)
 end
