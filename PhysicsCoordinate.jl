@@ -25,8 +25,13 @@ abstract type Coordinate <:AbstractVector{Real} end
             z₂ = convert(Float64, z)
             return CartesianCoordinate(x₂, y₂, z₂)
         end
+        function CartesianCoordinate( (x, y, z) )
+            return CartesianCoordinate(x, y, z)
+        end
 
 @testset "Functionality" begin
     @test isa(CartesianCoordinate(1.0, 2.0, 3.0), CartesianCoordinate)
     @test isa(CartesianCoordinate(1, 2//1, 3.0), CartesianCoordinate)
+    @test isa(CartesianCoordinate([1, 2//1, 3.0]), CartesianCoordinate)
+    @test isa(CartesianCoordinate( (1, 2//1, 3.0) ), CartesianCoordinate)
 end
