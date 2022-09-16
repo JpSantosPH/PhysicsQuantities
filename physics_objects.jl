@@ -1,21 +1,34 @@
 using LinearAlgebra
+using Unitful
 
 abstract type Coordinate end
-    Coordinate( (x, y, z) ) = Coordinate(x, y, z)
+
+    function Coordinate(x, y, z)
+        return CartesianCoordinate(x, y, z)
+    end
+
+    function Coordinate( (x, y, z) )
+        return Coordinate(x, y, z)
+    end
+
 
     struct CartesianCoordinate{T<:Float64} <: Coordinate
         x::T
         y::T
         z::T
     end
+
         function CartesianCoordinate(x::Real, y::Real, z::Real)
-            CartesianCoordinate(convert(Float64, x), convert(Float64, y), convert(Float64, z))
-        end # asserts that CartesianCoordinate must be Float64
+            x₂ = convert(Float64, x)
+            y₂ = convert(Float64, y)
+            z₂ = convert(Float64, z)
+            return CartesianCoordinate(x₂, y₂, z₂)
+        end
 
-        Coordinate(x, y, z) = CartesianCoordinate(x, y, z)
+        function CartesianCoordinate( (x, y, z) )
+            return CartesianCoordinate(x, y, z)
+        end
 
-        CartesianCoordinate( (x, y, z) ) = CartesianCoordinate(x, y, z)
- 
         function LinearAlgebra.normalize(CC::CartesianCoordinate)
             V = normalize([CC.x, CC.y, CC.z])
             return CartesianCoordinate(V)
@@ -25,18 +38,41 @@ abstract type Coordinate end
             sqrt(CC.x^2 + CC.y^2 +CC.z^2) ≈ 1.0
         end
 
+CartesianCoordinate([1, 1//1 , 1.0])
 struct Direction
     C::Coordinate
 
-    Direction(C::Coordinate) = begin
+    function Direction(C::Coordinate)
         N = normalize(C)
-        new(N)
+        return new(N)
     end
 end
-    Direction(x::Real, y::Real, z::Real) = Direction(Coordinate(x, y, z))
-    Direction( (x, y, z) ) = Direction(x, y, z)
 
-struct PhysicsVector
-    magnitude::Real
-    direction::Direction
-end
+    function Direction(x::Real, y::Real, z::Real)
+        return Direction(Coordinate(x, y, z))
+    end
+
+    function Direction( (x, y, z) )
+        return Direction(x, y, z)
+    end
+
+Direction(1, 2, 3)
+
+abstract type PhysicsVector end
+    struct PhysicsUnitVector <: PhysicsVector end
+    struct PhysicsPosition end
+
+abstract type PhysicsScalar end
+    struct Mass{T<:Real} <: PhysicsScalar
+        magnitude::T
+
+        Mass(magnitude::Real)
+    end
+
+
+    struct Force <: PhysicsVector
+        magnitude::Real
+        direction::Direction
+
+        
+    end
