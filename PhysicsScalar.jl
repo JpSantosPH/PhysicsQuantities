@@ -11,6 +11,12 @@ abstract type PhysicsScalar <: Real end
         return T(c)
     end
 
+    function PhysicsScalar(Q::Quantity)
+        if dimension(Q) == dimension(u"m/s")
+            return Speed(Q)
+        end
+    end
+
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
 
@@ -26,10 +32,14 @@ abstract type PhysicsScalar <: Real end
         end
     end
 
-@testset "ScalarVectors Functionalities" begin
+@testset "PhysicsScalar Functionalities" begin
     @test 12.3u"m/s" == u"m/s"(12.3)
+    @test Speed(12.3) + Speed(44.4) == Speed(56.7)
+    @test PhysicsScalar(12u"m/s") == Speed(12.0)
+end
+
+@testset "Speed Functionalities" begin
     @test Speed(12u"m/s") == Speed(12.0u"m/s")
     @test Speed(12u"mm/s") == Speed(12u"m/ks")
     @test Speed(12.3) == Speed(12.3u"m/s")
-    @test Speed(12.3) + Speed(44.4) == Speed(56.7)
 end
