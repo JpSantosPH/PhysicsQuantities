@@ -31,6 +31,10 @@ abstract type Coordinate <:AbstractVector{Real} end
         function Base.:+(CC₁::CartesianCoordinate, CC₂::CartesianCoordinate)
             return CartesianCoordinate([CC₁...] + [CC₂...])
         end
+        function LinearAlgebra.normalize(CC::CartesianCoordinate)
+            V = normalize([CC...])
+            return CartesianCoordinate(V)
+        end
 
 @testset "Functionalities" begin
     @test isa(CartesianCoordinate(1.0, 2.0, 3.0), CartesianCoordinate)
@@ -43,5 +47,9 @@ abstract type Coordinate <:AbstractVector{Real} end
         c = a + b
         d = CartesianCoordinate( (5÷1, 6//1, 7/1) )
         c == d
+    end
+    @test let
+        a = normalize(CartesianCoordinate( (1÷1, 2//1, 3/1) ))
+        norm(a) ≈ 1 && isa(a, CartesianCoordinate)
     end
 end
