@@ -23,11 +23,11 @@ abstract type PhysicsScalar <: Real end
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
 
-        function Speed(m::Quantity)
-            if sign(ustrip(m)) == -1
+        function Speed(Q::Quantity)
+            if sign(ustrip(Q)) == -1
                 error("must be positive")
             else
-                return new(m)
+                return new(Q)
             end
         end
         function Speed(m::Real)
@@ -37,6 +37,17 @@ abstract type PhysicsScalar <: Real end
 
     struct Mass <: PhysicsScalar
         magnitude::typeof(1.0u"kg")
+
+        function Mass(Q::Quantity)
+            if sign(ustrip(Q)) == -1
+                error("must be positive")
+            else
+                return new(Q)
+            end
+        end
+        function Mass(m::Real)
+            return new(m * u"kg")
+        end
     end
 
 @testset "Unitful added Functionalities" begin
@@ -59,5 +70,7 @@ end
 
 @testset "Mass Functionalities" begin
     @test dimension(Mass(12u"kg")) == dimension(u"kg")
+    @test Mass(12u"kg") == Mass(12.0u"kg")
+    @test Mass(12u"g") == Mass(0.012u"kg")
+    @test Mass(12) == Mass(12u"kg")
 end
-
