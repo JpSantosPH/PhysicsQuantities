@@ -14,7 +14,10 @@ abstract type PhysicsScalar <: Real end
     end
 
     function PhysicsScalar(Q::Quantity)
-        if dimension(Q) == dimension(u"m/s")
+        d = dimension(Q)
+        if d == dimension(u"kg")
+            return Mass(Q)
+        elseif d == dimension(u"m/s")
             return Speed(Q)
         end
     end
@@ -63,20 +66,18 @@ abstract type PhysicsScalar <: Real end
             return new(m * u"s^-1")
         end
     end
-@testset "Frequency Functionalities" begin
-    @test isa(Frequency(3u"s^-1"), Frequency)
-    @test Frequency(12.0u"s^-1") == Frequency(1.2e-8u"ns^-1")
-    @test Frequency(12.3) == Frequency(12.3u"s^-1")
+
+
+
+@testset "PhysicsScalar Functionalities" begin
+    @test Speed(12.3) + Speed(44.4) == Speed(56.7)
+    @test isa(PhysicsScalar(12u"m/s"), Speed)
+    @test isa(PhysicsScalar(12u"kg"), Mass)
 end
 
 @testset "Unitful added Functionalities" begin
     @test 12.3u"m/s" == u"m/s"(12.3)
     @test dimension(Speed(12)) == dimension(12u"m/s")
-end
-
-@testset "PhysicsScalar Functionalities" begin
-    @test Speed(12.3) + Speed(44.4) == Speed(56.7)
-    @test isa(PhysicsScalar(12u"m/s"), Speed)
 end
 
 @testset "Speed Functionalities" begin
@@ -89,4 +90,10 @@ end
     @test isa(Mass(12u"kg"), Mass)
     @test  Mass(12000u"g") == Mass(12.0u"kg")
     @test Mass(12) == Mass(12u"kg")
+end
+
+@testset "Frequency Functionalities" begin
+    @test isa(Frequency(3u"s^-1"), Frequency)
+    @test Frequency(12.0u"s^-1") == Frequency(1.2e-8u"ns^-1")
+    @test Frequency(12.3) == Frequency(12.3u"s^-1")
 end
