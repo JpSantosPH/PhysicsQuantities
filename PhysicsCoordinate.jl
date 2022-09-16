@@ -28,10 +28,20 @@ abstract type Coordinate <:AbstractVector{Real} end
         function CartesianCoordinate( (x, y, z) )
             return CartesianCoordinate(x, y, z)
         end
+        function Base.:+(CC₁::CartesianCoordinate, CC₂::CartesianCoordinate)
+            return CartesianCoordinate([CC₁...] + [CC₂...])
+        end
 
-@testset "Functionality" begin
+@testset "Functionalities" begin
     @test isa(CartesianCoordinate(1.0, 2.0, 3.0), CartesianCoordinate)
-    @test isa(CartesianCoordinate(1, 2//1, 3.0), CartesianCoordinate)
-    @test isa(CartesianCoordinate([1, 2//1, 3.0]), CartesianCoordinate)
-    @test isa(CartesianCoordinate( (1, 2//1, 3.0) ), CartesianCoordinate)
+    @test isa(CartesianCoordinate(1÷1, 2//1, 3/1), CartesianCoordinate)
+    @test isa(CartesianCoordinate([1÷1, 2//1, 3/1]), CartesianCoordinate)
+    @test isa(CartesianCoordinate( (1÷1, 2//1, 3/1) ), CartesianCoordinate)
+    @test let
+        a = CartesianCoordinate( (1÷1, 2//1, 3/1) )
+        b = CartesianCoordinate( [4÷1, 4//1, 4/1] )
+        c = a + b
+        d = CartesianCoordinate( (5÷1, 6//1, 7/1) )
+        c == d
+    end
 end
