@@ -43,6 +43,9 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         function Velocity(a₁::Quantity, a₂::Quantity, a₃::Quantity)
             Velocity(a₁, a₂, a₃, BasisVectors())
         end
+        function Velocity(a₁::Real, a₂::Real, a₃::Real)
+            Velocity(a₁ * u"m/s", a₂ * u"m/s", a₃ * u"m/s")
+        end
 
 @testset "BasisVectors Functionalities" begin
     @test let
@@ -64,4 +67,5 @@ end
 @testset "Velocity Functionalities" begin
     @test isa(Velocity(1÷1 * u"mm/s", 2//1 * u"m/ms", 3/1 * u"m/s", BasisVectors()), Velocity)
     @test isa(Velocity(1÷1 * u"m/s", 2//1 * u"m/s", 3/1 * u"m/s"), Velocity)
+    @test Velocity(1÷1, 2//1, 3/1) == Velocity(1÷1 * u"m/s", 2//1 * u"m/s", 3/1 * u"m/s")
 end
