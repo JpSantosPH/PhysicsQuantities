@@ -51,6 +51,13 @@ abstract type Coordinate <:AbstractVector{Real} end
     @test isa(CartesianCoordinate([1÷1, 2//1, 3/1]), CartesianCoordinate)
     @test isa(CartesianCoordinate( (1÷1, 2//1, 3/1) ), CartesianCoordinate)
     @test let
+        a = CartesianCoordinate( (1÷1, 2//1, 3/1) )
+        b = CartesianCoordinate( [4÷1, 4//1, 4/1] )
+        c = a + b
+        d = CartesianCoordinate( (5÷1, 6//1, 7/1) )
+        c == d
+    end
+    @test let
         a = normalize(CartesianCoordinate( (1÷1, 2//1, 3/1) ))
         norm(a) ≈ 1 && isa(a, CartesianCoordinate)
     end
