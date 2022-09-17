@@ -39,17 +39,20 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         a₃::typeof(1.0u"m")
         Basis::BasisVectors
 
-        function Position(a₁::Quantity, a₂::Quantity, a₃::Quantity, Basis::BasisVectors=BasisVectors())
+        function Position(a₁::Quantity=0.0u"m", a₂::Quantity=0.0u"m", a₃::Quantity=0.0u"m", Basis::BasisVectors=BasisVectors())
             return new(a₁, a₂, a₃, Basis)
         end
     end
-        function Position(a₁::Real, a₂::Real, a₃::Real, Basis::BasisVectors=BasisVectors())
+        function Position(a₁::Real=0.0, a₂::Real=0.0, a₃::Real=0.0, Basis::BasisVectors=BasisVectors())
             return Position(a₁ * u"m", a₂  * u"m", a₃  * u"m", Basis)
         end
-        function Position( (a₁, a₂, a₃) , Basis::BasisVectors=BasisVectors())
+        function Position( (a₁, a₂, a₃) )
             return Position(a₁, a₂, a₃, Basis)
         end
-        
+        function Position( V)
+            return Position( V...)
+        end
+
     struct Velocity <: PhysicsVector
         a₁::typeof(1.0u"m/s")
         a₂::typeof(1.0u"m/s")
@@ -97,6 +100,9 @@ end
         d = BasisVectors(a, b, c)
         Position(1÷1, 2//1, 3/1, d) == Position(30, 36, 42)
     end
+    @test Position() == Position(0, 0, 0)
+    @test Position(1u"m", 2u"m") == Position(1, 2)
+    @test Position([1u"m"]) == Position( (1, 0) )
 end
 
 @testset "Velocity Functionalities" begin
