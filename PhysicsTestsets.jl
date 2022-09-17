@@ -94,11 +94,12 @@ using Test
     @testset "PhysicsVector Functionalities" begin
         @test size(Position(1, 2, 3)) == (3,)
         @test Velocity(1, 2)[3] == 0.0u"m/s"
-        @test let a = Velocity(1, 2, 3) * 4
-            PhysicsVector(a) == Velocity(4, 8, 12)
-        end
+        @test isa(PhysicsVector([1u"m/s",1u"m/s",1u"m/s"]), Velocity)
+        @test isa(Position(1) * Velocity(2), Vector{typeof(1.0u"m^2/s")})
+        @test isa(4 * Position(3,2,1), Position)
+        @test isa(Velocity(1, 2, 3) * 4, Velocity)
     end
-
+    
     @testset "Position Functionalities" begin
         @test isa(Position(1÷1 * u"mm", 2//1 * u"m", 3/1 * u"km", BasisVectors()), Position)
         @test isa(Position(1÷1 * u"m", 2//1 * u"m", 3/1 * u"m"), Position)
@@ -115,7 +116,7 @@ using Test
         @test Position(1u"m", 2u"m") == Position(1, 2)
         @test Position([1u"m"]) == Position( (1, 0) )
     end
-    
+
     @testset "Velocity Functionalities" begin
         @test isa(Velocity(1÷1 * u"mm/s", 2//1 * u"m/ms", 3/1 * u"m/s", BasisVectors()), Velocity)
         @test isa(Velocity(1÷1 * u"m/s", 2//1 * u"m/s", 3/1 * u"m/s"), Velocity)
