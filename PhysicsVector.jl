@@ -28,6 +28,30 @@ end
 
 abstract type PhysicsVector <: AbstractVector{Real} end
 
+    struct Position <: PhysicsVector
+        a₁::typeof(1.0u"m")
+        a₂::typeof(1.0u"m")
+        a₃::typeof(1.0u"m")
+        Basis::BasisVectors
+
+        function Position(a₁::Quantity, a₂::Quantity, a₃::Quantity, Basis::BasisVectors=BasisVectors())
+            return new(a₁, a₂, a₃, Basis)
+        end
+    end
+        Base.size(Pos::PhysicsVector) = (3,)
+        function Base.getindex(Pos::PhysicsVector, i::Int)
+            V = Pos.a₁*Pos.Basis.e₁ + Pos.a₂*Pos.Basis.e₂ + Pos.a₃*Pos.Basis.e₃
+            return V[i]
+        end
+
+        function Position(a₁::Real, a₂::Real, a₃::Real, Basis::BasisVectors=BasisVectors())
+            return Position(a₁ * u"m", a₂  * u"m", a₃  * u"m", Basis)
+        end
+        function Position( (a₁, a₂, a₃) , Basis::BasisVectors=BasisVectors())
+            return Position(a₁, a₂, a₃, Basis)
+        end
+
+
     struct Velocity <: PhysicsVector
         a₁::typeof(1.0u"m/s")
         a₂::typeof(1.0u"m/s")
@@ -51,8 +75,6 @@ abstract type PhysicsVector <: AbstractVector{Real} end
             return Velocity(a₁, a₂, a₃, Basis)
         end
 
-        @test (isa(Velocity(1÷1 * u"m/s", 2//1 * u"m/s", 3/1 * u"m/s"), Velocity))
-
 
 @testset "BasisVectors Functionalities" begin
     @test let
@@ -68,6 +90,20 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         b = CartesianCoordinate(0, 1, 0)
         c = CartesianCoordinate(0, 0, 1)
         BV.e₁ == a && BV.e₂ == b && BV.e₃ == c
+    end
+end
+
+@testset "Position Functionalities" begin
+    @test isa(Position(1÷1 * u"mm", 2//1 * u"m", 3/1 * u"km", BasisVectors()), Position)
+    @test isa(Position(1÷1 * u"m", 2//1 * u"m", 3/1 * u"m"), Position)
+    @test Position(1÷1, 2//1, 3/1) == Position(1÷1 * u"m", 2//1 * u"m", 3/1 * u"m")
+    @test Position([1, 2, 3]) == Position( (1, 2, 3) )
+    @test let
+        a = CartesianCoordinate(1, 2, 3)
+        b = CartesianCoordinate(4, 5, 6)
+        c = CartesianCoordinate(7, 8, 9)
+        d = BasisVectors(a, b, c)
+        Position(1÷1, 2//1, 3/1, d) == Position(30, 36, 42)
     end
 end
 
