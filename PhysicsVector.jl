@@ -30,18 +30,22 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         V = PV.a₁*PV.Basis.e₁ + PV.a₂*PV.Basis.e₂ + PV.a₃*PV.Basis.e₃
         return V[i]
     end
+
     function PhysicsVector(VQ::Vector; dict::Dict=vector_dict)
-        return dict[dimension(VQ[1])](VQ)
-    end
-    function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector; dict::Dict=vector_dict)
-        V = PV₁ .* PV₂
-        if haskey(dict, dimension(V[1]))
-            return PhysicsVector(V)
-        else
-            return V
+        if haskey(dict, dimension(VQ[1]))
+            return dict[dimension(VQ[1])](VQ)
         end
     end
-
+    function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector)
+        return PhysicsVector(PV₁ .* PV₂)
+    end
+    function Base.:*(n::Number, PV::PhysicsVector)
+        return PhysicsVector(n .* PV)
+    end
+    function Base.:*(PV::PhysicsVector, n::Number)
+        return PhysicsVector(PV .* n)
+    end
+    
     struct Position <: PhysicsVector
         a₁::typeof(1.0u"m")
         a₂::typeof(1.0u"m")
