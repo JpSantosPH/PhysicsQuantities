@@ -1,5 +1,8 @@
 using LinearAlgebra
+using Unitful
 using Test
+using BenchmarkTools
+
 abstract type Coordinate <:AbstractVector{Real} end
     function Coordinate(x, y, z)
         return CartesianCoordinate(x, y, z)
@@ -8,10 +11,10 @@ abstract type Coordinate <:AbstractVector{Real} end
         return Coordinate(x, y, z)
     end
     
-    struct CartesianCoordinate{T<:Float64} <: Coordinate
-        x::T
-        y::T
-        z::T
+    struct CartesianCoordinate <: Coordinate
+        x::Float64
+        y::Float64
+        z::Float64
     end
         function Base.size(CC::CartesianCoordinate)
             return (3,)
