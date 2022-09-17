@@ -1,7 +1,7 @@
 using LinearAlgebra
 using Unitful
 
-abstract type Coordinate <:AbstractVector{Real} end
+abstract type Coordinate <:AbstractVector{Number} end
     function Coordinate(x, y, z)
         return CartesianCoordinate(x, y, z)
     end
@@ -26,7 +26,7 @@ abstract type Coordinate <:AbstractVector{Real} end
                 return CC.z
             end
         end
-        function CartesianCoordinate(x::Real=0.0, y::Real=0.0, z::Real=0.0)
+        function CartesianCoordinate(x::Number=0.0, y::Number=0.0, z::Number=0.0)
             x₂ = convert(Float64, x)
             y₂ = convert(Float64, y)
             z₂ = convert(Float64, z)
