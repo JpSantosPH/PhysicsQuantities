@@ -1,5 +1,7 @@
+using LinearAlgebra
 using Unitful
 using Test
+using BenchmarkTools
 
 abstract type PhysicsScalar <: Real end
     function Base.:+(a::T, b::T) where {T<:PhysicsScalar}
