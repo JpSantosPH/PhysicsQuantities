@@ -6,6 +6,15 @@ abstract type PhysicsScalar <: Real end
         c = a.magnitude + b.magnitude
         return T(c)
     end
+    function Base.:*(PS::PhysicsScalar, m::Real)
+        a = PS.magnitude * m
+        return PhysicsScalar(a)
+    end
+    function Base.:*(m::Real, PS::PhysicsScalar)
+        a = PS.magnitude * m
+        return PhysicsScalar(a)
+    end
+
     function (A::Unitful.FreeUnits)(m::Real)
         return m * A
     end
@@ -58,6 +67,8 @@ abstract type PhysicsScalar <: Real end
 @testset "PhysicsScalar Functionalities" begin
     @test Speed(12.3) + Speed(44.4) == Speed(56.7)
     @test isa(PhysicsScalar(12u"m/s"), Speed)
+    @test isa(Speed(1) * 23, Speed)
+    @test isa(12 * Speed(3), Speed)
 end
 
 @testset "Unitful added Functionalities" begin
