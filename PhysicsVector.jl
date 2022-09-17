@@ -8,9 +8,7 @@ struct BasisVectors <: AbstractVector{Vector}
     e₂::CartesianCoordinate
     e₃::CartesianCoordinate
 end
-    function Base.size(BV::BasisVectors)
-        return (3,)
-    end
+    Base.size(BV::BasisVectors) = (3,)
     function Base.getindex(BV::BasisVectors, i::Int)
         if i == 1
             return BV.e₁
@@ -20,6 +18,7 @@ end
             return BV.e₃
         end
     end
+
     function BasisVectors()
         î = CartesianCoordinate(1, 0, 0)
         ĵ = CartesianCoordinate(0, 1, 0)
@@ -35,12 +34,14 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         a₃::typeof(1.0u"m/s")
         BV::BasisVectors
     end
-        function Base.size(Velo::Velocity)
-            return (3,)
-        end
+        Base.size(Velo::Velocity) = (3,)
         function Base.getindex(Velo::Velocity, i::Int)
             V = Velo.a₁*Velo.BV.e₁ + Velo.a₂*Velo.BV.e₂ + Velo.a₃*Velo.BV.e₃
             return V[i]
+        end
+
+        function Velocity(a₁::Quantity, a₂::Quantity, a₃::Quantity)
+            Velocity(a₁, a₂, a₃, BasisVectors())
         end
 
 @testset "BasisVectors Functionalities" begin
@@ -61,5 +62,6 @@ abstract type PhysicsVector <: AbstractVector{Real} end
 end
 
 @testset "Velocity Functionalities" begin
-    @test isa(Velocity(1÷1 * u"m/s", 2//1 * u"m/s", 3/1 * u"m/s", BasisVectors()), Velocity)
+    @test isa(Velocity(1÷1 * u"mm/s", 2//1 * u"m/ms", 3/1 * u"m/s", BasisVectors()), Velocity)
+    @test isa(Velocity(1÷1 * u"m/s", 2//1 * u"m/s", 3/1 * u"m/s"), Velocity)
 end
