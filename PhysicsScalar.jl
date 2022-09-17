@@ -25,13 +25,6 @@ abstract type PhysicsScalar <: Real end
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
 
-        function Speed(Q::Quantity)
-            if sign(ustrip(Q)) == -1
-                error("must be positive")
-            else
-                return new(Q)
-            end
-        end
         function Speed(m::Real)
             return new(m * u"m/s")
         end
@@ -40,13 +33,6 @@ abstract type PhysicsScalar <: Real end
     struct Mass <: PhysicsScalar
         magnitude::typeof(1.0u"kg")
 
-        function Mass(Q::Quantity)
-            if sign(ustrip(Q)) == -1
-                error("must be positive")
-            else
-                return new(Q)
-            end
-        end
         function Mass(m::Real)
             return new(m * u"kg")
         end
@@ -55,19 +41,10 @@ abstract type PhysicsScalar <: Real end
     struct Frequency <:PhysicsScalar
         magnitude::typeof(1.0u"s^-1")
 
-        function Frequency(Q::Quantity)
-            if sign(ustrip(Q)) == -1
-                error("must be positive")
-            else
-                return new(Q)
-            end
-        end
         function Frequency(m::Real)
             return new(m * u"s^-1")
         end
     end
-
-
 
 @testset "PhysicsScalar Functionalities" begin
     @test Speed(12.3) + Speed(44.4) == Speed(56.7)
