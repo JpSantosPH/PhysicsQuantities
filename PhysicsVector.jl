@@ -46,10 +46,7 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         function Position(a₁::Real=0.0, a₂::Real=0.0, a₃::Real=0.0, Basis::BasisVectors=BasisVectors())
             return Position(a₁ * u"m", a₂  * u"m", a₃  * u"m", Basis)
         end
-        function Position( (a₁, a₂, a₃) )
-            return Position(a₁, a₂, a₃, Basis)
-        end
-        function Position( V)
+        function Position(V)
             return Position( V...)
         end
 
@@ -59,15 +56,15 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         a₃::typeof(1.0u"m/s")
         Basis::BasisVectors
 
-        function Velocity(a₁::Quantity, a₂::Quantity, a₃::Quantity, Basis::BasisVectors=BasisVectors())
+        function Velocity(a₁::Quantity=0.0u"m/s", a₂::Quantity=0.0u"m/s", a₃::Quantity=0.0u"m/s", Basis::BasisVectors=BasisVectors())
             return new(a₁, a₂, a₃, Basis)
         end
     end        
-        function Velocity(a₁::Real, a₂::Real, a₃::Real, Basis::BasisVectors=BasisVectors())
+        function Velocity(a₁::Real=0.0, a₂::Real=0.0, a₃::Real=0.0, Basis::BasisVectors=BasisVectors())
             return Velocity(a₁ * u"m/s", a₂  * u"m/s", a₃  * u"m/s", Basis)
         end
-        function Velocity( (a₁, a₂, a₃) , Basis::BasisVectors=BasisVectors())
-            return Velocity(a₁, a₂, a₃, Basis)
+        function Velocity(V)
+            return Velocity(V...)
         end
 
 
@@ -117,4 +114,7 @@ end
         d = BasisVectors(a, b, c)
         Velocity(1÷1, 2//1, 3/1, d) == Velocity(30, 36, 42)
     end
+    @test Velocity() == Velocity(0, 0, 0)
+    @test Velocity(1u"m/s", 2u"m/s") == Velocity(1, 2)
+    @test Velocity([1u"m/s"]) == Velocity( (1, 0) )
 end
