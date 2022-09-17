@@ -32,6 +32,9 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         V = PV.a₁*PV.Basis.e₁ + PV.a₂*PV.Basis.e₂ + PV.a₃*PV.Basis.e₃
         return V[i]
     end
+    function PhysicsVector(VQ::Vector; dict::Dict=vector_dict)
+        return dict[dimension(VQ[1])](VQ)
+    end
 
     struct Position <: PhysicsVector
         a₁::typeof(1.0u"m")
@@ -82,6 +85,14 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         b = CartesianCoordinate(0, 1, 0)
         c = CartesianCoordinate(0, 0, 1)
         BV.e₁ == a && BV.e₂ == b && BV.e₃ == c
+    end
+end
+
+@testset "PhysicsVector Functionalities" begin
+    @test size(Position(1, 2, 3)) == (3,)
+    @test Velocity(1, 2)[3] == 0.0u"m/s"
+    @test let a = Velocity(1, 2, 3) * 4
+        PhysicsVector(a) == Velocity(4, 8, 12)
     end
 end
 
