@@ -30,38 +30,28 @@ abstract type PhysicsScalar <: Real end
 
     struct Time <: PhysicsScalar
         magnitude::typeof(1.0u"s")
-
-        Time(Q::Quantity) = new(Q)
-        Time(m::Real) = new(m * u"s")
     end
+        Time(m::Real) = Time(m*u"s")
 
     struct Length <: PhysicsScalar
         magnitude::typeof(1.0u"m")
-
-        Length(Q::Quantity) = new(Q)
-        Length(m::Real) = new(m * u"m")
     end
+        Length(m::Real) = Length(m * u"m")
 
     struct Mass <: PhysicsScalar
         magnitude::typeof(1.0u"kg")
-
-        Mass(Q::Quantity) = new(Q)
-        Mass(m::Real) = new(m * u"kg")
     end
+        Mass(m::Real) = Mass(m * u"kg")
 
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
-
-        Speed(Q::Quantity) = new(Q)
-        Speed(m::Real) = new(m * u"m/s")
     end
+        Speed(m::Real) = Speed(m * u"m/s")
 
     struct Frequency <:PhysicsScalar
         magnitude::typeof(1.0u"s^-1")
-
-        Frequency(Q::Quantity) = new(Q)
-        Frequency(m::Real) = new(m * u"s^-1")
     end
+        Frequency(m::Real) = Frequency(m * u"s^-1")
 
 
 @testset "PhysicsScalar Functionalities" begin
@@ -69,6 +59,8 @@ abstract type PhysicsScalar <: Real end
     @test isa(PhysicsScalar(12u"m/s"), Speed)
     @test isa(Speed(1) * 23, Speed)
     @test isa(12 * Speed(3), Speed)
+    @test isa(Speed(12) * [3, 4, 5], Vector{Speed})
+    @test isa([1, 2, 3] * Speed(4.5), Vector{Speed})
 end
 
 @testset "Unitful added Functionalities" begin
