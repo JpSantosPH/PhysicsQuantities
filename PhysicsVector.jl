@@ -27,6 +27,11 @@ end
     end
 
 abstract type PhysicsVector <: AbstractVector{Real} end
+    Base.size(PV::PhysicsVector) = (3,)
+    function Base.getindex(PV::PhysicsVector, i::Int)
+        V = PV.a₁*PV.Basis.e₁ + PV.a₂*PV.Basis.e₂ + PV.a₃*PV.Basis.e₃
+        return V[i]
+    end
 
     struct Position <: PhysicsVector
         a₁::typeof(1.0u"m")
@@ -38,20 +43,13 @@ abstract type PhysicsVector <: AbstractVector{Real} end
             return new(a₁, a₂, a₃, Basis)
         end
     end
-        Base.size(Pos::PhysicsVector) = (3,)
-        function Base.getindex(Pos::PhysicsVector, i::Int)
-            V = Pos.a₁*Pos.Basis.e₁ + Pos.a₂*Pos.Basis.e₂ + Pos.a₃*Pos.Basis.e₃
-            return V[i]
-        end
-
         function Position(a₁::Real, a₂::Real, a₃::Real, Basis::BasisVectors=BasisVectors())
             return Position(a₁ * u"m", a₂  * u"m", a₃  * u"m", Basis)
         end
         function Position( (a₁, a₂, a₃) , Basis::BasisVectors=BasisVectors())
             return Position(a₁, a₂, a₃, Basis)
         end
-
-
+        
     struct Velocity <: PhysicsVector
         a₁::typeof(1.0u"m/s")
         a₂::typeof(1.0u"m/s")
@@ -61,13 +59,7 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         function Velocity(a₁::Quantity, a₂::Quantity, a₃::Quantity, Basis::BasisVectors=BasisVectors())
             return new(a₁, a₂, a₃, Basis)
         end
-    end
-        Base.size(Velo::Velocity) = (3,)
-        function Base.getindex(Velo::Velocity, i::Int)
-            V = Velo.a₁*Velo.Basis.e₁ + Velo.a₂*Velo.Basis.e₂ + Velo.a₃*Velo.Basis.e₃
-            return V[i]
-        end
-        
+    end        
         function Velocity(a₁::Real, a₂::Real, a₃::Real, Basis::BasisVectors=BasisVectors())
             return Velocity(a₁ * u"m/s", a₂  * u"m/s", a₃  * u"m/s", Basis)
         end
