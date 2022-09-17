@@ -1,7 +1,5 @@
 using LinearAlgebra
 using Unitful
-using Test
-using BenchmarkTools
 
 abstract type Coordinate <:AbstractVector{Real} end
     function Coordinate(x, y, z)
@@ -44,29 +42,3 @@ abstract type Coordinate <:AbstractVector{Real} end
             V = normalize([CC...])
             return CartesianCoordinate(V)
         end
-
-@testset "Coordinate Functionalities" begin
-    @test isa(Coordinate(1÷1, 2//1, 3/1), CartesianCoordinate)
-    @test isa(Coordinate([1÷1, 2//1, 3/1]), CartesianCoordinate)
-end
-
-@testset "CartesianCoordinate Functionalities" begin
-    @test isa(CartesianCoordinate(1.0, 2.0, 3.0), CartesianCoordinate)
-    @test isa(CartesianCoordinate(1÷1, 2//1, 3/1), CartesianCoordinate)
-    @test isa(CartesianCoordinate([1÷1, 2//1, 3/1]), CartesianCoordinate)
-    @test isa(CartesianCoordinate( (1÷1, 2//1, 3/1) ), CartesianCoordinate)
-    @test let
-        a = CartesianCoordinate( (1÷1, 2//1, 3/1) )
-        b = CartesianCoordinate( [4÷1, 4//1, 4/1] )
-        c = a + b
-        d = CartesianCoordinate( (5÷1, 6//1, 7/1) )
-        c == d
-    end
-    @test let
-        a = normalize(CartesianCoordinate( (1÷1, 2//1, 3/1) ))
-        norm(a) ≈ 1 && isa(a, CartesianCoordinate)
-    end
-    @test CartesianCoordinate() == CartesianCoordinate(0.0, 0.0, 0.0)
-    @test CartesianCoordinate(1) == CartesianCoordinate(1.0, 0.0, 0.0)
-    @test CartesianCoordinate(1, 2) == CartesianCoordinate(1.0, 2.0, 0.0)
-end
