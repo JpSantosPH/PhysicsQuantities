@@ -24,7 +24,7 @@ end
         return BasisVectors(î, ĵ, k̂)
     end
 
-abstract type PhysicsVector <: AbstractVector{Real} end
+abstract type PhysicsVector <: AbstractVector{Number} end
     Base.size(PV::PhysicsVector) = (3,)
     function Base.getindex(PV::PhysicsVector, i::Int)
         V = PV.a₁*PV.Basis.e₁ + PV.a₂*PV.Basis.e₂ + PV.a₃*PV.Basis.e₃
@@ -32,6 +32,14 @@ abstract type PhysicsVector <: AbstractVector{Real} end
     end
     function PhysicsVector(VQ::Vector; dict::Dict=vector_dict)
         return dict[dimension(VQ[1])](VQ)
+    end
+    function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector; dict::Dict=vector_dict)
+        V = PV₁ .* PV₂
+        if haskey(dict, dimension(V[1]))
+            return PhysicsVector(V)
+        else
+            return V
+        end
     end
 
     struct Position <: PhysicsVector
@@ -44,7 +52,7 @@ abstract type PhysicsVector <: AbstractVector{Real} end
             return new(a₁, a₂, a₃, Basis)
         end
     end
-        function Position(a₁::Real=0.0, a₂::Real=0.0, a₃::Real=0.0, Basis::BasisVectors=BasisVectors())
+        function Position(a₁::Number=0.0, a₂::Number=0.0, a₃::Number=0.0, Basis::BasisVectors=BasisVectors())
             return Position(a₁ * u"m", a₂  * u"m", a₃  * u"m", Basis)
         end
         function Position(V)
@@ -61,7 +69,7 @@ abstract type PhysicsVector <: AbstractVector{Real} end
             return new(a₁, a₂, a₃, Basis)
         end
     end        
-        function Velocity(a₁::Real=0.0, a₂::Real=0.0, a₃::Real=0.0, Basis::BasisVectors=BasisVectors())
+        function Velocity(a₁::Number=0.0, a₂::Number=0.0, a₃::Number=0.0, Basis::BasisVectors=BasisVectors())
             return Velocity(a₁ * u"m/s", a₂  * u"m/s", a₃  * u"m/s", Basis)
         end
         function Velocity(V)
