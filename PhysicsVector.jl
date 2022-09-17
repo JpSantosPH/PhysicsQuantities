@@ -8,14 +8,14 @@ struct BasisVectors <: AbstractVector{Vector}
     e₂::CartesianCoordinate
     e₃::CartesianCoordinate
 end
-    Base.size(BV::BasisVectors) = (3,)
-    function Base.getindex(BV::BasisVectors, i::Int)
+    Base.size(Basis::BasisVectors) = (3,)
+    function Base.getindex(Basis::BasisVectors, i::Int)
         if i == 1
-            return BV.e₁
+            return Basis.e₁
         elseif i == 2
-            return BV.e₂
+            return Basis.e₂
         elseif i == 3
-            return BV.e₃
+            return Basis.e₃
         end
     end
 
@@ -32,20 +32,27 @@ abstract type PhysicsVector <: AbstractVector{Real} end
         a₁::typeof(1.0u"m/s")
         a₂::typeof(1.0u"m/s")
         a₃::typeof(1.0u"m/s")
-        BV::BasisVectors
+        Basis::BasisVectors
+
+        function Velocity(a₁::Quantity, a₂::Quantity, a₃::Quantity, Basis::BasisVectors=BasisVectors())
+            return new(a₁, a₂, a₃, Basis)
+        end
     end
         Base.size(Velo::Velocity) = (3,)
         function Base.getindex(Velo::Velocity, i::Int)
-            V = Velo.a₁*Velo.BV.e₁ + Velo.a₂*Velo.BV.e₂ + Velo.a₃*Velo.BV.e₃
+            V = Velo.a₁*Velo.Basis.e₁ + Velo.a₂*Velo.Basis.e₂ + Velo.a₃*Velo.Basis.e₃
             return V[i]
         end
+        
+        function Velocity(a₁::Real, a₂::Real, a₃::Real, Basis::BasisVectors=BasisVectors())
+            return Velocity(a₁ * u"m/s", a₂  * u"m/s", a₃  * u"m/s", Basis)
+        end
+        function Velocity( (a₁, a₂, a₃) , Basis::BasisVectors=BasisVectors())
+            return Velocity(a₁, a₂, a₃, Basis)
+        end
 
-        function Velocity(a₁::Quantity, a₂::Quantity, a₃::Quantity)
-            Velocity(a₁, a₂, a₃, BasisVectors())
-        end
-        function Velocity(a₁::Real, a₂::Real, a₃::Real)
-            Velocity(a₁ * u"m/s", a₂ * u"m/s", a₃ * u"m/s")
-        end
+        @test (isa(Velocity(1÷1 * u"m/s", 2//1 * u"m/s", 3/1 * u"m/s"), Velocity))
+
 
 @testset "BasisVectors Functionalities" begin
     @test let
@@ -68,4 +75,12 @@ end
     @test isa(Velocity(1÷1 * u"mm/s", 2//1 * u"m/ms", 3/1 * u"m/s", BasisVectors()), Velocity)
     @test isa(Velocity(1÷1 * u"m/s", 2//1 * u"m/s", 3/1 * u"m/s"), Velocity)
     @test Velocity(1÷1, 2//1, 3/1) == Velocity(1÷1 * u"m/s", 2//1 * u"m/s", 3/1 * u"m/s")
+    @test Velocity([1, 2, 3]) == Velocity( (1, 2, 3) )
+    @test let
+        a = CartesianCoordinate(1, 2, 3)
+        b = CartesianCoordinate(4, 5, 6)
+        c = CartesianCoordinate(7, 8, 9)
+        d = BasisVectors(a, b, c)
+        Velocity(1÷1, 2//1, 3/1, d) == Velocity(30, 36, 42)
+    end
 end
