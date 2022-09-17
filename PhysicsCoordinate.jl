@@ -28,14 +28,14 @@ abstract type Coordinate <:AbstractVector{Real} end
                 return CC.z
             end
         end
-        function CartesianCoordinate(x::Real, y::Real, z::Real)
+        function CartesianCoordinate(x::Real=0.0, y::Real=0.0, z::Real=0.0)
             x₂ = convert(Float64, x)
             y₂ = convert(Float64, y)
             z₂ = convert(Float64, z)
             return CartesianCoordinate(x₂, y₂, z₂)
         end
-        function CartesianCoordinate( (x, y, z) )
-            return CartesianCoordinate(x, y, z)
+        function CartesianCoordinate(V)
+            return CartesianCoordinate(V...)
         end
         function Base.:+(CC₁::CartesianCoordinate, CC₂::CartesianCoordinate)
             return CartesianCoordinate([CC₁...] + [CC₂...])
@@ -45,7 +45,12 @@ abstract type Coordinate <:AbstractVector{Real} end
             return CartesianCoordinate(V)
         end
 
-@testset "Functionalities" begin
+@testset "Coordinate Functionalities" begin
+    @test isa(Coordinate(1÷1, 2//1, 3/1), CartesianCoordinate)
+    @test isa(Coordinate([1÷1, 2//1, 3/1]), CartesianCoordinate)
+end
+
+@testset "CartesianCoordinate Functionalities" begin
     @test isa(CartesianCoordinate(1.0, 2.0, 3.0), CartesianCoordinate)
     @test isa(CartesianCoordinate(1÷1, 2//1, 3/1), CartesianCoordinate)
     @test isa(CartesianCoordinate([1÷1, 2//1, 3/1]), CartesianCoordinate)
@@ -61,6 +66,7 @@ abstract type Coordinate <:AbstractVector{Real} end
         a = normalize(CartesianCoordinate( (1÷1, 2//1, 3/1) ))
         norm(a) ≈ 1 && isa(a, CartesianCoordinate)
     end
-    @test isa(Coordinate(1÷1, 2//1, 3/1), CartesianCoordinate)
-    @test isa(Coordinate([1÷1, 2//1, 3/1]), CartesianCoordinate)
+    @test CartesianCoordinate() == CartesianCoordinate(0.0, 0.0, 0.0)
+    @test CartesianCoordinate(1) == CartesianCoordinate(1.0, 0.0, 0.0)
+    @test CartesianCoordinate(1, 2) == CartesianCoordinate(1.0, 2.0, 0.0)
 end
