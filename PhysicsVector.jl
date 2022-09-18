@@ -102,7 +102,30 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             end
             return new(a₁, a₂, a₃, Basis)
         end
-    end        
+    end
         function Velocity(args)
             return Velocity(args...)
+        end
+
+    struct Acceleration <: PhysicsVector
+        a₁::typeof(1.0u"m/s^2")
+        a₂::typeof(1.0u"m/s^2")
+        a₃::typeof(1.0u"m/s^2")
+        Basis::BasisVectors
+
+        function Acceleration(a₁::Number=0.0, a₂::Number=0.0, a₃::Number=0.0; Basis::BasisVectors=BasisVectors())
+            if !isa(a₁, Quantity)
+                a₁ = a₁ * u"m/s^2"
+            end
+            if !isa(a₂, Quantity)
+                a₂ = a₂ * u"m/s^2"
+            end
+            if !isa(a₃, Quantity)
+                a₃ = a₃ * u"m/s^2"
+            end
+            return new(a₁, a₂, a₃, Basis)
+        end
+    end
+        function Acceleration(args)
+            return Acceleration(args...)
         end

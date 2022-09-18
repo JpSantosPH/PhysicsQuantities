@@ -133,4 +133,21 @@ using Test
         @test Velocity(1u"m/s", 2u"m/s") == Velocity(1, 2)
         @test Velocity([1u"m/s"]) == Velocity( (1, 0) )
     end
+
+    @testset "Acceleration Functionalities" begin
+        @test Acceleration(1÷1 * u"mm/s^2", 2//1 * u"m/ms^2", 3/1 * u"m/s^2"; Basis=BasisVectors()) isa Acceleration
+        @test Acceleration(1÷1 * u"m/s^2", 2//1 * u"m/s^2", 3/1 * u"m/s^2") isa Acceleration
+        @test Acceleration(1÷1, 2//1, 3/1) == Acceleration(1÷1 * u"m/s^2", 2//1 * u"m/s^2", 3/1 * u"m/s^2")
+        @test Acceleration([1, 2, 3]) == Acceleration( (1, 2, 3) )
+        @test let
+            a = CartesianCoordinate(1, 2, 3)
+            b = CartesianCoordinate(4, 5, 6)
+            c = CartesianCoordinate(7, 8, 9)
+            d = BasisVectors(a, b, c)
+            Acceleration(1÷1, 2//1, 3/1; Basis=d) == Acceleration(30, 36, 42)
+        end
+        @test Acceleration() == Acceleration(0, 0, 0)
+        @test Acceleration(1u"m/s^2", 2u"m/s^2") == Acceleration(1, 2)
+        @test Acceleration([1u"m/s^2"]) == Acceleration( (1, 0) )
+    end
 #####################

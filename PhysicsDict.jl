@@ -1,6 +1,7 @@
 vector_dict = Dict(
+    dimension(u"m") => Position,
     dimension(u"m/s") => Velocity,
-    dimension(u"m") => Position
+    dimension(u"m/s^2") => Acceleration,
 )
 
 scalar_dict = Dict(
