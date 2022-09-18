@@ -82,7 +82,7 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
             new(magnitude)
         end
     end
-    
+
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
 
@@ -95,11 +95,11 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
     end
 
     struct Frequency <:PhysicsScalar
-        magnitude::typeof(1.0u"s^-1")
+        magnitude::typeof(1.0u"Hz")
 
         function Frequency(magnitude::Number=0.0)
             if !(magnitude isa Quantity)
-                magnitude = magnitude * u"s^-1"
+                magnitude = magnitude * u"Hz"
             end
             new(magnitude)
         end

@@ -73,9 +73,9 @@ using Test
     end
 
     @testset "Frequency Functionalities" begin
-        @test isa(Frequency(3u"s^-1"), Frequency)
-        @test Frequency(12.0u"s^-1") == Frequency(1.2e-8u"ns^-1")
-        @test Frequency(12.3) == Frequency(12.3u"s^-1")
+        @test isa(Frequency(3u"Hz"), Frequency)
+        @test Frequency(12.0u"kHz") == Frequency(12000.0u"Hz")
+        @test Frequency(12.3) == Frequency(12.3u"Hz")
     end
 #####################
 

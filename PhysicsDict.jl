@@ -8,6 +8,7 @@ scalar_dict = Dict(
     dimension(u"s") => Time,
     dimension(u"m") => Length,
     dimension(u"kg") => Mass,
+    dimension(u"A") => Current,
     dimension(u"m/s") => Speed,
-    dimension(u"s^-1") => Frequency
+    dimension(u"Hz") => Frequency
 )
