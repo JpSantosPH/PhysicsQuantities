@@ -13,6 +13,19 @@ abstract type Coordinate <:AbstractVector{Number} end
         x::Float64
         y::Float64
         z::Float64
+
+        function CartesianCoordinate(x::Number=0.0, y::Number=0.0, z::Number=0.0)
+            if !(x isa Float64)
+                x = convert(Float64, x)
+            end
+            if !(y isa Float64)
+                y = convert(Float64, y)
+            end
+            if !(z isa Float64)
+                z = convert(Float64, z)
+            end
+            return new(x, y, z)
+        end
     end
         function Base.size(CC::CartesianCoordinate)
             return (3,)
@@ -26,15 +39,10 @@ abstract type Coordinate <:AbstractVector{Number} end
                 return CC.z
             end
         end
-        function CartesianCoordinate(x::Number=0.0, y::Number=0.0, z::Number=0.0)
-            x₂ = convert(Float64, x)
-            y₂ = convert(Float64, y)
-            z₂ = convert(Float64, z)
-            return CartesianCoordinate(x₂, y₂, z₂)
-        end
         function CartesianCoordinate(args)
             return CartesianCoordinate(args...)
         end
+
         function Base.:+(CC₁::CartesianCoordinate, CC₂::CartesianCoordinate)
             return CartesianCoordinate(CC₁.x + CC₂.x, CC₁.y + CC₂.y, CC₁.z + CC₂.z)
         end
