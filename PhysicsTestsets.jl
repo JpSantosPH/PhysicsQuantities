@@ -66,6 +66,13 @@ using Test
         @test Current(12) == Current(12u"A")
     end
 
+    @testset "Temperature Functionalities" begin
+        @test isa(Temperature(12u"K"), Temperature)
+        @test  Temperature(12000u"mK") == Temperature(12.0u"K")
+        @test Temperature(12) == Temperature(12u"K")
+        @test Temperature() == Temperature(273.15)
+    end
+
     @testset "Speed Functionalities" begin
         @test isa(Speed(12.0u"m/s"), Speed)
         @test Speed(12u"mm/s") == Speed(12.0u"m/ks")

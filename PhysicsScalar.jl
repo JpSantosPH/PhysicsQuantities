@@ -83,6 +83,20 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
+    struct Temperature <: PhysicsScalar
+        magnitude::typeof(1.0u"K")
+
+        function Temperature(magnitude::Number=273.15u"K")
+            if ustrip(magnitude) ≤ 0
+                error("Physics Error")
+            end
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"K"
+            end
+            new(magnitude)
+        end
+    end
+
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
 
