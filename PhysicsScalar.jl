@@ -33,10 +33,10 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         return PhysicsScalar(PS.magnitude * n)
     end
     function Base.:*(V::Vector, PS::PhysicsScalar)
-        return V .* PS.magnitude
+        return PhysicsScalar.(V .* PS.magnitude)
     end
     function Base.:*(PS::PhysicsScalar, V::Vector)
-        return PS.magnitude .* V
+        return PhysicsScalar.(PS.magnitude .* V)
     end
 
     struct Time <: PhysicsScalar
