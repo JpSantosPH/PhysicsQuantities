@@ -44,4 +44,4 @@ abstract type Coordinate <:AbstractVector{Number} end
         end
         function Base.:*(n::Number, CC::CartesianCoordinate)
             return (n*CC.x, n*CC.y, n*CC.z)
-        end        
+        end
