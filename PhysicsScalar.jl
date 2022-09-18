@@ -9,22 +9,22 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
-    function (A::Unitful.FreeUnits)(n::Number)
-        return n * A
-    end
     function Unitful.dimension(PS::PhysicsScalar)
         return dimension(PS.magnitude)
     end
 
-    function PhysicsScalar(Q::Quantity; dict::Dict=scalar_dict)
-        if haskey(dict, dimension(Q))
-            return dict[dimension(Q)](Q)
-        else
-            return Q
-        end
+    function PhysicsScalar(magnitude::Quantity)
+        return dimension(magnitude)(magnitude)
     end
-    function PhysicsScalar(VQ::Vector{Quantity})
-        return PhysicsScalar(VQ...)
+    function PhysicsScalar( (magnitude) )
+        return PhysicsScalar(magnitude)
+    end
+    
+    function Base.:+(PS₁::T, PS₂::T) where {T<:PhysicsScalar}
+        return PhysicsScalar(PS₁[1] + PS₂[1])
+    end
+    function Base.:*(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
+        return PhysicsScalar(PS₁[1] * PS₂[1])
     end
     function Base.:*(n::Number, PS::PhysicsScalar)
         return PhysicsScalar(n * PS.magnitude)

@@ -29,13 +29,13 @@ using Test
 #########################
 
 ### PhysicsScalar ###
-    @testset "PhysicsScalar Functionalities" begin
+    #@testset "PhysicsScalar Functionalities" begin
         @test isa(PhysicsScalar(12u"m/s"), Speed)
         @test isa(Speed(1) * 23, Speed)
-        @test isa(12 * Speed(3), Speed)
-        @test isa(Speed(12) * [3, 4, 5], Vector{typeof(1.0u"m/s")})
         @test isa([1, 2, 3] * Speed(4.5), Vector{typeof(1.0u"m/s")})
-    end
+        @test Length(123) + Length(456) == Length(579)
+        @test Length(12) * Frequency(3) == Speed(36)
+    #end
 
     @testset "Unitful added Functionalities" begin
         @test dimension(Speed(12)) == dimension(12u"m/s")
