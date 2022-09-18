@@ -40,6 +40,14 @@ using BenchmarkTools
         # Memory estimate: 16 bytes, allocs estimate: 1.
     # after
         @benchmark Length(123) + Length(456)
-        # Time  (mean ± σ):   2.030 ns ±  1.472 ns
+        # Time  (mean ± σ):   2.093 ns ±  1.779 ns
         # Memory estimate: 0 bytes, allocs estimate: 0.
 ###########################################
+
+### ideas/to do ###
+    # extend base divide functionalities to PhysicsScalar
+    # compete SI base units
+    # add all SI derived units
+    # Finish Vector Algebra
+    # add PhysicsVector * PhysicsScalar
+###################
