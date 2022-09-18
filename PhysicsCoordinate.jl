@@ -5,8 +5,8 @@ abstract type Coordinate <:AbstractVector{Number} end
     function Coordinate(x, y, z)
         return CartesianCoordinate(x, y, z)
     end
-    function Coordinate( (x, y, z) )
-        return Coordinate(x, y, z)
+    function Coordinate(args)
+        return Coordinate(args...)
     end
     
     struct CartesianCoordinate <: Coordinate
@@ -32,11 +32,11 @@ abstract type Coordinate <:AbstractVector{Number} end
             z₂ = convert(Float64, z)
             return CartesianCoordinate(x₂, y₂, z₂)
         end
-        function CartesianCoordinate(V)
-            return CartesianCoordinate(V...)
+        function CartesianCoordinate(args)
+            return CartesianCoordinate(args...)
         end
         function Base.:+(CC₁::CartesianCoordinate, CC₂::CartesianCoordinate)
-            return CartesianCoordinate([CC₁...] + [CC₂...])
+            return CartesianCoordinate(CC₁.x + CC₂.x, CC₁.y + CC₂.y, CC₁.z + CC₂.z)
         end
         function LinearAlgebra.normalize(CC::CartesianCoordinate)
             V = normalize([CC...])
