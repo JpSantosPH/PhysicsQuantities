@@ -8,8 +8,9 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
             return PS.magnitude
         end
     end
-    function (A::Unitful.FreeUnits)(m::Number)
-        return m * A
+    
+    function (A::Unitful.FreeUnits)(n::Number)
+        return n * A
     end
     function Unitful.dimension(PS::PhysicsScalar)
         return dimension(PS.magnitude)
@@ -41,34 +42,54 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
     struct Time <: PhysicsScalar
         magnitude::typeof(1.0u"s")
 
-        Time(magnitude::Quantity=0.0u"s") = new(magnitude)
+        function Time(magnitude::Number=0.0)
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"s"
+            end
+            new(magnitude)
+        end
     end
-        Time(m::Number=0.0) = Time(m*u"s")
 
     struct Length <: PhysicsScalar
         magnitude::typeof(1.0u"m")
 
-        Length(magnitude::Quantity=0.0u"m") = new(magnitude)
+        function Length(magnitude::Number=0.0)
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"m"
+            end
+            new(magnitude)
+        end
     end
-        Length(m::Number=0) = Length(m * u"m")
 
     struct Mass <: PhysicsScalar
         magnitude::typeof(1.0u"kg")
 
-        Mass(magnitude::Quantity=0.0u"kg") = new(magnitude)
+        function Mass(magnitude::Number=0.0)
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"kg"
+            end
+            new(magnitude)
+        end
     end
-        Mass(m::Number=0.0) = Mass(m * u"kg")
 
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
 
-        Speed(magnitude::Quantity=0.0u"m/s") = new(magnitude)
+        function Speed(magnitude::Number=0.0)
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"m/s"
+            end
+            new(magnitude)
+        end
     end
-        Speed(m::Number=0.0) = Speed(m * u"m/s")
 
     struct Frequency <:PhysicsScalar
         magnitude::typeof(1.0u"s^-1")
 
-        Frequency(magnitude::Quantity=0.0u"s^-1") = new(magnitude)
+        function Frequency(magnitude::Number=0.0)
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"s^-1"
+            end
+            new(magnitude)
+        end
     end
-        Frequency(m::Number=0.0) = Frequency(m * u"s^-1")
