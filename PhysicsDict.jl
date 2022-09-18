@@ -1,8 +1,13 @@
 vector_dict = Dict(
-    dimension(u"m") => Position,
-    dimension(u"m/s") => Velocity,
-    dimension(u"m/s^2") => Acceleration,
+    typeof(dimension(u"m")) => Position,
+    typeof(dimension(u"m/s")) => Velocity,
+    typeof(dimension(u"m/s^2")) => Acceleration,
 )
+
+function (type::typeof(dimension(u"m/s")))(x::T, y::T, z::T) where {T<:Quantity}
+    return Velocity(x, y, z)
+end
+
 
 scalar_dict = Dict(
     dimension(u"s") => Time,

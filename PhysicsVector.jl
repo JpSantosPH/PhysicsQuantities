@@ -44,23 +44,24 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         end
     end
 
-    function PhysicsVector( (x, y, z) ; dict::Dict=vector_dict)
-        if haskey(dict, dimension(x))
-            return dict[dimension(x)](x, y, z)
-        else
-            return (x, y, z)
-        end
+    function PhysicsVector(x::T, y::T, z::T) where {T<:Quantity}
+        return dimension(x)(x, y, z)
+    end
+    function PhysicsVector( (x, y, z) )
+        return PhysicsVector(x, y, z)
     end
     function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector)
-        return PhysicsVector( (PV₁[1]*PV₂[1], PV₁[2]*PV₂[2], PV₁[3]*PV₂[3]) )
+        return PV₁ ⋅ PV₂
     end
     function Base.:*(n::Number, PV::PhysicsVector)
-        return PhysicsVector( (n*PV[1], n*PV[2], n*PV[3]) )
+        return PhysicsVector(n*PV[1], n*PV[2], n*PV[3])
     end
     function Base.:*(PV::PhysicsVector, n::Number)
-        return PhysicsVector( (PV[1]*n, PV[2]*n, PV[3]*n) )
+        return PhysicsVector(PV[1]*n, PV[2]*n, PV[3]*n)
     end
-    
+    function Base.:+(PV₁::PhysicsVector, PV₂::PhysicsVector)
+        return PhysicsVector(PV₁[1]+PV₂[1], PV₁[2]+PV₂[2], PV₁[3]+PV₂[3])
+    end
     struct Position <: PhysicsVector
         a₁::typeof(1.0u"m")
         a₂::typeof(1.0u"m")

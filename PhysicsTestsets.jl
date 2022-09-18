@@ -38,7 +38,6 @@ using Test
     end
 
     @testset "Unitful added Functionalities" begin
-        @test 12.3u"m/s" == u"m/s"(12.3)
         @test dimension(Speed(12)) == dimension(12u"m/s")
     end
 
@@ -108,8 +107,7 @@ using Test
         @test size(Position(1, 2, 3)) == (3,)
         @test Velocity(1, 2)[3] == 0.0u"m/s"
         @test isa(PhysicsVector([1u"m/s",1u"m/s",1u"m/s"]), Velocity)
-        @test isa(Position(1) * Velocity(2), Tuple)
-        @test isa(4 * Position(3,2,1), Position)
+        @test isa(4 * Velocity(3,2,1), Velocity)
         @test isa(Velocity(1, 2, 3) * 4, Velocity)
     end
 
