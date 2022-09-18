@@ -8,7 +8,7 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
             return PS.magnitude
         end
     end
-    
+
     function (A::Unitful.FreeUnits)(n::Number)
         return n * A
     end
@@ -72,6 +72,17 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
+    struct Current <: PhysicsScalar
+        magnitude::typeof(1.0u"A")
+    
+        function Current(magnitude::Number=0.0)
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"A"
+            end
+            new(magnitude)
+        end
+    end
+    
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
 

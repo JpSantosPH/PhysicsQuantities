@@ -60,6 +60,12 @@ using Test
         @test Mass(12) == Mass(12u"kg")
     end
 
+    @testset "Current Functionalities" begin
+        @test isa(Current(12u"A"), Current)
+        @test  Current(12000u"mA") == Current(12.0u"A")
+        @test Current(12) == Current(12u"A")
+    end
+
     @testset "Speed Functionalities" begin
         @test isa(Speed(12.0u"m/s"), Speed)
         @test Speed(12u"mm/s") == Speed(12.0u"m/ks")
