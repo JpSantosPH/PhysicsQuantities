@@ -27,23 +27,38 @@ end
 abstract type PhysicsVector <: AbstractVector{Number} end
     Base.size(PV::PhysicsVector) = (3,)
     function Base.getindex(PV::PhysicsVector, i::Int)
-        V = PV.a₁*PV.Basis.e₁ + PV.a₂*PV.Basis.e₂ + PV.a₃*PV.Basis.e₃
-        return V[i]
+        x₁, y₁, z₁ = PV.a₁ * PV.Basis.e₁
+        x₂, y₂, z₂ = PV.a₂ * PV.Basis.e₂
+        x₃, y₃, z₃ = PV.a₃ * PV.Basis.e₃
+
+        x₄ = x₁ + x₂ + x₃
+        y₄ = y₁ + y₂ + y₃
+        z₄ = z₁ + z₂ + z₃
+
+        if i == 1
+            return x₄
+        elseif i == 2
+            return y₄
+        elseif i == 3
+            return z₄
+        end
     end
 
-    function PhysicsVector(VQ::Vector; dict::Dict=vector_dict)
-        if haskey(dict, dimension(VQ[1]))
-            return dict[dimension(VQ[1])](VQ)
+    function PhysicsVector( (x, y, z) ; dict::Dict=vector_dict)
+        if haskey(dict, dimension(x))
+            return dict[dimension(x)](x, y, z)
+        else
+            return (x, y, z)
         end
     end
     function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector)
-        return PhysicsVector(PV₁ .* PV₂)
+        return PhysicsVector( (PV₁[1]*PV₂[1], PV₁[2]*PV₂[2], PV₁[3]*PV₂[3]) )
     end
     function Base.:*(n::Number, PV::PhysicsVector)
-        return PhysicsVector(n .* PV)
+        return PhysicsVector( (n*PV[1], n*PV[2], n*PV[3]) )
     end
     function Base.:*(PV::PhysicsVector, n::Number)
-        return PhysicsVector(PV .* n)
+        return PhysicsVector( (PV[1]*n, PV[2]*n, PV[3]*n) )
     end
     
     struct Position <: PhysicsVector
