@@ -95,11 +95,11 @@ using Test
         @test size(Position(1, 2, 3)) == (3,)
         @test Velocity(1, 2)[3] == 0.0u"m/s"
         @test isa(PhysicsVector([1u"m/s",1u"m/s",1u"m/s"]), Velocity)
-        @test isa(Position(1) * Velocity(2), Vector{typeof(1.0u"m^2/s")})
+        @test isa(Position(1) * Velocity(2), Tuple)
         @test isa(4 * Position(3,2,1), Position)
         @test isa(Velocity(1, 2, 3) * 4, Velocity)
     end
-    
+
     @testset "Position Functionalities" begin
         @test isa(Position(1÷1 * u"mm", 2//1 * u"m", 3/1 * u"km", BasisVectors()), Position)
         @test isa(Position(1÷1 * u"m", 2//1 * u"m", 3/1 * u"m"), Position)
