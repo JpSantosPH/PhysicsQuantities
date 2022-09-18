@@ -67,13 +67,19 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         a₃::typeof(1.0u"m")
         Basis::BasisVectors
 
-        function Position(a₁::Quantity=0.0u"m", a₂::Quantity=0.0u"m", a₃::Quantity=0.0u"m", Basis::BasisVectors=BasisVectors())
+        function Position(a₁::Number=0.0, a₂::Number=0.0, a₃::Number=0.0; Basis::BasisVectors=BasisVectors())
+            if !(a₁ isa Quantity)
+                a₁ = a₁ * u"m"
+            end
+            if !(a₂ isa Quantity)
+                a₂ = a₂ * u"m"
+            end
+            if !(a₃ isa Quantity)
+                a₃ = a₃ * u"m"
+            end
             return new(a₁, a₂, a₃, Basis)
         end
     end
-        function Position(a₁::Number=0.0, a₂::Number=0.0, a₃::Number=0.0, Basis::BasisVectors=BasisVectors())
-            return Position(a₁ * u"m", a₂  * u"m", a₃  * u"m", Basis)
-        end
         function Position(args)
             return Position(args...)
         end
@@ -84,13 +90,19 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         a₃::typeof(1.0u"m/s")
         Basis::BasisVectors
 
-        function Velocity(a₁::Quantity=0.0u"m/s", a₂::Quantity=0.0u"m/s", a₃::Quantity=0.0u"m/s", Basis::BasisVectors=BasisVectors())
+        function Velocity(a₁::Number=0.0, a₂::Number=0.0, a₃::Number=0.0; Basis::BasisVectors=BasisVectors())
+            if !isa(a₁, Quantity)
+                a₁ = a₁ * u"m/s"
+            end
+            if !isa(a₂, Quantity)
+                a₂ = a₂ * u"m/s"
+            end
+            if !isa(a₃, Quantity)
+                a₃ = a₃ * u"m/s"
+            end
             return new(a₁, a₂, a₃, Basis)
         end
     end        
-        function Velocity(a₁::Number=0.0, a₂::Number=0.0, a₃::Number=0.0, Basis::BasisVectors=BasisVectors())
-            return Velocity(a₁ * u"m/s", a₂  * u"m/s", a₃  * u"m/s", Basis)
-        end
         function Velocity(args)
             return Velocity(args...)
         end
