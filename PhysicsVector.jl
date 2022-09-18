@@ -74,8 +74,8 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         function Position(a₁::Number=0.0, a₂::Number=0.0, a₃::Number=0.0, Basis::BasisVectors=BasisVectors())
             return Position(a₁ * u"m", a₂  * u"m", a₃  * u"m", Basis)
         end
-        function Position(V)
-            return Position( V...)
+        function Position(args)
+            return Position(args...)
         end
 
     struct Velocity <: PhysicsVector
@@ -91,6 +91,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         function Velocity(a₁::Number=0.0, a₂::Number=0.0, a₃::Number=0.0, Basis::BasisVectors=BasisVectors())
             return Velocity(a₁ * u"m/s", a₂  * u"m/s", a₃  * u"m/s", Basis)
         end
-        function Velocity(V)
-            return Velocity(V...)
+        function Velocity(args)
+            return Velocity(args...)
         end
