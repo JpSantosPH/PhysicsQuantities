@@ -19,25 +19,6 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
     function PhysicsScalar( (magnitude) )
         return PhysicsScalar(magnitude)
     end
-    
-    function Base.:+(PS₁::T, PS₂::T) where {T<:PhysicsScalar}
-        return PhysicsScalar(PS₁[1] + PS₂[1])
-    end
-    function Base.:*(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-        return PhysicsScalar(PS₁[1] * PS₂[1])
-    end
-    function Base.:*(n::Number, PS::PhysicsScalar)
-        return PhysicsScalar(n * PS.magnitude)
-    end
-    function Base.:*(PS::PhysicsScalar, n::Number)
-        return PhysicsScalar(PS.magnitude * n)
-    end
-    function Base.:*(V::Vector, PS::PhysicsScalar)
-        return PhysicsScalar.(V .* PS.magnitude)
-    end
-    function Base.:*(PS::PhysicsScalar, V::Vector)
-        return PhysicsScalar.(PS.magnitude .* V)
-    end
 
     struct Time <: PhysicsScalar
         magnitude::typeof(1.0u"s")

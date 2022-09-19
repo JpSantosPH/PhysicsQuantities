@@ -19,6 +19,17 @@ using BenchmarkTools
         # Memory estimate: 0 bytes, allocs estimate: 0.
 ###########################################
 
+### PhysicsVector unary minus optimization ###
+    # before
+        @benchmark PhysicsVector(-Velocity(1,2,3))
+        # Time  (mean ± σ):   62.632 ns ± 113.802 ns
+        # Memory estimate: 80 bytes, allocs estimate: 1.
+    #after
+        @benchmark  -Velocity(1,2,3)
+        # Time  (mean ± σ):   1.921 ns ±  1.249 ns
+        # Memory estimate: 0 bytes, allocs estimate: 0.
+#############################################
+
 ### PhysicsVector addition optimization ###
     # before
         @benchmark Velocity(1, 2, 3) .+ Velocity(4, 5, 6)
@@ -30,6 +41,28 @@ using BenchmarkTools
         # Memory estimate: 0 bytes, allocs estimate: 0.
 ###########################################
 
+### PhysicsVector Scalar multiplication optimization ###
+    # before
+        @benchmark PhysicsVector(Velocity(1, 2, 3) .* 4)
+        # Time  (mean ± σ):   70.272 ns ± 130.850 ns
+        # Memory estimate: 80 bytes, allocs estimate: 1.
+    # after
+        @benchmark Velocity(1, 2, 3) * 4
+        # Time  (mean ± σ):   2.027 ns ±   1.964 ns
+        # Memory estimate: 0 bytes, allocs estimate: 0.
+########################################################
+
+### PhysicsVector Multiplication optimization ###
+    # before
+        @benchmark Velocity(1, 2, 3) ⋅ Velocity(1, 2, 3)
+        # Time  (mean ± σ):   17.133 ns ±  10.645 ns
+        # Memory estimate: 0 bytes, allocs estimate: 0.
+    # after
+        @benchmark Velocity(1, 2, 3) * Velocity(1, 2, 3)
+        # Time  (mean ± σ):   1.968 ns ±   4.619 ns
+        # Memory estimate: 0 bytes, allocs estimate: 0.
+#################################################
+        
 ### PhysicsScalar addition optimization ###
     # before
         @benchmark begin
@@ -51,3 +84,7 @@ using BenchmarkTools
     # Finish Vector Algebra
     # add PhysicsVector * PhysicsScalar
 ###################
+
+
+
+     

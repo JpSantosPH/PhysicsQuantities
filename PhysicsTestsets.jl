@@ -22,7 +22,7 @@ using Test
         end
     end
 #########################
-methods(CartesianCoordinate)
+
 ### PhysicsScalar ###
     @testset "PhysicsScalar Functionalities" begin
         @test PhysicsScalar(12u"m/s") == Speed(12)
@@ -91,11 +91,7 @@ methods(CartesianCoordinate)
     end
 
     @testset "PhysicsVector Functionalities" begin
-        @test size(Position(1, 2, 3)) == (3,)
-        @test Velocity(1, 2, 3)[2] == 2.0u"m/s"
-        @test isa(PhysicsVector(1u"m/s", 2u"m/s", 3u"m/s"), Velocity)
-        @test Velocity(1, 2, 3) * 4 == Velocity(4, 8, 12)
-        @test Position(1, 2, 3) * Position(4, 5, 6) == 32.0u"m^2"
+        @test PhysicsVector(1u"m/s", 2u"m/s", 3u"m/s") isa Velocity
     end
 
     @testset "Position Functionalities" begin
@@ -134,3 +130,12 @@ methods(CartesianCoordinate)
         @test Acceleration() == Acceleration(0, 0, 0)
     end
 #####################
+
+### PhysicsOperators ###
+ @testset "PhysicsVectorOperators" begin
+    @test -Velocity(1, 2, 3) == Velocity(-1, -2, -3)
+    @test Velocity(1, 2, 3) * 4 == Velocity(4, 8, 12)
+    @test Position(1, 2, 3) + Position(4, 5, 6) == Position(5, 7, 9)
+ end
+
+
