@@ -1,6 +1,7 @@
 vector_dict = Dict(
-    typeof(dimension(u"N")) => Force,
     typeof(dimension(u"m")) => Position,
+    typeof(dimension(u"N")) => Force,
+    
     typeof(dimension(u"m/s")) => Velocity,
     typeof(dimension(u"m/s^2")) => Acceleration,
 )
@@ -26,10 +27,13 @@ scalar_dict = Dict(
     typeof(dimension(u"kg")) => Mass,
     typeof(dimension(u"A")) => Current,
     typeof(dimension(u"K")) => Temperature,
+
     typeof(dimension(u"Hz")) => Frequency,
     typeof(dimension(u"rad")) => Angle,
-    typeof(dimension(u"J")) => Energy,
     typeof(dimension(u"kPa")) => Pressure,
+    typeof(dimension(u"J")) => Energy,
+    typeof(dimension(u"W")) => Power,
+
     typeof(dimension(u"m/s")) => Speed
 )
 ### SI base units ###

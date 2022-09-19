@@ -52,6 +52,29 @@ abstract type PhysicsVector <: AbstractVector{Number} end
     end
 
 ### Named units derived from SI base units ###
+    struct Position <: PhysicsVector
+        a₁::typeof(1.0u"m")
+        a₂::typeof(1.0u"m")
+        a₃::typeof(1.0u"m")
+        Basis::BasisVectors
+
+        function Position(a₁::Number=0.0u"m", a₂::Number=0.0u"m", a₃::Number=0.0u"m"; Basis::BasisVectors=BasisVectors())
+            if !(a₁ isa Quantity)
+                a₁ = a₁ * u"m"
+            end
+            if !(a₂ isa Quantity)
+                a₂ = a₂ * u"m"
+            end
+            if !(a₃ isa Quantity)
+                a₃ = a₃ * u"m"
+            end
+            return new(a₁, a₂, a₃, Basis)
+        end
+        function Position(args)
+            return new(args...)
+        end
+    end
+
     struct Force <: PhysicsVector
         a₁::typeof(1.0u"N")
         a₂::typeof(1.0u"N")
@@ -76,29 +99,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
     end
 
 ### Kinematic SI derived units ###
-    struct Position <: PhysicsVector
-        a₁::typeof(1.0u"m")
-        a₂::typeof(1.0u"m")
-        a₃::typeof(1.0u"m")
-        Basis::BasisVectors
-
-        function Position(a₁::Number=0.0u"m", a₂::Number=0.0u"m", a₃::Number=0.0u"m"; Basis::BasisVectors=BasisVectors())
-            if !(a₁ isa Quantity)
-                a₁ = a₁ * u"m"
-            end
-            if !(a₂ isa Quantity)
-                a₂ = a₂ * u"m"
-            end
-            if !(a₃ isa Quantity)
-                a₃ = a₃ * u"m"
-            end
-            return new(a₁, a₂, a₃, Basis)
-        end
-        function Position(args)
-            return new(args...)
-        end
-    end
-
     struct Velocity <: PhysicsVector
         a₁::typeof(1.0u"m/s")
         a₂::typeof(1.0u"m/s")
