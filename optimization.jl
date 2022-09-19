@@ -78,10 +78,12 @@ using BenchmarkTools
 ###########################################
 
 ### PhysicsOperators benchmarks ###
-    @benchmark 1/2 * 10.0u"kg" * [3.0u"m/s", 4.0u"m/s"] ⋅ [3.0u"m/s", 4.0u"m/s"]
-        # Time  (mean ± σ):   167.929 ns ± 271.013 ns
-        # Memory estimate: 240 bytes, allocs estimate: 3.
-    @benchmark 1/2 * Mass(10) * Velocity(3, 4)^2
-        # Time  (mean ± σ):   1.949 ns ±  1.311 ns
-        # Memory estimate: 0 bytes, allocs estimate: 0.
+    # before
+        @benchmark 1/2 * 10.0u"kg" * [3.0u"m/s", 4.0u"m/s"] ⋅ [3.0u"m/s", 4.0u"m/s"]
+            # Time  (mean ± σ):   167.929 ns ± 271.013 ns
+            # Memory estimate: 240 bytes, allocs estimate: 3.
+    # after
+        @benchmark 1/2 * Mass(10) * Velocity(3, 4)^2
+            # Time  (mean ± σ):   1.949 ns ±  1.311 ns
+            # Memory estimate: 0 bytes, allocs estimate: 0.
 ###################################
