@@ -35,6 +35,7 @@ using Test
         @test dimension(Speed(12)) == dimension(12u"m/s")
     end
 
+### SI base units ###
     @testset "Time Functionalities" begin
         @test Time(12//1000) == Time(12.0u"ms")
         @test Time() == Time(0)
@@ -60,6 +61,7 @@ using Test
         @test Temperature() == Temperature(273.15)        
     end
 
+### Named units derived from SI base units ###
     @testset "Frequency Functionalities" begin
         @test Frequency(12//1000) == Frequency(12.0u"mHz")
         @test Frequency() == Frequency(0)
@@ -70,6 +72,12 @@ using Test
         @test Energy() == Energy(0)
     end
 
+    @testset "Pressure Functionalities" begin
+        @test Pressure(12//1000) == Pressure(12.0u"Pa")
+        @test Pressure() == Pressure(100)
+    end
+
+### Kinematic SI derived units ###
     @testset "Speed Functionalities" begin
         @test Speed(12//1000) == Speed(12.0u"mm/s")
         @test Speed() == Speed(0)

@@ -64,7 +64,7 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
             new(magnitude)
         end
     end
-    
+
     struct Temperature <: PhysicsScalar
         magnitude::typeof(1.0u"K")
 
@@ -91,10 +91,6 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
-    
-    
-    
-
     struct Energy <: PhysicsScalar
         magnitude::typeof(1.0u"J")
 
@@ -110,7 +106,10 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         magnitude::typeof(1.0u"kPa")
     
         function Pressure(magnitude::Number=100.0u"kPa")
-            
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"kPa"
+            end
+            new(magnitude)
         end
     end
 

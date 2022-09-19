@@ -24,6 +24,7 @@ scalar_dict = Dict(
 ### Named units derived from SI base units ###
     typeof(dimension(u"Hz")) => Frequency,
     typeof(dimension(u"J")) => Energy,
+    typeof(dimension(u"kPa")) => Pressure,
 ### Kinematic SI derived units ###
     typeof(dimension(u"m/s")) => Speed
 )
