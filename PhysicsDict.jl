@@ -33,6 +33,7 @@ scalar_dict = Dict(
     typeof(dimension(u"kPa")) => Pressure,
     typeof(dimension(u"J")) => Energy,
     typeof(dimension(u"W")) => Power,
+    typeof(dimension(u"C")) => Charge,
 
     typeof(dimension(u"m/s")) => Speed
 )
@@ -60,8 +61,17 @@ scalar_dict = Dict(
     function (dimension_type::typeof(dimension(u"rad")))(magnitude::Quantity)
         return Angle(magnitude)
     end
+    function (dimension_type::typeof(dimension(u"kPa")))(magnitude::Quantity)
+        return Pressure(magnitude)
+    end
     function (dimension_type::typeof(dimension(u"J")))(magnitude::Quantity)
         return Energy(magnitude)
+    end
+    function (dimension_type::typeof(dimension(u"W")))(magnitude::Quantity)
+        return Power(magnitude)
+    end
+    function (dimension_type::typeof(dimension(u"C")))(magnitude::Quantity)
+        return Charge(magnitude)
     end
 
 ### Kinematic SI derived units ###

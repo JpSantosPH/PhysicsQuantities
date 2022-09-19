@@ -135,6 +135,17 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
+    struct Charge <: PhysicsScalar
+        magnitude::typeof(1.0u"C")
+
+        function Charge(magnitude::Number=0.0u"C")
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"C"
+            end
+            new(magnitude)
+        end
+    end
+
 ### Kinematic SI derived units ###
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")

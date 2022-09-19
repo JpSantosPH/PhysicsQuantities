@@ -39,59 +39,76 @@ using Test
     @testset "Time Functionalities" begin
         @test Time(12//1000) == Time(12.0u"ms")
         @test Time() == Time(0)
+        @test PhysicsScalar(12u"s") == Time(12)
     end
 
     @testset "Length Functionalities" begin
         @test Length(12//1000) == Length(12.0u"mm")
         @test Length() == Length(0)
+        @test PhysicsScalar(12u"m") == Length(12)
     end
 
     @testset "Mass Functionalities" begin
         @test Mass(12//1000) == Mass(12.0u"g")
         @test Mass() == Mass(0)
+        @test PhysicsScalar(12u"kg") == Mass(12)
     end
 
     @testset "Current Functionalities" begin
         @test Current(12//1000) == Current(12.0u"mA")
         @test Current() == Current(0)
+        @test PhysicsScalar(12u"A") == Current(12)
     end
 
     @testset "Temperature Functionalities" begin
         @test Temperature(12//1000) == Temperature(12.0u"mK")
-        @test Temperature() == Temperature(273.15)        
+        @test Temperature() == Temperature(273.15)
+        @test PhysicsScalar(12u"K") == Temperature(12)
     end
 
 ### Named units derived from SI base units ###
     @testset "Frequency Functionalities" begin
         @test Frequency(12//1000) == Frequency(12.0u"mHz")
         @test Frequency() == Frequency(0)
+        @test PhysicsScalar(12u"Hz") == Frequency(12)
     end
 
     @testset "Angle Functionalities" begin
         @test Angle(12//1000) == Angle(12.0u"mrad")
         @test Angle() == Angle(0)
         @test Angle(180u"°") == Angle(π*u"rad")
+        @test PhysicsScalar(12u"rad") == Angle(12)
     end
 
     @testset "Pressure Functionalities" begin
         @test Pressure(12//1000) == Pressure(12.0u"Pa")
         @test Pressure() == Pressure(100)
+        @test PhysicsScalar(12u"kPa") == Pressure(12)
     end
 
     @testset "Energy Functionalities" begin
         @test Energy(12//1000) == Energy(12.0u"mJ")
         @test Energy() == Energy(0)
+        @test PhysicsScalar(12u"J") == Energy(12)
     end
 
     @testset "Power Functionalities" begin
         @test Power(12//1000) == Power(12.0u"mW")
         @test Power() == Power(0)
+        @test PhysicsScalar(12u"W") == Power(12)
+    end
+
+    @testset "Charge Functionalities" begin
+        @test Charge(12//1000) == Charge(12.0u"mC")
+        @test Charge() == Charge(0)
+        @test PhysicsScalar(12u"C") == Charge(12)
     end
 
 ### Kinematic SI derived units ###
     @testset "Speed Functionalities" begin
         @test Speed(12//1000) == Speed(12.0u"mm/s")
         @test Speed() == Speed(0)
+        @test PhysicsScalar(12u"m/s") == Speed(12)
     end
 
 ### PhysicsVector ###
