@@ -79,6 +79,28 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
+    struct Substance <: PhysicsScalar
+        m::typeof(1.0u"mol")
+
+        function Substance(m::Number=0.0u"mol")
+            if !(m isa Quantity)
+                m = m * u"mol"
+            end
+            new(m)
+        end
+    end
+
+    struct Luminous <: PhysicsScalar
+        m::typeof(1.0u"mol")
+
+        function Luminous(m::Number=0.0u"cd")
+            if !(m isa Quantity)
+                m = m * u"cd"
+            end
+            new(m)
+        end
+    end
+
 ### Named units derived from SI base units ###
     struct Frequency <: PhysicsScalar
         m::typeof(1.0u"Hz")

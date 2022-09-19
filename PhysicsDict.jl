@@ -27,6 +27,8 @@ scalar_dict = Dict(
     typeof(dimension(u"kg")) => Mass,
     typeof(dimension(u"A")) => Current,
     typeof(dimension(u"K")) => Temperature,
+    typeof(dimension(u"mol")) => Substance,
+    typeof(dimension(u"cd")) => Luminous,
 
     typeof(dimension(u"Hz")) => Frequency,
     typeof(dimension(u"rad")) => Angle,
@@ -58,6 +60,12 @@ scalar_dict = Dict(
     end
     function (dimension_type::typeof(dimension(u"K")))(m::Quantity)
         return Temperature(m)
+    end
+    function (dimension_type::typeof(dimension(u"mol")))(m::Quantity)
+        return Substance(m)
+    end
+    function (dimension_type::typeof(dimension(u"cd")))(m::Quantity)
+        return Luminous(m)
     end
 
 ### Named units derived from SI base units ###

@@ -62,6 +62,18 @@ using Test
         @test PhysicsScalar(12u"K") == Temperature(12)
     end
 
+    @testset "Substance Functionalities" begin
+        @test Substance(12//1000) == Substance(12.0u"mmol")
+        @test Substance() == Substance(0)
+        @test PhysicsScalar(12u"mol") == Substance(12)
+    end
+
+    #@testset "Luminous Functionalities" begin
+        @test Luminous(12//1000) == Luminous(12.0u"mcd")
+        @test Luminous() == Luminous(0)
+        @test PhysicsScalar(12u"cd") == Luminous(12)
+    #end
+
 ### Named units derived from SI base units ###
     @testset "Frequency Functionalities" begin
         @test Frequency(12//1000) == Frequency(12.0u"mHz")
