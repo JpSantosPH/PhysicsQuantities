@@ -6,24 +6,18 @@ using Test
         @test isa(Coordinate([1, 2, 3]), CartesianCoordinate)
     end
 
-    #@testset "CartesianCoordinate Functionalities" begin
-        @test isa(CartesianCoordinate(1, 2//1, 3.0), CartesianCoordinate)
+    @testset "CartesianCoordinate Functionalities" begin
+        @test CartesianCoordinate(1, 2, 3) isa CartesianCoordinate
         @test CartesianCoordinate( (1, 2) ) == CartesianCoordinate(1, 2, 0)
         @test let
             a = CartesianCoordinate(1, 2, 3)
-            b = CartesianCoordinate(4, 4, 4)
+            b = CartesianCoordinate(4, 5, 6)
             c = a + b
-            d = CartesianCoordinate( (5÷1, 6//1, 7/1) )
+            d = CartesianCoordinate(5, 7, 9)
             c == d
         end
-        @test let
-            a = normalize(CartesianCoordinate([1, 2, 3]))
-            norm(a) ≈ 1 && isa(a, CartesianCoordinate)
-        end
-    #end
-    CartesianCoordinate( [1, 2] )
-    Velocity(1, 2)
-    methods(CartesianCoordinate)
+    end
+
 ### PhysicsScalar ###
     @testset "PhysicsScalar Functionalities" begin
         @test PhysicsScalar(12u"m/s") == Speed(12)

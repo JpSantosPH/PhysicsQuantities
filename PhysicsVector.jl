@@ -15,6 +15,9 @@ abstract type PhysicsVector <: AbstractVector{Number} end
     function PhysicsVector(x::T, y::T, z::T) where {T<:Quantity}
         return dimension(x)(x, y, z)
     end
+    function PhysicsVector(x::Float64, y::Float64, z::Float64)
+        return CartesianCoordinate(x, y, z)
+    end
     function PhysicsVector( (x, y, z) )
         return PhysicsVector(x, y, z)
     end
@@ -44,10 +47,10 @@ abstract type PhysicsVector <: AbstractVector{Number} end
                     return new(x, y, z)
                 end
             end
-                function CartesianCoordinate((args...))
-                    return CartesianCoordinate(args)
+                function CartesianCoordinate(args)
+                    return CartesianCoordinate(args...)
                 end
-
+            
 ### Named units derived from SI base units ###
     struct Position <: PhysicsVector
         x::typeof(1.0u"m")
@@ -66,10 +69,10 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             end
             return new(x, y, z)
         end
-        function Position(args)
-            return new(args...)
-        end
     end
+        function Position(args)
+            return Position(args...)
+        end
 
     struct Force <: PhysicsVector
         x::typeof(1.0u"N")
@@ -88,10 +91,10 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             end
             return new(x, y, z)
         end
-        function Force(args)
-            return new(args...)
-        end
     end
+        function Force(args)
+            return Force(args...)
+        end
 
 ### Kinematic SI derived units ###
     struct Velocity <: PhysicsVector
@@ -111,10 +114,10 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             end
             return new(x, y, z)
         end
-        function Velocity(args)
-            return new(args...)
-        end
     end
+        function Velocity(args)
+            return Velocity(args...)
+        end
 
     struct Acceleration <: PhysicsVector
         x::typeof(1.0u"m/s^2")
@@ -133,7 +136,7 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             end
             return new(x, y, z)
         end
-        function Acceleration(args)
-            return new(args...)
-        end
     end
+        function Acceleration(args)
+            return Acceleration(args...)
+        end
