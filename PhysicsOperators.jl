@@ -14,6 +14,14 @@ end
 function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector)
     return PV₁[1] * PV₂[1] + PV₁[2] * PV₂[2] + PV₁[3] * PV₂[3]
 end
+function Base.:^(PV::PhysicsVector, n::Number)
+    if n == 2
+        return PV * PV
+    end
+end
+function Base.:^(PS::PhysicsScalar, n::Number)
+    return PS.magnitude^n
+end
 
 ### PhysicsScalar ###
 function Base.:+(PS₁::T, PS₂::T) where {T<:PhysicsScalar}

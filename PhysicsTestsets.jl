@@ -142,4 +142,5 @@ using Test
     @test Velocity(1, 2, 3) * 4 == Velocity(4, 8, 12)
     @test Position(1, 2, 3) + Position(4, 5, 6) == Position(5, 7, 9)
     @test Velocity(1, 2, 3) * Velocity(1, 2, 3) == 14u"m^2/s^2"
+    @test 1/2 * Mass(10) * Velocity(3, 4)^2 == 1/2 * Mass(10) * Speed(5)^2
  end
