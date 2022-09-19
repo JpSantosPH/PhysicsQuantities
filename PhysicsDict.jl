@@ -35,6 +35,11 @@ scalar_dict = Dict(
     typeof(dimension(u"W")) => Power,
     typeof(dimension(u"C")) => Charge,
     typeof(dimension(u"V")) => Voltage,
+    typeof(dimension(u"F")) => Capacitance,
+    typeof(dimension(u"Ω")) => Resistance,
+    typeof(dimension(u"S")) => Conductance,
+    typeof(dimension(u"Wb")) => MagneticFlux,
+    typeof(dimension(u"H")) => Inductance,
 
     typeof(dimension(u"m/s")) => Speed
 )
@@ -76,6 +81,21 @@ scalar_dict = Dict(
     end
     function (dimension_type::typeof(dimension(u"V")))(magnitude::Quantity)
         return Voltage(magnitude)
+    end
+    function (dimension_type::typeof(dimension(u"F")))(magnitude::Quantity)
+        return Capacitance(magnitude)
+    end
+    function (dimension_type::typeof(dimension(u"Ω")))(magnitude::Quantity)
+        return Resistance(magnitude)
+    end
+    function (dimension_type::typeof(dimension(u"S")))(magnitude::Quantity)
+        return Conductance(magnitude)
+    end
+    function (dimension_type::typeof(dimension(u"Wb")))(magnitude::Quantity)
+        return MagneticFlux(magnitude)
+    end
+    function (dimension_type::typeof(dimension(u"H")))(magnitude::Quantity)
+        return Inductance(magnitude)
     end
 
 ### Kinematic SI derived units ###

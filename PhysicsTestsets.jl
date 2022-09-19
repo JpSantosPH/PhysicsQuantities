@@ -110,6 +110,36 @@ using Test
         @test PhysicsScalar(12u"V") == Voltage(12)
     end
 
+    @testset "Capacitance Functionalities" begin
+        @test Capacitance(12//1000) == Capacitance(12.0u"mF")
+        @test Capacitance() == Capacitance(0)
+        @test PhysicsScalar(12u"F") == Capacitance(12)
+    end
+
+    @testset "Resistance Functionalities" begin
+        @test Resistance(12//1000) == Resistance(12.0u"mΩ")
+        @test Resistance() == Resistance(0)
+        @test PhysicsScalar(12u"Ω") == Resistance(12)
+    end
+
+    @testset "Conductance Functionalities" begin
+        @test Conductance(12//1000) == Conductance(12.0u"mS")
+        @test Conductance() == Conductance(0)
+        @test PhysicsScalar(12u"S") == Conductance(12)
+    end
+
+    @testset "MagneticFlux Functionalities" begin
+        @test MagneticFlux(12//1000) == MagneticFlux(12.0u"mWb")
+        @test MagneticFlux() == MagneticFlux(0)
+        @test PhysicsScalar(12u"Wb") == MagneticFlux(12)
+    end
+
+    @testset "Inductance Functionalities" begin
+        @test Inductance(12//1000) == Inductance(12.0u"mH")
+        @test Inductance() == Inductance(0)
+        @test PhysicsScalar(12u"H") == Inductance(12)
+    end
+
 ### Kinematic SI derived units ###
     @testset "Speed Functionalities" begin
         @test Speed(12//1000) == Speed(12.0u"mm/s")

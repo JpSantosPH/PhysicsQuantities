@@ -157,6 +157,61 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
+    struct Capacitance <: PhysicsScalar
+        magnitude::typeof(1.0u"F")
+
+        function Capacitance(magnitude::Number=0.0u"F")
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"F"
+            end
+            new(magnitude)
+        end
+    end
+
+    struct Resistance <: PhysicsScalar
+        magnitude::typeof(1.0u"Ω")
+
+        function Resistance(magnitude::Number=0.0u"Ω")
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"Ω"
+            end
+            new(magnitude)
+        end
+    end
+ 
+    struct Conductance <: PhysicsScalar
+        magnitude::typeof(1.0u"S")
+
+        function Conductance(magnitude::Number=0.0u"S")
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"S"
+            end
+            new(magnitude)
+        end
+    end
+
+    struct MagneticFlux <: PhysicsScalar
+        magnitude::typeof(1.0u"Wb")
+
+        function MagneticFlux(magnitude::Number=0.0u"Wb")
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"Wb"
+            end
+            new(magnitude)
+        end
+    end
+
+    struct Inductance <: PhysicsScalar
+        magnitude::typeof(1.0u"H")
+
+        function Inductance(magnitude::Number=0.0u"H")
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"H"
+            end
+            new(magnitude)
+        end
+    end
+
 ### Kinematic SI derived units ###
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
