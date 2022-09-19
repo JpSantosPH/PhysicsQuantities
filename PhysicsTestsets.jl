@@ -21,7 +21,6 @@ using Test
             norm(a) ≈ 1 && isa(a, CartesianCoordinate)
         end
     end
-#########################
 
 ### PhysicsScalar ###
     @testset "PhysicsScalar Functionalities" begin
@@ -61,21 +60,20 @@ using Test
         @test Temperature() == Temperature(273.15)        
     end
 
-    @testset "Speed Functionalities" begin
-        @test Speed(12//1000) == Speed(12.0u"mm/s")
-        @test Speed() == Speed(0)
-    end
-
     @testset "Frequency Functionalities" begin
         @test Frequency(12//1000) == Frequency(12.0u"mHz")
         @test Frequency() == Frequency(0)
     end
-    
+
     @testset "Energy Functionalities" begin
         @test Energy(12//1000) == Energy(12.0u"mJ")
         @test Energy() == Energy(0)
     end
-#####################
+
+    @testset "Speed Functionalities" begin
+        @test Speed(12//1000) == Speed(12.0u"mm/s")
+        @test Speed() == Speed(0)
+    end
 
 ### PhysicsVector ###
     @testset "BasisVectors Functionalities" begin
@@ -134,13 +132,12 @@ using Test
         end
         @test Acceleration() == Acceleration(0, 0, 0)
     end
-#####################
 
 ### PhysicsOperators ###
- @testset "PhysicsVectorOperators" begin
-    @test -Velocity(1, 2, 3) == Velocity(-1, -2, -3)
-    @test Velocity(1, 2, 3) * 4 == Velocity(4, 8, 12)
-    @test Position(1, 2, 3) + Position(4, 5, 6) == Position(5, 7, 9)
-    @test Velocity(1, 2, 3) * Velocity(1, 2, 3) == 14u"m^2/s^2"
-    @test 1/2 * Mass(10) * Velocity(3, 4)^2 == 1/2 * Mass(10) * Speed(5)^2
- end
+    @testset "PhysicsVectorOperators" begin
+        @test -Velocity(1, 2, 3) == Velocity(-1, -2, -3)
+        @test Velocity(1, 2, 3) * 4 == Velocity(4, 8, 12)
+        @test Position(1, 2, 3) + Position(4, 5, 6) == Position(5, 7, 9)
+        @test Velocity(1, 2, 3) * Velocity(1, 2, 3) == 14u"m^2/s^2"
+        @test 1/2 * Mass(10) * Velocity(3, 4)^2 == 1/2 * Mass(10) * Speed(5)^2
+    end

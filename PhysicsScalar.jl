@@ -20,10 +20,11 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         return PhysicsScalar(magnitude)
     end
 
+### SI base units ###
     struct Time <: PhysicsScalar
         magnitude::typeof(1.0u"s")
 
-        function Time(magnitude::Number=0.0)
+        function Time(magnitude::Number=0.0u"s")
             if !(magnitude isa Quantity)
                 magnitude = magnitude * u"s"
             end
@@ -34,7 +35,7 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
     struct Length <: PhysicsScalar
         magnitude::typeof(1.0u"m")
 
-        function Length(magnitude::Number=0.0)
+        function Length(magnitude::Number=0.0u"m")
             if !(magnitude isa Quantity)
                 magnitude = magnitude * u"m"
             end
@@ -45,7 +46,7 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
     struct Mass <: PhysicsScalar
         magnitude::typeof(1.0u"kg")
 
-        function Mass(magnitude::Number=0.0)
+        function Mass(magnitude::Number=0.0u"kg")
             if !(magnitude isa Quantity)
                 magnitude = magnitude * u"kg"
             end
@@ -55,15 +56,15 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
 
     struct Current <: PhysicsScalar
         magnitude::typeof(1.0u"A")
-    
-        function Current(magnitude::Number=0.0)
+
+        function Current(magnitude::Number=0.0u"A")
             if !(magnitude isa Quantity)
                 magnitude = magnitude * u"A"
             end
             new(magnitude)
         end
     end
-
+    
     struct Temperature <: PhysicsScalar
         magnitude::typeof(1.0u"K")
 
@@ -78,21 +79,11 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
-    struct Speed <: PhysicsScalar
-        magnitude::typeof(1.0u"m/s")
-
-        function Speed(magnitude::Number=0.0)
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"m/s"
-            end
-            new(magnitude)
-        end
-    end
-
+### Named units derived from SI base units ###
     struct Frequency <: PhysicsScalar
         magnitude::typeof(1.0u"Hz")
 
-        function Frequency(magnitude::Number=0.0)
+        function Frequency(magnitude::Number=0.0u"Hz")
             if !(magnitude isa Quantity)
                 magnitude = magnitude * u"Hz"
             end
@@ -100,12 +91,36 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
+    
+    
+    
+
     struct Energy <: PhysicsScalar
         magnitude::typeof(1.0u"J")
 
-        function Energy(magnitude::Number=0.0)
+        function Energy(magnitude::Number=0.0u"J")
             if !(magnitude isa Quantity)
                 magnitude = magnitude * u"J"
+            end
+            new(magnitude)
+        end
+    end
+
+    struct Pressure <: PhysicsScalar
+        magnitude::typeof(1.0u"kPa")
+    
+        function Pressure(magnitude::Number=100.0u"kPa")
+            
+        end
+    end
+
+### Kinematic SI derived units ###
+    struct Speed <: PhysicsScalar
+        magnitude::typeof(1.0u"m/s")
+
+        function Speed(magnitude::Number=0.0u"m/s")
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"m/s"
             end
             new(magnitude)
         end
