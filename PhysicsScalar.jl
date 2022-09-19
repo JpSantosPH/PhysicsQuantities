@@ -91,6 +91,17 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
+    struct Angle <: PhysicsScalar
+        magnitude::typeof(1.0u"rad")
+
+        function Angle(magnitude::Number=0.0u"rad")
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"rad"
+            end
+            new(magnitude)
+        end
+    end
+
     struct Energy <: PhysicsScalar
         magnitude::typeof(1.0u"J")
 

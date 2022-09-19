@@ -67,6 +67,12 @@ using Test
         @test Frequency() == Frequency(0)
     end
 
+    @testset "Angle Functionalities" begin
+        @test Angle(12//1000) == Angle(12.0u"mrad")
+        @test Angle() == Angle(0)
+        @test Angle(180u"°") == Angle(π*u"rad")
+    end
+
     @testset "Energy Functionalities" begin
         @test Energy(12//1000) == Energy(12.0u"mJ")
         @test Energy() == Energy(0)

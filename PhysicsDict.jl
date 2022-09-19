@@ -23,6 +23,7 @@ scalar_dict = Dict(
     typeof(dimension(u"K")) => Temperature,
 ### Named units derived from SI base units ###
     typeof(dimension(u"Hz")) => Frequency,
+    typeof(dimension(u"rad")) => Angle,
     typeof(dimension(u"J")) => Energy,
     typeof(dimension(u"kPa")) => Pressure,
 ### Kinematic SI derived units ###
@@ -52,6 +53,10 @@ scalar_dict = Dict(
 ### Named units derived from SI base units ###
     function (dimension_type::typeof(dimension(u"Hz")))(magnitude::Quantity)
         return Frequency(magnitude)
+    end
+    
+    function (dimension_type::typeof(dimension(u"rad")))(magnitude::Quantity)
+        return Angle(magnitude)
     end
 
     function (dimension_type::typeof(dimension(u"J")))(magnitude::Quantity)
