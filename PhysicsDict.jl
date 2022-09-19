@@ -44,61 +44,61 @@ scalar_dict = Dict(
     typeof(dimension(u"m/s")) => Speed
 )
 ### SI base units ###
-    function (dimension_type::typeof(dimension(u"s")))(magnitude::Quantity)
-        return Time(magnitude)
+    function (dimension_type::typeof(dimension(u"s")))(m::Quantity)
+        return Time(m)
     end
-    function (dimension_type::typeof(dimension(u"m")))(magnitude::Quantity)
-        return Length(magnitude)
+    function (dimension_type::typeof(dimension(u"m")))(m::Quantity)
+        return Length(m)
     end
-    function (dimension_type::typeof(dimension(u"kg")))(magnitude::Quantity)
-        return Mass(magnitude)
+    function (dimension_type::typeof(dimension(u"kg")))(m::Quantity)
+        return Mass(m)
     end
-    function (dimension_type::typeof(dimension(u"A")))(magnitude::Quantity)
-        return Current(magnitude)
+    function (dimension_type::typeof(dimension(u"A")))(m::Quantity)
+        return Current(m)
     end
-    function (dimension_type::typeof(dimension(u"K")))(magnitude::Quantity)
-        return Temperature(magnitude)
+    function (dimension_type::typeof(dimension(u"K")))(m::Quantity)
+        return Temperature(m)
     end
 
 ### Named units derived from SI base units ###
-    function (dimension_type::typeof(dimension(u"Hz")))(magnitude::Quantity)
-        return Frequency(magnitude)
+    function (dimension_type::typeof(dimension(u"Hz")))(m::Quantity)
+        return Frequency(m)
     end
-    function (dimension_type::typeof(dimension(u"rad")))(magnitude::Quantity)
-        return Angle(magnitude)
+    function (dimension_type::typeof(dimension(u"rad")))(m::Quantity)
+        return Angle(m)
     end
-    function (dimension_type::typeof(dimension(u"kPa")))(magnitude::Quantity)
-        return Pressure(magnitude)
+    function (dimension_type::typeof(dimension(u"kPa")))(m::Quantity)
+        return Pressure(m)
     end
-    function (dimension_type::typeof(dimension(u"J")))(magnitude::Quantity)
-        return Energy(magnitude)
+    function (dimension_type::typeof(dimension(u"J")))(m::Quantity)
+        return Energy(m)
     end
-    function (dimension_type::typeof(dimension(u"W")))(magnitude::Quantity)
-        return Power(magnitude)
+    function (dimension_type::typeof(dimension(u"W")))(m::Quantity)
+        return Power(m)
     end
-    function (dimension_type::typeof(dimension(u"C")))(magnitude::Quantity)
-        return Charge(magnitude)
+    function (dimension_type::typeof(dimension(u"C")))(m::Quantity)
+        return Charge(m)
     end
-    function (dimension_type::typeof(dimension(u"V")))(magnitude::Quantity)
-        return Voltage(magnitude)
+    function (dimension_type::typeof(dimension(u"V")))(m::Quantity)
+        return Voltage(m)
     end
-    function (dimension_type::typeof(dimension(u"F")))(magnitude::Quantity)
-        return Capacitance(magnitude)
+    function (dimension_type::typeof(dimension(u"F")))(m::Quantity)
+        return Capacitance(m)
     end
-    function (dimension_type::typeof(dimension(u"Ω")))(magnitude::Quantity)
-        return Resistance(magnitude)
+    function (dimension_type::typeof(dimension(u"Ω")))(m::Quantity)
+        return Resistance(m)
     end
-    function (dimension_type::typeof(dimension(u"S")))(magnitude::Quantity)
-        return Conductance(magnitude)
+    function (dimension_type::typeof(dimension(u"S")))(m::Quantity)
+        return Conductance(m)
     end
-    function (dimension_type::typeof(dimension(u"Wb")))(magnitude::Quantity)
-        return MagneticFlux(magnitude)
+    function (dimension_type::typeof(dimension(u"Wb")))(m::Quantity)
+        return MagneticFlux(m)
     end
-    function (dimension_type::typeof(dimension(u"H")))(magnitude::Quantity)
-        return Inductance(magnitude)
+    function (dimension_type::typeof(dimension(u"H")))(m::Quantity)
+        return Inductance(m)
     end
 
 ### Kinematic SI derived units ###
-    function (dimension_type::typeof(dimension(u"m/s")))(magnitude::Quantity)
-        return Speed(magnitude)
+    function (dimension_type::typeof(dimension(u"m/s")))(m::Quantity)
+        return Speed(m)
     end

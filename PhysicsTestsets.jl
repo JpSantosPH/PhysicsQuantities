@@ -6,7 +6,7 @@ using Test
         @test isa(Coordinate([1, 2, 3]), CartesianCoordinate)
     end
 
-    @testset "CartesianCoordinate Functionalities" begin
+    #@testset "CartesianCoordinate Functionalities" begin
         @test isa(CartesianCoordinate(1, 2//1, 3.0), CartesianCoordinate)
         @test CartesianCoordinate( (1, 2) ) == CartesianCoordinate(1, 2, 0)
         @test let
@@ -20,8 +20,10 @@ using Test
             a = normalize(CartesianCoordinate([1, 2, 3]))
             norm(a) ≈ 1 && isa(a, CartesianCoordinate)
         end
-    end
-
+    #end
+    CartesianCoordinate( [1, 2] )
+    Velocity(1, 2)
+    methods(CartesianCoordinate)
 ### PhysicsScalar ###
     @testset "PhysicsScalar Functionalities" begin
         @test PhysicsScalar(12u"m/s") == Speed(12)
@@ -148,72 +150,27 @@ using Test
     end
 
 ### PhysicsVector ###
-    @testset "BasisVectors Functionalities" begin
-        @test let
-            a = CartesianCoordinate(1, 2, 3)
-            b = CartesianCoordinate(4, 5, 6)
-            c = CartesianCoordinate(7, 8, 9)
-            d = BasisVectors(a, b, c)
-            isa(d, BasisVectors)
-        end
-        @test let
-            BV = BasisVectors()
-            a = CartesianCoordinate(1, 0, 0)
-            b = CartesianCoordinate(0, 1, 0)
-            c = CartesianCoordinate(0, 0, 1)
-            BV.e₁ == a && BV.e₂ == b && BV.e₃ == c
-        end
-    end
-
     @testset "PhysicsVector Functionalities" begin
         @test PhysicsVector(1u"m/s", 2u"m/s", 3u"m/s") isa Velocity
     end
 
     @testset "Position Functionalities" begin
-        @test Position(1, 2//1000; Basis=BasisVectors()) == Position(1 * u"m", 2//1 * u"mm", 0.0u"m")
-        @test let
-            a = CartesianCoordinate(1, 2, 3)
-            b = CartesianCoordinate(4, 5, 6)
-            c = CartesianCoordinate(7, 8, 9)
-            d = BasisVectors(a, b, c)
-            Position(1, 2, 3; Basis=d) == Position(30, 36, 42)
-        end
+        @test Position(1, 2//1000) == Position(1 * u"m", 2//1 * u"mm", 0.0u"m")
         @test Position() == Position(0, 0, 0)
     end
 
     @testset "Force Functionalities" begin
-        @test Force(1, 2//1000; Basis=BasisVectors()) == Force(1 * u"N", 2//1 * u"mN", 0.0u"N")
-        @test let
-            a = CartesianCoordinate(1, 2, 3)
-            b = CartesianCoordinate(4, 5, 6)
-            c = CartesianCoordinate(7, 8, 9)
-            d = BasisVectors(a, b, c)
-            Force(1, 2, 3; Basis=d) == Force(30, 36, 42)
-        end
+        @test Force(1, 2//1000) == Force(1 * u"N", 2//1 * u"mN", 0.0u"N")
         @test Force() == Force(0, 0, 0)
     end
 
     @testset "Velocity Functionalities" begin
-        @test Velocity(1, 2//1000; Basis=BasisVectors()) == Velocity(1 * u"m/s", 2//1 * u"mm/s", 0.0u"m/s")
-        @test let
-            a = CartesianCoordinate(1, 2, 3)
-            b = CartesianCoordinate(4, 5, 6)
-            c = CartesianCoordinate(7, 8, 9)
-            d = BasisVectors(a, b, c)
-            Velocity(1, 2, 3; Basis=d) == Velocity(30, 36, 42)
-        end
+        @test Velocity(1, 2//1000) == Velocity(1 * u"m/s", 2//1 * u"mm/s", 0.0u"m/s")
         @test Velocity() == Velocity(0, 0, 0)
     end
 
     @testset "Acceleration Functionalities" begin
-        @test Acceleration(1, 2//1000; Basis=BasisVectors()) == Acceleration(1 * u"m/s^2", 2//1 * u"mm/s^2", 0.0u"m/s^2")
-        @test let
-            a = CartesianCoordinate(1, 2, 3)
-            b = CartesianCoordinate(4, 5, 6)
-            c = CartesianCoordinate(7, 8, 9)
-            d = BasisVectors(a, b, c)
-            Acceleration(1÷1, 2//1, 3/1; Basis=d) == Acceleration(30, 36, 42)
-        end
+        @test Acceleration(1, 2//1000) == Acceleration(1 * u"m/s^2", 2//1 * u"mm/s^2", 0.0u"m/s^2")
         @test Acceleration() == Acceleration(0, 0, 0)
     end
 
@@ -231,7 +188,7 @@ using Test
     end
 
 ### PhysicsScalar Operator ###
-    #@testset " PhysicsScalar Operators" begin
+    @testset " PhysicsScalar Operators" begin
         @test Time(1) + Time(2) isa Time
         @test Length(1) - Length(2) isa Length
         @test Length(1) * Frequency(2) isa Speed
@@ -241,4 +198,4 @@ using Test
         @test Length(1) / 2 isa Length
         @test [1, 2, 3] / Time(4) isa Vector{Frequency}
         @test 1/2 * Mass(10) * Speed(5)^2 isa Energy
-    #end
+    end

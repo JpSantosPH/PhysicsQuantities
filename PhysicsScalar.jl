@@ -5,221 +5,221 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
     Base.size(PS::PhysicsScalar) = (1,)
     function Base.getindex(PS::PhysicsScalar, i::Int)
         if i == 1
-            return PS.magnitude
+            return PS.m
         end
     end
 
     function Unitful.dimension(PS::PhysicsScalar)
-        return dimension(PS.magnitude)
+        return dimension(PS.m)
     end
 
-    function PhysicsScalar(magnitude::Quantity)
-        return dimension(magnitude)(magnitude)
+    function PhysicsScalar(m::Quantity)
+        return dimension(m)(m)
     end
-    function PhysicsScalar( (magnitude) )
-        return PhysicsScalar(magnitude)
+    function PhysicsScalar( (m) )
+        return PhysicsScalar(m)
     end
 
 ### SI base units ###
     struct Time <: PhysicsScalar
-        magnitude::typeof(1.0u"s")
+        m::typeof(1.0u"s")
 
-        function Time(magnitude::Number=0.0u"s")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"s"
+        function Time(m::Number=0.0u"s")
+            if !(m isa Quantity)
+                m = m * u"s"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Length <: PhysicsScalar
-        magnitude::typeof(1.0u"m")
+        m::typeof(1.0u"m")
 
-        function Length(magnitude::Number=0.0u"m")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"m"
+        function Length(m::Number=0.0u"m")
+            if !(m isa Quantity)
+                m = m * u"m"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Mass <: PhysicsScalar
-        magnitude::typeof(1.0u"kg")
+        m::typeof(1.0u"kg")
 
-        function Mass(magnitude::Number=0.0u"kg")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"kg"
+        function Mass(m::Number=0.0u"kg")
+            if !(m isa Quantity)
+                m = m * u"kg"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Current <: PhysicsScalar
-        magnitude::typeof(1.0u"A")
+        m::typeof(1.0u"A")
 
-        function Current(magnitude::Number=0.0u"A")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"A"
+        function Current(m::Number=0.0u"A")
+            if !(m isa Quantity)
+                m = m * u"A"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Temperature <: PhysicsScalar
-        magnitude::typeof(1.0u"K")
+        m::typeof(1.0u"K")
 
-        function Temperature(magnitude::Number=273.15u"K")
-            if ustrip(magnitude) ≤ 0
+        function Temperature(m::Number=273.15u"K")
+            if ustrip(m) ≤ 0
                 error("Physics Error")
             end
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"K"
+            if !(m isa Quantity)
+                m = m * u"K"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
 ### Named units derived from SI base units ###
     struct Frequency <: PhysicsScalar
-        magnitude::typeof(1.0u"Hz")
+        m::typeof(1.0u"Hz")
 
-        function Frequency(magnitude::Number=0.0u"Hz")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"Hz"
+        function Frequency(m::Number=0.0u"Hz")
+            if !(m isa Quantity)
+                m = m * u"Hz"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Angle <: PhysicsScalar
-        magnitude::typeof(1.0u"rad")
+        m::typeof(1.0u"rad")
 
-        function Angle(magnitude::Number=0.0u"rad")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"rad"
+        function Angle(m::Number=0.0u"rad")
+            if !(m isa Quantity)
+                m = m * u"rad"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Pressure <: PhysicsScalar
-        magnitude::typeof(1.0u"kPa")
+        m::typeof(1.0u"kPa")
     
-        function Pressure(magnitude::Number=100.0u"kPa")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"kPa"
+        function Pressure(m::Number=100.0u"kPa")
+            if !(m isa Quantity)
+                m = m * u"kPa"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Energy <: PhysicsScalar
-        magnitude::typeof(1.0u"J")
+        m::typeof(1.0u"J")
 
-        function Energy(magnitude::Number=0.0u"J")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"J"
+        function Energy(m::Number=0.0u"J")
+            if !(m isa Quantity)
+                m = m * u"J"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Power <: PhysicsScalar
-        magnitude::typeof(1.0u"W")
+        m::typeof(1.0u"W")
 
-        function Power(magnitude::Number=0.0u"W")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"W"
+        function Power(m::Number=0.0u"W")
+            if !(m isa Quantity)
+                m = m * u"W"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Charge <: PhysicsScalar
-        magnitude::typeof(1.0u"C")
+        m::typeof(1.0u"C")
 
-        function Charge(magnitude::Number=0.0u"C")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"C"
+        function Charge(m::Number=0.0u"C")
+            if !(m isa Quantity)
+                m = m * u"C"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Voltage <: PhysicsScalar
-        magnitude::typeof(1.0u"V")
+        m::typeof(1.0u"V")
 
-        function Voltage(magnitude::Number=0.0u"V")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"V"
+        function Voltage(m::Number=0.0u"V")
+            if !(m isa Quantity)
+                m = m * u"V"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Capacitance <: PhysicsScalar
-        magnitude::typeof(1.0u"F")
+        m::typeof(1.0u"F")
 
-        function Capacitance(magnitude::Number=0.0u"F")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"F"
+        function Capacitance(m::Number=0.0u"F")
+            if !(m isa Quantity)
+                m = m * u"F"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Resistance <: PhysicsScalar
-        magnitude::typeof(1.0u"Ω")
+        m::typeof(1.0u"Ω")
 
-        function Resistance(magnitude::Number=0.0u"Ω")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"Ω"
+        function Resistance(m::Number=0.0u"Ω")
+            if !(m isa Quantity)
+                m = m * u"Ω"
             end
-            new(magnitude)
+            new(m)
         end
     end
  
     struct Conductance <: PhysicsScalar
-        magnitude::typeof(1.0u"S")
+        m::typeof(1.0u"S")
 
-        function Conductance(magnitude::Number=0.0u"S")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"S"
+        function Conductance(m::Number=0.0u"S")
+            if !(m isa Quantity)
+                m = m * u"S"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct MagneticFlux <: PhysicsScalar
-        magnitude::typeof(1.0u"Wb")
+        m::typeof(1.0u"Wb")
 
-        function MagneticFlux(magnitude::Number=0.0u"Wb")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"Wb"
+        function MagneticFlux(m::Number=0.0u"Wb")
+            if !(m isa Quantity)
+                m = m * u"Wb"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
     struct Inductance <: PhysicsScalar
-        magnitude::typeof(1.0u"H")
+        m::typeof(1.0u"H")
 
-        function Inductance(magnitude::Number=0.0u"H")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"H"
+        function Inductance(m::Number=0.0u"H")
+            if !(m isa Quantity)
+                m = m * u"H"
             end
-            new(magnitude)
+            new(m)
         end
     end
 
 ### Kinematic SI derived units ###
     struct Speed <: PhysicsScalar
-        magnitude::typeof(1.0u"m/s")
+        m::typeof(1.0u"m/s")
 
-        function Speed(magnitude::Number=0.0u"m/s")
-            if !(magnitude isa Quantity)
-                magnitude = magnitude * u"m/s"
+        function Speed(m::Number=0.0u"m/s")
+            if !(m isa Quantity)
+                m = m * u"m/s"
             end
-            new(magnitude)
+            new(m)
         end
     end
