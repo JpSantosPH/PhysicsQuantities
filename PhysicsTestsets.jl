@@ -111,6 +111,18 @@ using Test
         @test PhysicsVector(1u"m/s", 2u"m/s", 3u"m/s") isa Velocity
     end
 
+    @testset "Force Functionalities" begin
+        @test Force(1, 2//1000; Basis=BasisVectors()) == Force(1 * u"N", 2//1 * u"mN", 0.0u"N")
+        @test let
+            a = CartesianCoordinate(1, 2, 3)
+            b = CartesianCoordinate(4, 5, 6)
+            c = CartesianCoordinate(7, 8, 9)
+            d = BasisVectors(a, b, c)
+            Force(1, 2, 3; Basis=d) == Force(30, 36, 42)
+        end
+        @test Force() == Force(0, 0, 0)
+    end
+
     @testset "Position Functionalities" begin
         @test Position(1, 2//1000; Basis=BasisVectors()) == Position(1 * u"m", 2//1 * u"mm", 0.0u"m")
         @test let
