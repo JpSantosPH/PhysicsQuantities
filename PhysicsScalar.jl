@@ -89,12 +89,23 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
-    struct Frequency <:PhysicsScalar
+    struct Frequency <: PhysicsScalar
         magnitude::typeof(1.0u"Hz")
 
         function Frequency(magnitude::Number=0.0)
             if !(magnitude isa Quantity)
                 magnitude = magnitude * u"Hz"
+            end
+            new(magnitude)
+        end
+    end
+
+    struct Energy <: PhysicsScalar
+        magnitude::typeof(1.0u"J")
+
+        function Energy(magnitude::Number=0.0)
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"J"
             end
             new(magnitude)
         end

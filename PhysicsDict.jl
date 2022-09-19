@@ -22,7 +22,8 @@ scalar_dict = Dict(
     typeof(dimension(u"A")) => Current,
     typeof(dimension(u"K")) => Temperature,
     typeof(dimension(u"m/s")) => Speed,
-    typeof(dimension(u"Hz")) => Frequency
+    typeof(dimension(u"Hz")) => Frequency,
+    typeof(dimension(u"J")) => Energy
 )
 function (dimension_type::typeof(dimension(u"s")))(magnitude::Quantity)
     return Time(magnitude)
@@ -44,4 +45,7 @@ function (dimension_type::typeof(dimension(u"m/s")))(magnitude::Quantity)
 end
 function (dimension_type::typeof(dimension(u"Hz")))(magnitude::Quantity)
     return Frequency(magnitude)
+end
+function (dimension_type::typeof(dimension(u"J")))(magnitude::Quantity)
+    return Energy(magnitude)
 end

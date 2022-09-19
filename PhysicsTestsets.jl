@@ -70,6 +70,11 @@ using Test
         @test Frequency(12//1000) == Frequency(12.0u"mHz")
         @test Frequency() == Frequency(0)
     end
+    
+    @testset "Energy Functionalities" begin
+        @test Energy(12//1000) == Energy(12.0u"mJ")
+        @test Energy() == Energy(0)
+    end
 #####################
 
 ### PhysicsVector ###
@@ -136,6 +141,5 @@ using Test
     @test -Velocity(1, 2, 3) == Velocity(-1, -2, -3)
     @test Velocity(1, 2, 3) * 4 == Velocity(4, 8, 12)
     @test Position(1, 2, 3) + Position(4, 5, 6) == Position(5, 7, 9)
+    @test Velocity(1, 2, 3) * Velocity(1, 2, 3) == 14u"m^2/s^2"
  end
-
-
