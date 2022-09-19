@@ -217,11 +217,28 @@ using Test
         @test Acceleration() == Acceleration(0, 0, 0)
     end
 
-### PhysicsOperators ###
-    @testset "PhysicsVectorOperators" begin
-        @test -Velocity(1, 2, 3) == Velocity(-1, -2, -3)
-        @test Velocity(1, 2, 3) * 4 == Velocity(4, 8, 12)
-        @test Position(1, 2, 3) + Position(4, 5, 6) == Position(5, 7, 9)
-        @test Velocity(1, 2, 3) * Velocity(1, 2, 3) == 14u"m^2/s^2"
-        @test 1/2 * Mass(10) * Velocity(3, 4)^2 == 1/2 * Mass(10) * Speed(5)^2
+### PhysicsVector Operators ###
+    @testset "PhysicsVector Operators" begin
+        @test -Velocity(1, 2, 3) isa Velocity
+        @test Position(1, 2, 3) + Position(4, 5, 6) isa Position
+        @test Position(1, 2, 3) - Position(4, 5, 6) isa Position
+        @test Velocity(1, 2, 3) * 4 isa Velocity
+        @test Velocity(8, 6, 4) / 2 isa Velocity
+        @test Acceleration(1,2,3) * Time(4) isa Velocity
+        @test Velocity(8, 6, 4) / Time(2) isa Acceleration
+        @test Position(1, 2, 3) * Position(4, 5, 6) == 32.0u"m^2"
+        @test Velocity(1, 2, 3)^2 == 14.0u"m^2/s^2"
     end
+
+### PhysicsScalar Operator ###
+    #@testset " PhysicsScalar Operators" begin
+        @test Time(1) + Time(2) isa Time
+        @test Length(1) - Length(2) isa Length
+        @test Length(1) * Frequency(2) isa Speed
+        @test Speed(1) * 2 isa Speed
+        @test [1, 2, 3] * Length(4) isa Vector{Length}
+        @test Length(1) / Time(2) isa Speed
+        @test Length(1) / 2 isa Length
+        @test [1, 2, 3] / Time(4) isa Vector{Frequency}
+        @test 1/2 * Mass(10) * Speed(5)^2 isa Energy
+    #end

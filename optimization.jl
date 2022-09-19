@@ -86,4 +86,20 @@ using BenchmarkTools
         @benchmark 1/2 * Mass(10) * Velocity(3, 4)^2
             # Time  (mean ± σ):   1.949 ns ±  1.311 ns
             # Memory estimate: 0 bytes, allocs estimate: 0.
-###################################
+    ###############################
+    # before
+        @benchmark [Position(1, 1, 1) + Position(i, i, i) for i in 1:10000]
+            # Time  (mean ± σ):   130.714 μs ± 171.853 μs
+            # Memory estimate: 937.55 KiB, allocs estimate: 2.
+    #after
+        @benchmark [[1.0u"m", 1.0u"m", 1.0u"m"] + [i*u"m", i*u"m", i*u"m"] for i in 1:10000]
+            # Time  (mean ± σ):   1.708 ms ± 1.147 ms
+            # Memory estimate: 2.37 MiB, allocs estimate: 30002.
+
+            # 1.708 ms / 130.714 μs
+            # = 13.066695227749134 speedup!!!
+    ###############################
+
+    @benchmark [Position(1, 1, 1) + Position(i, i, i) for i in 1:1000000]
+
+    @benchmark [CartesianCoordinate(1, 1, 1) + CartesianCoordinate(i, i, i) for i in 1:1000000]
