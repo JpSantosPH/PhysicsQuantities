@@ -104,6 +104,12 @@ using Test
         @test PhysicsScalar(12u"C") == Charge(12)
     end
 
+    @testset "Voltage Functionalities" begin
+        @test Voltage(12//1000) == Voltage(12.0u"mV")
+        @test Voltage() == Voltage(0)
+        @test PhysicsScalar(12u"V") == Voltage(12)
+    end
+
 ### Kinematic SI derived units ###
     @testset "Speed Functionalities" begin
         @test Speed(12//1000) == Speed(12.0u"mm/s")

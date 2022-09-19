@@ -34,6 +34,7 @@ scalar_dict = Dict(
     typeof(dimension(u"J")) => Energy,
     typeof(dimension(u"W")) => Power,
     typeof(dimension(u"C")) => Charge,
+    typeof(dimension(u"V")) => Voltage,
 
     typeof(dimension(u"m/s")) => Speed
 )
@@ -72,6 +73,9 @@ scalar_dict = Dict(
     end
     function (dimension_type::typeof(dimension(u"C")))(magnitude::Quantity)
         return Charge(magnitude)
+    end
+    function (dimension_type::typeof(dimension(u"V")))(magnitude::Quantity)
+        return Voltage(magnitude)
     end
 
 ### Kinematic SI derived units ###

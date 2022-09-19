@@ -146,6 +146,17 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
+    struct Voltage <: PhysicsScalar
+        magnitude::typeof(1.0u"V")
+
+        function Voltage(magnitude::Number=0.0u"V")
+            if !(magnitude isa Quantity)
+                magnitude = magnitude * u"V"
+            end
+            new(magnitude)
+        end
+    end
+
 ### Kinematic SI derived units ###
     struct Speed <: PhysicsScalar
         magnitude::typeof(1.0u"m/s")
