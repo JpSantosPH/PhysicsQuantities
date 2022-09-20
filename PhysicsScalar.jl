@@ -91,7 +91,7 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
     end
 
     struct Luminous <: PhysicsScalar
-        m::typeof(1.0u"mol")
+        m::typeof(1.0u"cd")
 
         function Luminous(m::Number=0.0u"cd")
             if !(m isa Quantity)
