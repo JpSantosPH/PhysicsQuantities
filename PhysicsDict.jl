@@ -21,7 +21,7 @@ vector_dict = Dict(
         return Acceleration(x, y, z)
     end
 
-scalar_dict = Dict(
+const scalar_dict = Dict(
     typeof(dimension(u"s")) => Time,
     typeof(dimension(u"m")) => Length,
     typeof(dimension(u"kg")) => Mass,
