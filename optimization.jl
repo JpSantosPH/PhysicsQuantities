@@ -83,5 +83,3 @@ using BenchmarkTools
         # Time  (mean ± σ):     1.014 ms ±  1.132 ms
         # Memory estimate: 2.29 MiB, allocs estimate: 2.
     ###############################
-
-    Velocity(1, 2, 3) === [1.0u"m/s", 2.0u"m/s", 3.0u"m/s"]
