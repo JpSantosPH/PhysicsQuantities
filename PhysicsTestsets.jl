@@ -22,7 +22,6 @@ using Test
     @testset "PhysicsScalar Functionalities" begin
         @test PhysicsScalar(12u"m/s") == Speed(12)
         @test Speed(1) * 23 == Speed(23)
-        @test [1, 2, 3] * Speed(4.5) isa Vector{Speed}
         @test Length(123) + Length(456) == Length(579)
         @test 1(Length(12) * Frequency(3)) == Speed(36)
     end
@@ -198,9 +197,7 @@ using Test
         @test Length(1) - Length(2) isa Length
         @test 1(Length(1) * Frequency(2)) isa Speed
         @test Speed(1) * 2 isa Speed
-        @test [1, 2, 3] * Length(4) isa Vector{Length}
         @test 1*(Length(1) / Time(2)) isa Speed
         @test Length(1) / 2 isa Length
-        @test [1, 2, 3] / Time(4) isa Vector{Frequency}
         @test 1/2 * (Mass(10) * Speed(5)^2) isa Energy
     end
