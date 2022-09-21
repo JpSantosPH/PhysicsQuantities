@@ -76,10 +76,21 @@ using BenchmarkTools
     ###############################
     # before
         @benchmark [[1.0u"m", 1.0u"m", 1.0u"m"] + [i*u"m", i*u"m", i*u"m"] for i in 1:100000]
-        # Time  (mean ± σ):   17.877 ms ±  4.420 ms
-        # Memory estimate: 23.65 MiB, allocs estimate: 300002.
+            # Time  (mean ± σ):   17.877 ms ±  4.420 ms
+            # Memory estimate: 23.65 MiB, allocs estimate: 300002.
     #after
         @benchmark [Position(1, 1, 1) + Position(i, i, i) for i in 1:100000]
-        # Time  (mean ± σ):     1.014 ms ±  1.132 ms
-        # Memory estimate: 2.29 MiB, allocs estimate: 2.
+            # Time  (mean ± σ):     1.014 ms ±  1.132 ms
+            # Memory estimate: 2.29 MiB, allocs estimate: 2.
     ###############################
+
+### ElectricField benchmark ###
+    # before
+        @benchmark [ElectricField(Charge(4u"nC"))(Position(i)) for i ∈ 1:100]
+            # Time  (mean ± σ):   19.854 μs ± 73.917 μs
+            # Memory estimate: 15.05 KiB, allocs estimate: 603.
+    # after
+        @benchmark [ElectricField(Charge(4u"nC"))(Position(i)) for i ∈ 1:100]
+            # Time  (mean ± σ):   5.523 μs ± 21.547 μs
+            # Memory estimate: 2.50 KiB, allocs estimate: 1.
+###############################

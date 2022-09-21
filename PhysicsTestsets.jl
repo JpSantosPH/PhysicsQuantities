@@ -157,7 +157,6 @@ using Test
     @testset "PhysicsVector Functionalities" begin
         @test PhysicsVector(1u"m/s", 2u"m/s", 3u"m/s") isa Velocity
     end
-
     @testset "Position Functionalities" begin
         @test Position(1, 2//1000) == Position(1 * u"m", 2//1 * u"mm", 0.0u"m")
         @test Position() == Position(0, 0, 0)
@@ -178,6 +177,10 @@ using Test
         @test Acceleration() == Acceleration(0, 0, 0)
     end
 
+    @testset "ElectricField Functionalities" begin
+        @test ElectricField(4u"nC")(Position(2)) isa ElectricField
+        @test dimension(ElectricField(4u"nC")(Length(2))) == dimension(u"N/C")
+    end
 ### PhysicsVector Operators ###
     @testset "PhysicsVector Operators" begin
         @test -Velocity(1, 2, 3) isa Velocity

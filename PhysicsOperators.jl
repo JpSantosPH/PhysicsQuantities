@@ -82,6 +82,10 @@ function Base.:^(PS::PhysicsScalar, n::Integer)
 end
 
 Base.inv(PS::PhysicsScalar) = 1/PS
-    function Unitful.dimension(PS::PhysicsScalar)
-        return dimension(PS[1])
-    end
+
+function Unitful.dimension(PS::PhysicsScalar)
+    return dimension(PS[1])
+end
+function Unitful.dimension(PV::PhysicsVector)
+    return dimension(PV[1])
+end

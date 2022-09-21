@@ -140,3 +140,9 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         function Acceleration(args)
             return Acceleration(args...)
         end
+
+    struct ElectricField <: PhysicsVector
+        x::typeof(1.0u"N/C")
+        y::typeof(1.0u"N/C")
+        z::typeof(1.0u"N/C")
+    end
