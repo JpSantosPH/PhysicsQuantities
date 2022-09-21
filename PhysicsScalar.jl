@@ -1,39 +1,15 @@
 using LinearAlgebra
 using Unitful
-subtypes(Tuple)
-abstract type PhysicsScalar <: Number end
-    Base.size(PS::PhysicsScalar) = ()
-    function Base.getindex(PS::PhysicsScalar, i::Int)
+
+abstract type PhysicsScalar <: AbstractVector{Number} end
+    Base.size(PS::PhysicsScalar) = (1,)
+
+    function Base.getindex(PS::PhysicsScalar, i::Integer)
         if i == 1
             return PS.m
         end
     end
-typeof((1, u"s"))
-    abstract type ScalarOperator <: PhysicsScalar end
-        function Base.getindex(SO::ScalarOperator, i::Int)
-            if i == 1
-               return dimension(SO.m)(SO.m)
-            end
-        end
-        struct ScalarProduct <: ScalarOperator
-            m::Number
-        end
-        struct ScalarQuotient <: ScalarOperator
-            m::Number
-        end
 
-    function Unitful.dimension(PS::PhysicsScalar)
-        return dimension(PS.m)
-    end
-
-    function PhysicsScalar(m::Quantity)
-        return dimension(m)(m)
-    end
-    function PhysicsScalar( (m) )
-        return PhysicsScalar(m)
-    end
-
-    
 ### SI base units ###
     struct Time <: PhysicsScalar
         m::typeof(1.0u"s")

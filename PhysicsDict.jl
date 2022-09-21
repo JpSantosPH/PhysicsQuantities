@@ -5,6 +5,16 @@ vector_dict = Dict(
     typeof(dimension(u"m/s")) => Velocity,
     typeof(dimension(u"m/s^2")) => Acceleration,
 )
+function PhysicsVector(x::T, y::T, z::T) where {T<:Quantity}
+    return dimension(x)(x, y, z)
+end
+function PhysicsVector(x::Float64, y::Float64, z::Float64)
+    return CartesianCoordinate(x, y, z)
+end
+function PhysicsVector( (x, y, z) )
+    return PhysicsVector(x, y, z)
+end
+
 ### Named units derived from SI base units ###
     function (dimension_type::typeof(dimension(u"m")))(x::T, y::T, z::T) where {T<:Quantity}
         return Position(x, y, z)
@@ -20,32 +30,78 @@ vector_dict = Dict(
     function (dimension_type::typeof(dimension(u"m/s^2")))(x::T, y::T, z::T) where {T<:Quantity}
         return Acceleration(x, y, z)
     end
-
 const scalar_dict = Dict(
-    typeof(dimension(u"s")) => Time,
-    typeof(dimension(u"m")) => Length,
-    typeof(dimension(u"kg")) => Mass,
-    typeof(dimension(u"A")) => Current,
-    typeof(dimension(u"K")) => Temperature,
-    typeof(dimension(u"mol")) => Substance,
-    typeof(dimension(u"cd")) => Luminous,
+    dimension(u"s") => Time,
+    dimension(u"m") => Length,
+    dimension(u"kg") => Mass,
+    dimension(u"A") => Current,
+    dimension(u"K") => Temperature,
+    dimension(u"mol") => Substance,
+    dimension(u"cd") => Luminous,
 
-    typeof(dimension(u"Hz")) => Frequency,
-    typeof(dimension(u"rad")) => Angle,
-    typeof(dimension(u"kPa")) => Pressure,
-    typeof(dimension(u"J")) => Energy,
-    typeof(dimension(u"W")) => Power,
-    typeof(dimension(u"C")) => Charge,
-    typeof(dimension(u"V")) => Voltage,
-    typeof(dimension(u"F")) => Capacitance,
-    typeof(dimension(u"Ω")) => Resistance,
-    typeof(dimension(u"S")) => Conductance,
-    typeof(dimension(u"Wb")) => MagneticFlux,
-    typeof(dimension(u"H")) => Inductance,
+    dimension(u"Hz") => Frequency,
+    dimension(u"rad") => Angle,
+    dimension(u"kPa") => Pressure,
+    dimension(u"J") => Energy,
+    dimension(u"W") => Power,
+    dimension(u"C") => Charge,
+    dimension(u"V") => Voltage,
+    dimension(u"F") => Capacitance,
+    dimension(u"Ω") => Resistance,
+    dimension(u"S") => Conductance,
+    dimension(u"Wb") => MagneticFlux,
+    dimension(u"H") => Inductance,
 
-    typeof(dimension(u"m/s")) => Speed
+    dimension(u"m/s") => Speed
 )
 ### SI base units ###
+function PhysicsScalar(m::Quantity)
+    d = dimension(m)
+    if d == dimension(u"s")
+        return Time(m)
+    elseif d == dimension(u"m")
+        return Length(m)
+    elseif d == dimension(u"kg")
+        return Mass(m)
+    elseif d == dimension(u"A")
+        return Current(m)
+    elseif d == dimension(u"K")
+        return Temperature(m)
+    elseif d == dimension(u"mol")
+        return Substance(m)
+    elseif d == dimension(u"cd")
+        return Luminous(m)
+    elseif d == dimension(u"Hz")
+        return Frequency(m)
+    elseif d == dimension(u"rad")
+        return Angle(m)
+    elseif d == dimension(u"kPa")
+        return Pressure(m)
+    elseif d == dimension(u"J")
+        return Energy(m)
+    elseif d == dimension(u"W")
+        return Power(m)
+    elseif d == dimension(u"C")
+        return Charge(m)
+    elseif d == dimension(u"V")
+        return Voltage(m)
+    elseif d == dimension(u"F")
+        return Capacitance(m)
+    elseif d == dimension(u"Ω")
+        return Resistance(m)
+    elseif d == dimension(u"S")
+        return Conductance(m)
+    elseif d == dimension(u"Wb")
+        return MagneticFlux(m)
+    elseif d == dimension(u"H")
+        return Inductance(m)
+    elseif d == dimension(u"m/s")
+        return Speed(m)
+    else
+        return m
+    end
+end
+
     function (dimension_type::typeof(dimension(u"s")))(m::Quantity)
         return Time(m)
     end

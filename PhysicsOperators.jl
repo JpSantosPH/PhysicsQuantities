@@ -34,56 +34,54 @@ function Base.:^(PV::PhysicsVector, n::Number)
         return PV * PV
     end
 end
+function unitvec(PV::PhysicsVector)
+    return PV/norm(PV)
+end
 
 ### PhysicsScalar ###
 function Base.:+(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return PhysicsScalar(PS₁.m + PS₂.m)
+    return PhysicsScalar(PS₁[1] + PS₂[1])
 end
 function Base.:-(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return PhysicsScalar(PS₁.m - PS₂.m)
+    return PhysicsScalar(PS₁[1] - PS₂[1])
 end
 function Base.:*(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return ScalarProduct(PS₁.m * PS₂.m)
+    return PhysicsScalar(PS₁[1] * PS₂[1])
 end
 function Base.:*(q::Quantity, PS::PhysicsScalar)
-    return ScalarProduct(q * PS.m)
+    return PhysicsScalar(q * PS[1])
 end
 function Base.:*(PS::PhysicsScalar, q::Quantity)
-    return ScalarProduct(PS.m * q)
+    return PhysicsScalar(PS[1] * q)
 end
 function Base.:*(n::Number, PS::PhysicsScalar)
-    return n * PS.m
+    return PhysicsScalar(n * PS[1])
 end
 function Base.:*(PS::PhysicsScalar, n::Number)
-    return PS.m * n
-end
-function Base.:*(V::Vector, PS::PhysicsScalar)
-    return PhysicsScalar.(V .* PS.m)
-end
-function Base.:*(PS::PhysicsScalar, V::Vector)
-    return PhysicsScalar.(PS.m .* V)
+    return PhysicsScalar(PS[1] * n)
 end
 function Base.:/(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return ScalarQuotient(PS₁.m / PS₂.m)
+    return PhysicsScalar(PS₁[1] / PS₂[1])
 end
 function Base.:/(q::Quantity, PS::PhysicsScalar)
-    return ScalarQuotient(q / PS.m)
+    return PhysicsScalar(q / PS[1])
 end
 function Base.:/(PS::PhysicsScalar, q::Quantity)
-    return ScalarQuotient(PS.m / q)
+    return PhysicsScalar(PS[1] / q)
 end
 function Base.:/(n::Number, PS::PhysicsScalar)
-    return n / PS.m
+    return PhysicsScalar(n / PS[1])
 end
 function Base.:/(PS::PhysicsScalar, n::Number)
-    return PS.m / n
+    return PhysicsScalar(PS[1] / n)
 end
-function Base.:/(V::Vector, PS::PhysicsScalar)
-    return PhysicsScalar.(V ./ PS.m)
+function Base.:^(PS::PhysicsScalar, n::Integer)
+    if n == 2
+        return PhysicsScalar(PS[1] * PS[1])
+    end
 end
-function Base.:/(PS::PhysicsScalar, V::Vector)
-    return PhysicsScalar.(PS.m ./ V)
-end
-function unit(PV::PhysicsVector)
-    return PV/norm(PV)
-end
+
+Base.inv(PS::PhysicsScalar) = 1/PS
+    function Unitful.dimension(PS::PhysicsScalar)
+        return dimension(PS[1])
+    end
