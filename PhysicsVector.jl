@@ -12,15 +12,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             return PV.z
         end
     end
-    function PhysicsVector(x::T, y::T, z::T) where {T<:Quantity}
-        return dimension(x)(x, y, z)
-    end
-    function PhysicsVector(x::Float64, y::Float64, z::Float64)
-        return CartesianCoordinate(x, y, z)
-    end
-    function PhysicsVector( (x, y, z) )
-        return PhysicsVector(x, y, z)
-    end
 
     abstract type Coordinate <: PhysicsVector end
         function Coordinate(x, y, z)
@@ -50,6 +41,12 @@ abstract type PhysicsVector <: AbstractVector{Number} end
                 function CartesianCoordinate(args)
                     return CartesianCoordinate(args...)
                 end
+
+    struct GeneralVector <: PhysicsVector
+        x::Number
+        y::Number
+        z::Number
+    end
             
 ### Named units derived from SI base units ###
     struct Position <: PhysicsVector
@@ -146,13 +143,5 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         y::typeof(1.0u"N/C")
         z::typeof(1.0u"N/C")
     end
-        function ElectricField(q::Charge)
-            E(r::Position) = (1/(4π*(8.8541878128e-12u"F*m^-1"))) * (q/r^2) * unitvec(r)
-            E(r::Length) = uconvert(u"N/C", (1/(4π*(8.8541878128e-12u"F*m^-1"))) * (q/r^2))
-            return E
-        end
-        function ElectricField(q::Quantity)
-            if dimension(q) == dimension(u"C")
-                return ElectricField(Charge(q))
-            end
-        end
+    
+    println(".")

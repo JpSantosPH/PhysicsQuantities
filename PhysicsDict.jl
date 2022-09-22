@@ -8,7 +8,7 @@ vector_dict = Dict(
     dimension(u"N/C") => ElectricField
 )
 
-function PhysicsVector(x::T, y::T, z::T) where {T<:Quantity}
+function PhysicsVector(x::T, y::T, z::T) where {T<:Number}
     d = dimension(x)
 ### Named units derived from SI base units ###
     if d == dimension(u"m")
@@ -23,7 +23,7 @@ function PhysicsVector(x::T, y::T, z::T) where {T<:Quantity}
     elseif d == dimension(u"N/C")
         return ElectricField(x, y, z)
     else
-        return (x, y, z)
+        return GeneralVector(x, y, z)
     end
 end
 function PhysicsVector(x::T, y::T, z::T) where {T<:Float64}
@@ -58,7 +58,7 @@ scalar_dict = Dict(
     dimension(u"m/s") => Speed
 )
 
-function PhysicsScalar(m::Quantity)
+function PhysicsScalar(m::Number)
     d = dimension(m)
 ### SI base units ###
     if d == dimension(u"s")
@@ -78,7 +78,7 @@ function PhysicsScalar(m::Quantity)
 ### Named units derived from SI base units ###
     elseif d == dimension(u"Hz")
         return Frequency(m)
-    elseif d == dimension(u"rad")
+    elseif unit(m) == unit(1.0u"rad")
         return Angle(m)
     elseif d == dimension(u"kPa")
         return Pressure(m)
@@ -104,6 +104,8 @@ function PhysicsScalar(m::Quantity)
     elseif d == dimension(u"m/s")
         return Speed(m)
     else
-        return m
+        return GeneralScalar(m)
     end
 end
+
+println(".")

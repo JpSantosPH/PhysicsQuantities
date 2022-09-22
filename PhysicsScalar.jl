@@ -10,6 +10,10 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
         end
     end
 
+    struct GeneralScalar <: PhysicsScalar
+        m::Number
+    end
+
 ### SI base units ###
     struct Time <: PhysicsScalar
         m::typeof(1.0u"s")
@@ -235,3 +239,5 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
             new(m)
         end
     end
+
+println(".")
