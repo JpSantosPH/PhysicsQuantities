@@ -8,5 +8,3 @@ function ElectricField(q::Quantity)
         return ElectricField(Charge(q))
     end
 end
-
-println(".")

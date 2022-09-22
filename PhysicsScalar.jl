@@ -239,5 +239,3 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
             new(m)
         end
     end
-
-println(".")

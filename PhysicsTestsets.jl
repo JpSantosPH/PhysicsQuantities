@@ -18,9 +18,6 @@ using Test
         @test Length(123) + Length(456) == Length(579)
         @test 1(Length(12) * Frequency(3)) == Speed(36)
     end
-    @testset "Unitful added Functionalities" begin
-        @test dimension(Speed(12)) == dimension(12u"m/s")
-    end
 
 ### SI base units ###
     @testset "Time Functionalities" begin
@@ -59,11 +56,11 @@ using Test
         @test PhysicsScalar(12u"mol") == Substance(12)
     end
 
-    #@testset "Luminous Functionalities" begin
+    @testset "Luminous Functionalities" begin
         @test Luminous(12//1000) == Luminous(12.0u"mcd")
         @test Luminous() == Luminous(0)
         @test PhysicsScalar(12u"cd") == Luminous(12)
-    #end
+    end
 
 ### Named units derived from SI base units ###
     @testset "Frequency Functionalities" begin
@@ -177,25 +174,38 @@ using Test
 
 ### PhysicsVector Operators ###
     @testset "PhysicsVector Operators" begin
-        @test -Velocity(1, 2, 3) isa Velocity
         @test Position(1, 2, 3) + Position(4, 5, 6) isa Position
         @test Position(1, 2, 3) - Position(4, 5, 6) isa Position
+        @test -Velocity(1, 2, 3) isa Velocity
         @test Velocity(1, 2, 3) * 4 isa Velocity
         @test Velocity(8, 6, 4) / 2 isa Velocity
         @test Acceleration(1,2,3) * Time(4) isa Velocity
         @test Velocity(8, 6, 4) / Time(2) isa Acceleration
         @test Position(1, 2, 3) * Position(4, 5, 6) == 32.0u"m^2"
         @test Velocity(1, 2, 3)^2 == 14.0u"m^2/s^2"
+        @test unitvec(Position(1,2,3)) isa CartesianCoordinate
     end
 
+    
 ### PhysicsScalar Operator ###
     @testset " PhysicsScalar Operators" begin
         @test Time(1) + Time(2) isa Time
         @test Length(1) - Length(2) isa Length
-        @test 1(Length(1) * Frequency(2)) isa Speed
+        @test -Length(1) isa Length
+        @test Length(1) * Frequency(2) isa Speed
         @test Speed(1) * 2 isa Speed
-        @test 1*(Length(1) / Time(2)) isa Speed
-        @test Length(1) / 2 isa Length
-        @test 1/2 * (Mass(10) * Speed(5)^2) isa Energy
-        @test dimension(Speed(1)^5) == dimension(1u"m^5/s^5") 
+        @test Length(1) / Time(2) isa Speed
+        @test Length(1) / 2u"s" isa Speed
+        @test 1/2 * Mass(10) * Speed(5)^2 isa Energy
+        @test dimension(Speed(12)^5) == dimension(1u"m^5/s^5") 
+        @test sqrt(Length(12)) isa GeneralScalar
+        @test cbrt(Time(12)) isa GeneralScalar
+        @test inv(Time(12)) isa Frequency
+        @test one(length(3)) == 1
+    end
+
+    @testset "Unitful added Functionalities" begin
+        @test dimension(Speed(12)) == dimension(12u"m/s")
+        @test dimension(Velocity(1,2)) == dimension(12u"m/s")
+        @test uconvert(u"Hz", 1/Time(1)) isa Frequency
     end

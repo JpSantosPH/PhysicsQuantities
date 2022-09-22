@@ -143,5 +143,3 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         y::typeof(1.0u"N/C")
         z::typeof(1.0u"N/C")
     end
-    
-    println(".")

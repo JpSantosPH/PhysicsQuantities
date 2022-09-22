@@ -33,31 +33,6 @@ function PhysicsVector( (x, y, z) )
     return PhysicsVector(x, y, z)
 end
 
-scalar_dict = Dict(
-    dimension(u"s") => Time,
-    dimension(u"m") => Length,
-    dimension(u"kg") => Mass,
-    dimension(u"A") => Current,
-    dimension(u"K") => Temperature,
-    dimension(u"mol") => Substance,
-    dimension(u"cd") => Luminous,
-
-    dimension(u"Hz") => Frequency,
-    dimension(u"rad") => Angle,
-    dimension(u"kPa") => Pressure,
-    dimension(u"J") => Energy,
-    dimension(u"W") => Power,
-    dimension(u"C") => Charge,
-    dimension(u"V") => Voltage,
-    dimension(u"F") => Capacitance,
-    dimension(u"Ω") => Resistance,
-    dimension(u"S") => Conductance,
-    dimension(u"Wb") => MagneticFlux,
-    dimension(u"H") => Inductance,
-
-    dimension(u"m/s") => Speed
-)
-
 function PhysicsScalar(m::Number)
     d = dimension(m)
 ### SI base units ###
@@ -108,4 +83,27 @@ function PhysicsScalar(m::Number)
     end
 end
 
-println(".")
+scalar_dict = Dict(
+    dimension(u"s") => Time,
+    dimension(u"m") => Length,
+    dimension(u"kg") => Mass,
+    dimension(u"A") => Current,
+    dimension(u"K") => Temperature,
+    dimension(u"mol") => Substance,
+    dimension(u"cd") => Luminous,
+
+    dimension(u"Hz") => Frequency,
+    dimension(u"rad") => Angle,
+    dimension(u"kPa") => Pressure,
+    dimension(u"J") => Energy,
+    dimension(u"W") => Power,
+    dimension(u"C") => Charge,
+    dimension(u"V") => Voltage,
+    dimension(u"F") => Capacitance,
+    dimension(u"Ω") => Resistance,
+    dimension(u"S") => Conductance,
+    dimension(u"Wb") => MagneticFlux,
+    dimension(u"H") => Inductance,
+
+    dimension(u"m/s") => Speed
+)
