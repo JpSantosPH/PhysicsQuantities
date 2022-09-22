@@ -12,6 +12,10 @@ abstract type PhysicsScalar <: AbstractVector{Number} end
 
     struct GeneralScalar <: PhysicsScalar
         m::Number
+
+        function GeneralScalar(m::Number)
+            new(m[1])
+        end
     end
 
 ### SI base units ###
