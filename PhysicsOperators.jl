@@ -80,10 +80,10 @@ function Base.:/(PS::PhysicsScalar, n::Number)
     return PhysicsScalar(PS[1] / n)
 end
 function Base.:^(PS::PhysicsScalar, i::Integer)
-    
+    return PS.m^i
 end
 function Base.:^(PS::PhysicsScalar, n::Number)
-    return PhysicsScalar(PS[1]^n)
+    return PhysicsScalar(PS.m^n)
 end
 
 function Base.rem(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
