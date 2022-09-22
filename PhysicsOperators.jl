@@ -76,12 +76,17 @@ function Base.:/(PS::PhysicsScalar, n::Number)
     return PhysicsScalar(PS[1] / n)
 end
 function Base.:^(PS::PhysicsScalar, n::Integer)
-    if n == 2
-        return PhysicsScalar(PS[1] * PS[1])
+    if n == 1
+        return PS
     end
+    return PhysicsScalar(PS[1] * PS[1]^(n-1))
 end
-
-Base.inv(PS::PhysicsScalar) = 1/PS
+function Base.inv(PS::PhysicsScalar)
+    return PhysicsScalar(one(PS)/PS[1])
+end
+function Base.one(PS::PhysicsScalar)
+    return one(PS[1])
+end
 
 function Unitful.dimension(PS::PhysicsScalar)
     return dimension(PS[1])
@@ -89,3 +94,8 @@ end
 function Unitful.dimension(PV::PhysicsVector)
     return dimension(PV[1])
 end
+function Unitful.uconvert(a::Unitful.Units, GS::GeneralScalar)
+    return GeneralScalar(uconvert(a, GS[1]))
+end
+
+println(".")

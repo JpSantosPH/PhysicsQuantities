@@ -9,13 +9,6 @@ using Test
     @testset "CartesianCoordinate Functionalities" begin
         @test CartesianCoordinate(1, 2, 3) isa CartesianCoordinate
         @test CartesianCoordinate( (1, 2) ) == CartesianCoordinate(1, 2, 0)
-        @test let
-            a = CartesianCoordinate(1, 2, 3)
-            b = CartesianCoordinate(4, 5, 6)
-            c = a + b
-            d = CartesianCoordinate(5, 7, 9)
-            c == d
-        end
     end
 
 ### PhysicsScalar ###
@@ -181,6 +174,7 @@ using Test
         @test ElectricField(4u"nC")(Position(2)) isa ElectricField
         @test dimension(ElectricField(4u"nC")(Length(2))) == dimension(u"N/C")
     end
+
 ### PhysicsVector Operators ###
     @testset "PhysicsVector Operators" begin
         @test -Velocity(1, 2, 3) isa Velocity
@@ -203,4 +197,5 @@ using Test
         @test 1*(Length(1) / Time(2)) isa Speed
         @test Length(1) / 2 isa Length
         @test 1/2 * (Mass(10) * Speed(5)^2) isa Energy
+        @test dimension(Speed(1)^5) == dimension(1u"m^5/s^5") 
     end
