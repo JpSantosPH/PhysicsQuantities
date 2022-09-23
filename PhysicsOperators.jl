@@ -94,7 +94,7 @@ function Base.:/(PS::PhysicsScalar, n::Number)
     return dimension(PS.m)(PS.m / n)
 end
 function Base.:^(PS::PhysicsScalar, i::Integer)
-    return PhysicsScalar(*((PS.m for x in 1:i)...))
+    return *((PS.m for x in 1:i)...)
 end
 function Base.:^(PS::PhysicsScalar, n::Rational)
     return PhysicsScalar(PS.m^n)
