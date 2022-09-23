@@ -40,13 +40,7 @@ function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector)
     return PhysicsScalar(PV₁.x*PV₂.x + PV₁.y*PV₂.y + PV₁.z*PV₂.z)
 end
 function Base.:^(PV::PhysicsVector, i::Integer)
-    if i == 2
-        return PV.x^2 + PV.y^2 + PV.z^2
-    elseif i == 1
-        return PV
-    else
-        return PV * PV^(i-1)
-    end
+    return *((PV for x in 1:i)...)
 end
 
 function unitvec(PV::PhysicsVector)
