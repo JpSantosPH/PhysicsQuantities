@@ -83,6 +83,10 @@ function PhysicsScalar(m::Number)
     end
 end
 
+function PhysicsScalar(args)
+    return PhysicsScalar(args...)
+end
+
 scalar_dict = Dict(
     dimension(u"s") => Time,
     dimension(u"m") => Length,
