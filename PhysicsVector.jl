@@ -13,34 +13,27 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         end
     end
 
-    abstract type Coordinate <: PhysicsVector end
-        function Coordinate(x, y, z)
-            return CartesianCoordinate(x, y, z)
-        end
-        function Coordinate(args)
-            return Coordinate(args...)
-        end
-            struct CartesianCoordinate <: Coordinate
-                x::Float64
-                y::Float64
-                z::Float64
+    struct CartesianCoordinate <: PhysicsVector
+        x::Float64
+        y::Float64
+        z::Float64
 
-                function CartesianCoordinate(x::Number=0.0, y::Number=0.0, z::Number=0.0)
-                    if !(x isa Float64)
-                        x = convert(Float64, x)
-                    end
-                    if !(y isa Float64)
-                        y = convert(Float64, y)
-                    end
-                    if !(z isa Float64)
-                        z = convert(Float64, z)
-                    end
-                    return new(x, y, z)
-                end
+        function CartesianCoordinate(x::Number=0.0, y::Number=0.0, z::Number=0.0)
+            if !(x isa Float64)
+                x = convert(Float64, x)
             end
-                function CartesianCoordinate(args)
-                    return CartesianCoordinate(args...)
-                end
+            if !(y isa Float64)
+                y = convert(Float64, y)
+            end
+            if !(z isa Float64)
+                z = convert(Float64, z)
+            end
+            return new(x, y, z)
+        end
+    end
+        function CartesianCoordinate(args)
+            return CartesianCoordinate(args...)
+        end
 
     struct GeneralVector <: PhysicsVector
         x::Number
@@ -143,3 +136,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         y::typeof(1.0u"N/C")
         z::typeof(1.0u"N/C")
     end
+        function ElectricField( (x, y, z) )
+            return ElectricField(x, y, z)
+        end

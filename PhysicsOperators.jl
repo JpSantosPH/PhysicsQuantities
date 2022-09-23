@@ -10,28 +10,39 @@ function Base.:-(PV::PhysicsVector)
     return dimension(PV.x)(-PV.x, -PV.y, -PV.z)
 end
 function Base.:*(n::Number, PV::PhysicsVector)
-    return GeneralScalar(n*PV.x, n*PV.y, n*PV.z)
+    return dimension(PV.x)(n*PV.x, n*PV.y, n*PV.z)
 end
 function Base.:*(PV::PhysicsVector, n::Number)
-    return GeneralScalar(PV.x*n, PV.y*n, PV.z*n)
+    return dimension(PV.x)(PV.x*n, PV.y*n, PV.z*n)
 end
-function Base.:/(PV::PhysicsVector, n::Number)
-    return GeneralScalar(PV.x/n, PV.y/n, PV.z/n)
+function Base.:*(q::Quantity, PV::PhysicsVector)
+    return GeneralVector(q*PV.x, q*PV.y, q*PV.z)
+end
+function Base.:*(PV::PhysicsVector, q::Quantity)
+    return GeneralVector(PV.x*q, PV.y*q, PV.z*q)
 end
 function Base.:*(PS::PhysicsScalar, PV::PhysicsVector)
-    return GeneralScalar(PS.m*PV.x, PS.m*PV.y, PS.m*PV.z)
+    return GeneralVector(PS.m*PV.x, PS.m*PV.y, PS.m*PV.z)
 end
 function Base.:*(PV::PhysicsVector, PS::PhysicsScalar)
-    return GeneralScalar(PV.x*PS.m, PV.y*PS.m, PV.z*PS.m)
+    return GeneralVector(PV.x*PS.m, PV.y*PS.m, PV.z*PS.m)
+end
+function Base.:/(PV::PhysicsVector, n::Number)
+    return dimension(PV.x)(PV.x/n, PV.y/n, PV.z/n)
+end
+function Base.:/(PV::PhysicsVector, q::Quantity)
+    return GeneralVector(PV.x/q, PV.y/q, PV.z/q)
 end
 function Base.:/(PV::PhysicsVector, PS::PhysicsScalar)
-    return GeneralScalar(PV.x/PS.m, PV.y/PS.m, PV.z/PS.m)
+    return GeneralVector(PV.x/PS.m, PV.y/PS.m, PV.z/PS.m)
 end
 function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector)
     return PV₁.x*PV₂.x + PV₁.y*PV₂.y + PV₁.z*PV₂.z
 end
 function Base.:^(PV::PhysicsVector, i::Integer)
-    if i == 1
+    if i == 2
+        return PV.x^2 + PV.y^2 + PV.z^2
+    elseif i == 1
         return PV
     else
         return PV * PV^(i-1)
@@ -49,23 +60,30 @@ end
 
 ### PhysicsScalar ###
 function Base.:+(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return PS₁.m + PS₂.m
+    return dimension(PS₁)(PS₁.m + PS₂.m)
 end
 function Base.:-(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return PS₁.m - PS₂.m
+    return dimension(PS₁)(PS₁.m - PS₂.m)
 end
 function Base. -(PS::PhysicsScalar)
-    return -PS.m
+    return dimension(PS.m)(-PS.m)
 end
 function Base.:*(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
     return PS₁.m * PS₂.m
 end
+function Base.:*(q::Quantity, PS::PhysicsScalar)
+    return q * PS.m
+end
+function Base.:*(PS::PhysicsScalar, q::Quantity)
+    return PS.m * q
+end
 function Base.:*(n::Number, PS::PhysicsScalar)
-    return n * PS.m
+    return dimension(PS.m)(n * PS.m)
 end
 function Base.:*(PS::PhysicsScalar, n::Number)
-    return PS.m * n
+    return dimension(PS.m)(PS.m * n)
 end
+
 function Base.:/(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
     return PS₁.m / PS₂.m
 end
@@ -79,17 +97,23 @@ function Base.:/(n::Number, PS::PhysicsScalar)
     return n / PS.m
 end
 function Base.:/(PS::PhysicsScalar, n::Number)
-    return PS.m / n
+    return dimension(PS.m)(PS.m / n)
 end
-function Base.:^(PS::PhysicsScalar, n::Number)
+function Base.:^(PS::PhysicsScalar, i::Integer)
+    return *((PS.m for x in 1:i)...)
+end
+function Base.:^(PS::PhysicsScalar, n::Rational)
     return PS.m^n
+end
+function Base.inv(PS::PhysicsScalar)
+    return inv(PS.m)
 end
 
 function Base.rem(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return rem(PS₁.m, PS₂.m)
+    return dimension(PS₁.m)(rem(PS₁.m, PS₂.m))
 end
 function Base.rem(PS::PhysicsScalar, n::Number)
-    return rem(PS.m, n)
+    return dimension(PS₁.m)(rem(PS.m, n))
 end
 
 function Base.:sqrt(PS::PhysicsScalar)
@@ -100,9 +124,7 @@ function Base.Math.:cbrt(PS::PhysicsScalar)
     return cbrt(PS.m)
 end
 
-function Base.inv(PS::PhysicsScalar)
-    return inv(PS.m)
-end
+
 function Base.one(PS::PhysicsScalar)
     return one(PS.m)
 end
@@ -116,6 +138,6 @@ end
 function Unitful.uconvert(a::Unitful.Units, PS::PhysicsScalar)
     return uconvert(a, PS.m)
 end
-function Unitful.uconvert(a::Unitful.Units, PV::PhysicsScalar)
-    return GeneralScalar(uconvert(a, PV.x), uconvert(a, PV.y), uconvert(a, PV.z))
+function Unitful.uconvert(a::Unitful.Units, PV::PhysicsVector)
+    return GeneralVector(uconvert(a, PV.x), uconvert(a, PV.y), uconvert(a, PV.z))
 end

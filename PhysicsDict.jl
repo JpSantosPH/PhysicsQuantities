@@ -8,7 +8,7 @@ vector_dict = Dict(
     dimension(u"N/C") => ElectricField
 )
 
-function PhysicsVector(x::T, y::T, z::T) where {T<:Number}
+function Physics(x::T, y::T, z::T) where {T<:Number}
     d = dimension(x)
 ### Named units derived from SI base units ###
     if d == dimension(u"m")
@@ -26,14 +26,14 @@ function PhysicsVector(x::T, y::T, z::T) where {T<:Number}
         return GeneralVector(x, y, z)
     end
 end
-function PhysicsVector(x::T, y::T, z::T) where {T<:Float64}
+function Physics(x::T, y::T, z::T) where {T<:Float64}
     return CartesianCoordinate(x, y, z)
 end
-function PhysicsVector( (x, y, z) )
-    return PhysicsVector(x, y, z)
+function Physics( (x, y, z) )
+    return Physics(x, y, z)
 end
 
-function PhysicsScalar(m::Number)
+function Physics(m::Number)
     d = dimension(m)
 ### SI base units ###
     if d == dimension(u"s")
@@ -79,7 +79,7 @@ function PhysicsScalar(m::Number)
     elseif d == dimension(u"m/s")
         return Speed(m)
     else
-        return GeneralScalar(m)
+        return m
     end
 end
 
@@ -107,3 +107,85 @@ scalar_dict = Dict(
 
     dimension(u"m/s") => Speed
 )
+
+### Named units derived from SI base units ###
+function (dimension_type::typeof(dimension(u"m")))(x::T, y::T, z::T) where {T<:Quantity}
+    return Position(x, y, z)
+end
+function (dimension_type::typeof(dimension(u"N")))(x::T, y::T, z::T) where {T<:Quantity}
+    return Force(x, y, z)
+end
+
+### Kinematic SI derived units ###
+function (dimension_type::typeof(dimension(u"m/s")))(x::T, y::T, z::T) where {T<:Quantity}
+    return Velocity(x, y, z)
+end
+function (dimension_type::typeof(dimension(u"m/s^2")))(x::T, y::T, z::T) where {T<:Quantity}
+    return Acceleration(x, y, z)
+end
+
+
+function (dimension_type::typeof(dimension(u"s")))(m::Quantity)
+    return Time(m)
+end
+function (dimension_type::typeof(dimension(u"m")))(m::Quantity)
+    return Length(m)
+end
+function (dimension_type::typeof(dimension(u"kg")))(m::Quantity)
+    return Mass(m)
+end
+function (dimension_type::typeof(dimension(u"A")))(m::Quantity)
+    return Current(m)
+end
+function (dimension_type::typeof(dimension(u"K")))(m::Quantity)
+    return Temperature(m)
+end
+function (dimension_type::typeof(dimension(u"mol")))(m::Quantity)
+    return Substance(m)
+end
+function (dimension_type::typeof(dimension(u"cd")))(m::Quantity)
+    return Luminous(m)
+end
+
+### Named units derived from SI base units ###
+function (dimension_type::typeof(dimension(u"Hz")))(m::Quantity)
+    return Frequency(m)
+end
+function (dimension_type::typeof(dimension(u"rad")))(m::Quantity)
+    return Angle(m)
+end
+function (dimension_type::typeof(dimension(u"kPa")))(m::Quantity)
+    return Pressure(m)
+end
+function (dimension_type::typeof(dimension(u"J")))(m::Quantity)
+    return Energy(m)
+end
+function (dimension_type::typeof(dimension(u"W")))(m::Quantity)
+    return Power(m)
+end
+function (dimension_type::typeof(dimension(u"C")))(m::Quantity)
+    return Charge(m)
+end
+function (dimension_type::typeof(dimension(u"V")))(m::Quantity)
+    return Voltage(m)
+end
+function (dimension_type::typeof(dimension(u"F")))(m::Quantity)
+    return Capacitance(m)
+end
+function (dimension_type::typeof(dimension(u"Ω")))(m::Quantity)
+    return Resistance(m)
+end
+function (dimension_type::typeof(dimension(u"S")))(m::Quantity)
+    return Conductance(m)
+end
+function (dimension_type::typeof(dimension(u"Wb")))(m::Quantity)
+    return MagneticFlux(m)
+end
+function (dimension_type::typeof(dimension(u"H")))(m::Quantity)
+    return Inductance(m)
+end
+
+### Kinematic SI derived units ###
+function (dimension_type::typeof(dimension(u"m/s")))(m::Quantity)
+    return Speed(m)
+end
