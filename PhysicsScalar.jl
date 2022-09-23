@@ -1,8 +1,8 @@
 using LinearAlgebra
 using Unitful
 
-abstract type PhysicsScalar <: AbstractVector{Number} end
-    Base.size(PS::PhysicsScalar) = (1,)
+abstract type PhysicsScalar <: Number end
+    Base.size(PS::PhysicsScalar) = ()
 
     function Base.getindex(PS::PhysicsScalar, i::Integer)
         if i == 1
