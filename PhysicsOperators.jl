@@ -16,28 +16,28 @@ function Base.:*(PV::PhysicsVector, n::Number)
     return dimension(PV.x)(PV.x*n, PV.y*n, PV.z*n)
 end
 function Base.:*(q::Quantity, PV::PhysicsVector)
-    return GeneralVector(q*PV.x, q*PV.y, q*PV.z)
+    return PhysicsVector(q*PV.x, q*PV.y, q*PV.z)
 end
 function Base.:*(PV::PhysicsVector, q::Quantity)
-    return GeneralVector(PV.x*q, PV.y*q, PV.z*q)
+    return PhysicsVector(PV.x*q, PV.y*q, PV.z*q)
 end
 function Base.:*(PS::PhysicsScalar, PV::PhysicsVector)
-    return GeneralVector(PS.m*PV.x, PS.m*PV.y, PS.m*PV.z)
+    return PhysicsVector(PS.m*PV.x, PS.m*PV.y, PS.m*PV.z)
 end
 function Base.:*(PV::PhysicsVector, PS::PhysicsScalar)
-    return GeneralVector(PV.x*PS.m, PV.y*PS.m, PV.z*PS.m)
+    return PhysicsVector(PV.x*PS.m, PV.y*PS.m, PV.z*PS.m)
 end
 function Base.:/(PV::PhysicsVector, n::Number)
     return dimension(PV.x)(PV.x/n, PV.y/n, PV.z/n)
 end
 function Base.:/(PV::PhysicsVector, q::Quantity)
-    return GeneralVector(PV.x/q, PV.y/q, PV.z/q)
+    return PhysicsVector(PV.x/q, PV.y/q, PV.z/q)
 end
 function Base.:/(PV::PhysicsVector, PS::PhysicsScalar)
-    return GeneralVector(PV.x/PS.m, PV.y/PS.m, PV.z/PS.m)
+    return PhysicsVector(PV.x/PS.m, PV.y/PS.m, PV.z/PS.m)
 end
 function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector)
-    return PV₁.x*PV₂.x + PV₁.y*PV₂.y + PV₁.z*PV₂.z
+    return PhysicsScalar(PV₁.x*PV₂.x + PV₁.y*PV₂.y + PV₁.z*PV₂.z)
 end
 function Base.:^(PV::PhysicsVector, i::Integer)
     if i == 2
@@ -55,7 +55,7 @@ function unitvec(PV::PhysicsVector)
 end
 
 function LinearAlgebra.norm(PV::PhysicsVector)
-    return sqrt(PV.x^2 + PV.y^2 + PV.z^2)
+    return PhysicsScalar(sqrt(PV.x^2 + PV.y^2 + PV.z^2))
 end
 
 ### PhysicsScalar ###
@@ -69,13 +69,13 @@ function Base. -(PS::PhysicsScalar)
     return dimension(PS.m)(-PS.m)
 end
 function Base.:*(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return PS₁.m * PS₂.m
+    return PhysicsScalar(PS₁.m * PS₂.m)
 end
 function Base.:*(q::Quantity, PS::PhysicsScalar)
-    return q * PS.m
+    return PhysicsScalar(q * PS.m)
 end
 function Base.:*(PS::PhysicsScalar, q::Quantity)
-    return PS.m * q
+    return PhysicsScalar(PS.m * q)
 end
 function Base.:*(n::Number, PS::PhysicsScalar)
     return dimension(PS.m)(n * PS.m)
@@ -85,28 +85,28 @@ function Base.:*(PS::PhysicsScalar, n::Number)
 end
 
 function Base.:/(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return PS₁.m / PS₂.m
+    return PhysicsScalar(PS₁.m / PS₂.m)
 end
 function Base.:/(n::Quantity, PS::PhysicsScalar)
-    return n / PS.m
+    return PhysicsScalar(n / PS.m)
 end
 function Base.:/(PS::PhysicsScalar, n::Quantity)
-    return PS.m / n
+    return PhysicsScalar(PS.m / n)
 end
 function Base.:/(n::Number, PS::PhysicsScalar)
-    return n / PS.m
+    return PhysicsScalar(n / PS.m)
 end
 function Base.:/(PS::PhysicsScalar, n::Number)
     return dimension(PS.m)(PS.m / n)
 end
 function Base.:^(PS::PhysicsScalar, i::Integer)
-    return *((PS.m for x in 1:i)...)
+    return PhysicsScalar(*((PS.m for x in 1:i)...))
 end
 function Base.:^(PS::PhysicsScalar, n::Rational)
-    return PS.m^n
+    return PhysicsScalar(PS.m^n)
 end
 function Base.inv(PS::PhysicsScalar)
-    return inv(PS.m)
+    return PhysicsScalar(inv(PS.m))
 end
 
 function Base.rem(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
@@ -117,13 +117,12 @@ function Base.rem(PS::PhysicsScalar, n::Number)
 end
 
 function Base.:sqrt(PS::PhysicsScalar)
-    return sqrt(PS.m)
+    return PhysicsScalar(sqrt(PS.m))
 end
 
 function Base.Math.:cbrt(PS::PhysicsScalar)
-    return cbrt(PS.m)
+    return PhysicsScalar(cbrt(PS.m))
 end
-
 
 function Base.one(PS::PhysicsScalar)
     return one(PS.m)

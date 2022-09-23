@@ -8,7 +8,7 @@ vector_dict = Dict(
     dimension(u"N/C") => ElectricField
 )
 
-function Physics(x::T, y::T, z::T) where {T<:Number}
+function PhysicsVector(x::T, y::T, z::T) where {T<:Number}
     d = dimension(x)
 ### Named units derived from SI base units ###
     if d == dimension(u"m")
@@ -26,14 +26,14 @@ function Physics(x::T, y::T, z::T) where {T<:Number}
         return GeneralVector(x, y, z)
     end
 end
-function Physics(x::T, y::T, z::T) where {T<:Float64}
+function PhysicsVector(x::T, y::T, z::T) where {T<:Float64}
     return CartesianCoordinate(x, y, z)
 end
-function Physics( (x, y, z) )
-    return Physics(x, y, z)
+function PhysicsVector( (x, y, z) )
+    return PhysicsVector(x, y, z)
 end
 
-function Physics(m::Number)
+function PhysicsScalar(m::Number)
     d = dimension(m)
 ### SI base units ###
     if d == dimension(u"s")
