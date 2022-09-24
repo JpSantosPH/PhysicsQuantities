@@ -1,13 +1,13 @@
 ### PhysicsVector ###
 
 function Base.:+(PV₁::PhysicsVector, PV₂::PhysicsVector)
-    return dimension(PV₁.x)(PV₁.x+PV₂.x, PV₁.y+PV₂.y, PV₁.z+PV₂.z)
+    return PhysicsVector(PV₁.x+PV₂.x, PV₁.y+PV₂.y, PV₁.z+PV₂.z)
 end
 function Base.:-(PV₁::PhysicsVector, PV₂::PhysicsVector)
-    return dimension(PV₁.x)(PV₁.x-PV₂.x, PV₁.y-PV₂.y, PV₁.z-PV₂.z)
+    return PhysicsVector(PV₁.x-PV₂.x, PV₁.y-PV₂.y, PV₁.z-PV₂.z)
 end
 function Base.:-(PV::PhysicsVector)
-    return dimension(PV.x)(-PV.x, -PV.y, -PV.z)
+    return PhysicsVector(-PV.x, -PV.y, -PV.z)
 end
 function Base.:*(PS::PhysicsScalar, PV::PhysicsVector)
     return PhysicsVector(PS.m*PV.x, PS.m*PV.y, PS.m*PV.z)
@@ -43,13 +43,13 @@ end
 
 ### PhysicsScalar ###
 function Base.:+(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return dimension(PS₁.m)(PS₁.m + PS₂.m)
+    return PhysicsScalar(PS₁.m + PS₂.m)
 end
 function Base.:-(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return dimension(PS₁.m)(PS₁.m - PS₂.m)
+    return PhysicsScalar(PS₁.m - PS₂.m)
 end
 function Base.:-(PS::PhysicsScalar)
-    return dimension(PS.m)(-PS.m)
+    return PhysicsScalar(-PS.m)
 end
 function Base.:*(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
     return PhysicsScalar(PS₁.m * PS₂.m)
@@ -79,10 +79,10 @@ function Base.inv(PS::PhysicsScalar)
     return PhysicsScalar(inv(PS.m))
 end
 function Base.rem(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
-    return dimension(PS₁.m)(rem(PS₁.m, PS₂.m))
+    return PhysicsScalar(rem(PS₁.m, PS₂.m))
 end
 function Base.rem(PS::PhysicsScalar, n::Number)
-    return dimension(PS₁.m)(rem(PS.m, n))
+    return PhysicsScalar(rem(PS.m, n))
 end
 function Base.:sqrt(PS::PhysicsScalar)
     return PhysicsScalar(sqrt(PS.m))

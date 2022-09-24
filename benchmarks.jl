@@ -1,3 +1,5 @@
+using BenchmarkTools
+
 ### Base Julia ###
     @benchmark [[1u"m/s^2", 2u"m/s^2", 3u"m/s^2"] .* i*u"s" for i in 1:1000]
         # Time  (mean ± σ):   153.382 μs ± 195.937 μs
@@ -24,7 +26,7 @@
         # Memory estimate: 242.31 KiB, allocs estimate: 3001.
 
 ### w/o auto convert ###
-    @benchmark [Physics(Acceleration(1,2,3) * Time(i)) for i in 1:1000]
+    @benchmark [PhysicsVector(Acceleration(1,2,3) * Time(i)) for i in 1:1000]
         # Time  (mean ± σ):   21.371 μs ±  44.728 μs
         # Memory estimate: 23.48 KiB, allocs estimate: 2.
 
@@ -32,7 +34,7 @@
         # Time  (mean ± σ):   42.287 μs ± 99.229 μs
         # Memory estimate: 70.31 KiB, allocs estimate: 2999.
 
-    @benchmark [Physics(Length(1)/Time(i)) for i in 1:10000]
+    @benchmark [PhysicsScalar(Length(1)/Time(i)) for i in 1:10000]
         # Time  (mean ± σ):   51.557 μs ± 199.992 μs
         # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
@@ -40,7 +42,7 @@
         # Time  (mean ± σ):   40.000 μs ± 126.427 μs
         # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
-    @benchmark [Physics(Length(1)/Time(i)^2) for i in 1:10000]
+    @benchmark [PhysicsScalar(Length(1)/Time(i)^2) for i in 1:10000]
         # Time  (mean ± σ):   46.789 μs ± 159.342 μs
         # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
@@ -52,11 +54,11 @@
         # Time  (mean ± σ):   34.758 μs ± 123.611 μs
         # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
-    @benchmark [Physics(kinetic_energy(Mass(10))(Speed(i))) for i in 1:10000]
+    @benchmark [PhysicsScalar(kinetic_energy(Mass(10))(Speed(i))) for i in 1:10000]
         # Time  (mean ± σ):   30.871 μs ± 113.300 μs
         # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
-    @benchmark [Physics(kinetic_energy(Mass(10))(Velocity(i))) for i in 1:10000]
+    @benchmark [PhysicsScalar(kinetic_energy(Mass(10))(Velocity(i))) for i in 1:10000]
         # Time  (mean ± σ):   38.695 μs ± 137.350 μs
         # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
