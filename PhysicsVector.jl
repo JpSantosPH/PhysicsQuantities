@@ -41,17 +41,17 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             return new(x, y, z)
         end
     end
-    CartesianCoordinate(args) = CartesianCoordinate(args...)
+        CartesianCoordinate(args) = CartesianCoordinate(args...)
 
     struct GeneralVector{T<:Number} <: PhysicsVector
         x::T
         y::T
         z::T
     end
-    Base.showarg(io::IO, GV::GeneralVector, toplevel) = print(io, :GeneralVector)
-    GeneralVector() = GeneralVector(0.0, 0.0, 0.0)
-    GeneralVector()
-
+        Base.showarg(io::IO, GV::GeneralVector, toplevel) = print(io, :GeneralVector)
+        GeneralVector( (x, y, z) ) = GeneralVector(x, y, z)
+        GeneralVector() = GeneralVector(0.0, 0.0, 0.0)
+    
 ### Named units derived from SI base units ###
     struct Position <: PhysicsVector
         x::typeof(1.0u"m")
@@ -71,9 +71,8 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             return new(x, y, z)
         end
     end
-        function Position(args)
-            return Position(args...)
-        end
+        Position(args) = Position(args...)
+        
 
     struct Force <: PhysicsVector
         x::typeof(1.0u"N")
@@ -93,9 +92,7 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             return new(x, y, z)
         end
     end
-        function Force(args)
-            return Force(args...)
-        end
+        Force(args) = Force(args...)
 
 ### Kinematic SI derived units ###
     struct Velocity <: PhysicsVector
@@ -116,9 +113,7 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             return new(x, y, z)
         end
     end
-        function Velocity(args)
-            return Velocity(args...)
-        end
+        Velocity(args) = Velocity(args...)
 
     struct Acceleration <: PhysicsVector
         x::typeof(1.0u"m/s^2")
@@ -138,15 +133,11 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             return new(x, y, z)
         end
     end
-        function Acceleration(args)
-            return Acceleration(args...)
-        end
+        Acceleration(args) = Acceleration(args...)
 
     struct ElectricField <: PhysicsVector
         x::typeof(1.0u"N/C")
         y::typeof(1.0u"N/C")
         z::typeof(1.0u"N/C")
     end
-        function ElectricField( (x, y, z) )
-            return ElectricField(x, y, z)
-        end
+        ElectricField( (x, y, z) ) = ElectricField(x, y, z)
