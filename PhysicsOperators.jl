@@ -60,6 +60,12 @@ end
 function Base.:*(PS::PhysicsScalar, n::Number)
     return PhysicsScalar(PS.m * n)
 end
+function Base.:*(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
+    return PhysicsScalar(PS.m * AQ)
+end
+function Base.:*(AQ::Unitful.AbstractQuantity, PS::PhysicsScalar)
+    return PhysicsScalar(AQ * PS.m)
+end
 function Base.:/(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
     return PhysicsScalar(PS₁.m / PS₂.m)
 end
@@ -68,6 +74,12 @@ function Base.:/(n::Number, PS::PhysicsScalar)
 end
 function Base.:/(PS::PhysicsScalar, n::Number)
     return PhysicsScalar(PS.m / n)
+end
+function Base.:/(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
+    return PhysicsScalar(PS.m / AQ)
+end
+function Base.:/(AQ::Unitful.AbstractQuantity, PS::PhysicsScalar)
+    return PhysicsScalar(AQ / PS.m)
 end
 function Base.:^(PS::PhysicsScalar, i::Integer)
     return *((PS.m for x in 1:i)...)

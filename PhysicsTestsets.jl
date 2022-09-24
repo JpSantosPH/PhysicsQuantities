@@ -166,7 +166,6 @@ using Test
         @test ElectricField(4u"nC")(Position(2)) isa ElectricField
         @test dimension(ElectricField(4u"nC")(Length(2))) == dimension(u"N/C")
     end
-    ElectricField(4u"nC")(Length(2))
 
 ### PhysicsVector Operators ###
     @testset "PhysicsVector Operators" begin
@@ -180,6 +179,7 @@ using Test
         @test Position(1, 2, 3) * Position(4, 5, 6) == 32.0u"m^2"
         @test Velocity(1, 2, 3)^2 == 14.0u"m^2/s^2"
         @test unitvec(Position(1,2,3)) isa CartesianCoordinate
+        @test Velocity(1,2,3) .* 1u"s" isa Position
     end
     
 ### PhysicsScalar Operator ###
@@ -187,15 +187,15 @@ using Test
         @test Time(1) + Time(2) isa Time
         @test Length(1) - Length(2) isa Length
         @test -Length(1) isa Length
-        @test PhysicsScalar(Length(1) * Frequency(2)) isa Speed
+        @test Length(1) * Frequency(2) isa Speed
         @test Speed(1) * 2 isa Speed
-        @test PhysicsScalar(Length(1) / Time(2)) isa Speed
-        @test PhysicsScalar(Length(1) / 2u"s") isa Speed
-        @test PhysicsScalar(1/2 * Mass(10) * Speed(5)^2) isa Energy
+        @test Length(1) / Time(2) isa Speed
+        @test Length(1) / 2u"s" isa Speed
+        @test 1/2 * Mass(10) * Speed(5)^2 isa Energy
         @test dimension(Speed(12)^5) == dimension(1u"m^5/s^5") 
         @test sqrt(Length(12)) isa Quantity
         @test cbrt(Time(12)) isa Quantity
-        @test PhysicsScalar(inv(Time(12))) isa Frequency
+        @test inv(Time(12)) isa Frequency
         @test one(length(3)) == 1
     end
 

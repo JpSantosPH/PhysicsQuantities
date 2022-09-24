@@ -1,15 +1,8 @@
 using LinearAlgebra
 using Unitful
 
-abstract type PhysicsScalar <: AbstractVector{Number} end
-    Base.size(PS::PhysicsScalar) = (1,)
+abstract type PhysicsScalar <: Number end
 
-    function Base.getindex(PS::PhysicsScalar, i::Integer)
-        if i == 1
-            return PS.m
-        end
-    end
-    
 ### SI base units ###
     struct Time <: PhysicsScalar
         m::typeof(1.0u"s")
