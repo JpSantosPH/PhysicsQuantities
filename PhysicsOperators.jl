@@ -105,3 +105,9 @@ end
 function Unitful.uconvert(a::Unitful.Units, PV::PhysicsVector)
     return GeneralVector(uconvert(a, PV.x), uconvert(a, PV.y), uconvert(a, PV.z))
 end
+
+### broadcasting ###
+Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector}) = Broadcast.ArrayStyle{PhysicsVector}()
+function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{PhysicsVector}}, ::Type{ElType}) where ElType
+    PhysicsVector(bc...)
+end
