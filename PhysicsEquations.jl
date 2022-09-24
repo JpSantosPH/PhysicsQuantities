@@ -13,6 +13,7 @@ end
 function kinetic_energy(m::Mass)
     KE(v::Velocity) = 1/2 * m * v^2
     KE(v::Speed) = 1/2 * m * v^2
+    return E
 end
 
 function my_electric_field(q::Quantity)

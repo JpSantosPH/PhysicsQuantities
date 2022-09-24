@@ -18,9 +18,8 @@ function PhysicsVector(x::Number, y::Number, z::Number)
         end
     end
 end
-function PhysicsVector( (x, y, z) )
-    return PhysicsVector(x, y, z)
-end
+    PhysicsVector(x::T, y::T, z::T) where {T<:PhysicsScalar} = PhysicsVector(x.m, y.m, z.m)
+    PhysicsVector( (x, y, z) ) = PhysicsVector(x, y, z)
 
 function PhysicsScalar(m::Number)
     d = dimension(m)
@@ -71,6 +70,4 @@ function PhysicsScalar(m::Number)
         return m
     end
 end
-function PhysicsScalar(args)
-    return PhysicsScalar(args...)
-end
+    PhysicsScalar(args) = PhysicsScalar(args...)
