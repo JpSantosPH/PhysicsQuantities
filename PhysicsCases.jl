@@ -1,19 +1,21 @@
-function PhysicsVector(x::T, y::T, z::T) where {T<:Number}
-    d = dimension(x)
-### Named units derived from SI base units ###
-    if d == dimension(u"m")
-        return Position(x, y, z)
-    elseif d == dimension(u"N")
-        return Force(x, y, z)
-### Kinematic SI derived units ###
-    elseif d == dimension(u"m/s")
-        return Velocity(x, y, z)
-    elseif d == dimension(u"m/s^2")
-        return Acceleration(x, y, z)
-    elseif d == dimension(u"N/C")
-        return ElectricField(x, y, z)
-    else
-        return GeneralVector(x, y, z)
+function PhysicsVector(x::Number, y::Number, z::Number)
+    if dimension(x) == dimension(y) == dimension(z)
+        d = dimension(x)
+    ### Named units derived from SI base units ###
+        if d == dimension(u"m")
+            return Position(x, y, z)
+        elseif d == dimension(u"N")
+            return Force(x, y, z)
+    ### Kinematic SI derived units ###
+        elseif d == dimension(u"m/s")
+            return Velocity(x, y, z)
+        elseif d == dimension(u"m/s^2")
+            return Acceleration(x, y, z)
+        elseif d == dimension(u"N/C")
+            return ElectricField(x, y, z)
+        else
+            return GeneralVector(x, y, z)
+        end
     end
 end
 function PhysicsVector( (x, y, z) )
