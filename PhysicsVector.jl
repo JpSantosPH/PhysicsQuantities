@@ -12,35 +12,46 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             return PV.z
         end
     end
+    Base.similar(PV::PhysicsVector) = PhysicsVector(PV.x, PV.y, PV.z)
+    function Base.setindex!(PV::PhysicsVector, val, i::Int)
+        if i == 1
+            return PhysicsVector(val, PV.y, PV.x)
+        elseif i == 2
+            return PhysicsVector(PV.x, val, PV.z)
+        elseif i == 3
+            return PhysicsVector(PV.x, PV.y, val)
+        end
+    end
 
     struct CartesianCoordinate <: PhysicsVector
-        x::Float64
-        y::Float64
-        z::Float64
+        x::AbstractFloat
+        y::AbstractFloat
+        z::AbstractFloat
 
         function CartesianCoordinate(x::Number=0.0, y::Number=0.0, z::Number=0.0)
-            if !(x isa Float64)
+            if !(x isa AbstractFloat)
                 x = convert(Float64, x)
             end
-            if !(y isa Float64)
+            if !(y isa AbstractFloat)
                 y = convert(Float64, y)
             end
-            if !(z isa Float64)
+            if !(z isa AbstractFloat)
                 z = convert(Float64, z)
             end
             return new(x, y, z)
         end
     end
-        function CartesianCoordinate(args)
-            return CartesianCoordinate(args...)
-        end
+    CartesianCoordinate(args) = CartesianCoordinate(args...)
 
-    struct GeneralVector <: PhysicsVector
-        x::Number
-        y::Number
-        z::Number
+    struct GeneralVector{T<:Number} <: PhysicsVector
+        x::T
+        y::T
+        z::T
     end
-            
+    Base.showarg(io::IO, GV::GeneralVector, toplevel) = print(io, :GeneralVector)
+    GeneralVector() = GeneralVector(0.0, 0.0, 0.0)
+    GeneralVector()
+
 ### Named units derived from SI base units ###
     struct Position <: PhysicsVector
         x::typeof(1.0u"m")
