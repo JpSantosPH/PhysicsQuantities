@@ -6,7 +6,7 @@ using BenchmarkTools
             # Time  (mean ± σ):   153.382 μs ± 195.937 μs
             # Memory estimate: 242.31 KiB, allocs estimate: 3001.
 
-        @benchmark [(1u"m")/(i*u"s") for i in 1:10000]
+        @benchmark [1u"m" / (i*u"s") for i in 1:10000]
             # Time  (mean ± σ):   43.568 μs ± 142.308 μs
             # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
@@ -72,24 +72,12 @@ using BenchmarkTools
             # Memory estimate: 23.48 KiB, allocs estimate: 2.
 
     ### w/ auto convert ###
-        @benchmark [PhysicsVector(Acceleration(1,2,3) * Time(i)) for i in 1:1000]
-            # Time  (mean ± σ):   12.356 μs ±  30.553 μs
-            # Memory estimate: 23.48 KiB, allocs estimate: 2.
-
         @benchmark [Acceleration(1,2,3) * Time(i) for i in 1:1000]
             # Time  (mean ± σ):   11.844 μs ±  27.937 μs
             # Memory estimate: 23.48 KiB, allocs estimate: 2.
 
-        @benchmark [PhysicsScalar(Length(1)/Time(i)) for i in 1:10000]
-            # Time  (mean ± σ):   32.620 μs ± 116.400 μs
-            # Memory estimate: 78.17 KiB, allocs estimate: 2.
-
         @benchmark [Length(1)/Time(i) for i in 1:10000]
             # Time  (mean ± σ):   27.955 μs ± 94.058 μs #
-            # Memory estimate: 78.17 KiB, allocs estimate: 2.
-
-        @benchmark [PhysicsScalar(Length(1)/Time(i)^2) for i in 1:10000]
-            # Time  (mean ± σ):   26.987 μs ± 94.951 μs #
             # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
         @benchmark [Length(1)/Time(i)^2 for i in 1:10000]
@@ -104,14 +92,6 @@ using BenchmarkTools
             # Time  (mean ± σ):   27.091 μs ± 99.707 μs
             # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
-        @benchmark [PhysicsScalar(kinetic_energy(Mass(10))(Speed(i))) for i in 1:10000]
-            # Time  (mean ± σ):   28.722 μs ± 105.998 μs
-            # Memory estimate: 78.17 KiB, allocs estimate: 2.
-
-        @benchmark [PhysicsScalar(kinetic_energy(Mass(10))(Velocity(i))) for i in 1:10000]
-            # Time  (mean ± σ):   26.331 μs ± 102.381 μs
-            # Memory estimate: 78.17 KiB, allocs estimate: 2.
-
         @benchmark [ElectricField(4u"nC")(Length(i)) for i in 1:1000]
             # Time  (mean ± σ):   2.706 μs ±  13.011 μs
             # Memory estimate: 7.94 KiB, allocs estimate: 1.
@@ -119,7 +99,7 @@ using BenchmarkTools
         @benchmark [ElectricField(4u"nC")(Position(i)) for i in 1:1000]
             # Time  (mean ± σ):   39.235 μs ± 51.262 μs#
             # Memory estimate: 23.48 KiB, allocs estimate: 2.
-
+        1
     ### w/ auto convert and PhysicsScalar ###
         @benchmark [PhysicsVector(Acceleration(1,2,3) * Time(i)) for i in 1:1000]
             # Time  (mean ± σ):   6.110 μs ±  18.120 μs
@@ -169,24 +149,6 @@ using BenchmarkTools
             # Time  (mean ± σ):   1.264 ms ± 348.767 μs
             # Memory estimate: 351.89 KiB, allocs estimate: 18009.
 
-    @benchmark [[1u"m/s^2", 2u"m/s^2", 3u"m/s^2"] .* i*u"s" for i in 1:1000]
-    @benchmark [(1u"m")/(i*u"s") for i in 1:10000]
-    @benchmark [(1u"m")/((i*u"s")^2) for i in 1:10000]
-    @benchmark [1/2 * 10u"kg" * (i*u"m/s")^2 for i in 1:10000]
-    @benchmark [my_electric_field(4u"nC")(i*u"m") for i in 1:1000]
-    @benchmark [my_electric_field(4u"nC")([i*u"m", 0u"m", 0u"m"]) for i in 1:1000]
-    @benchmark [PhysicsVector(Acceleration(1,2,3) * Time(i)) for i in 1:1000]
-    @benchmark [Acceleration(1,2,3) * Time(i) for i in 1:1000]
-    @benchmark [PhysicsScalar(Length(1)/Time(i)) for i in 1:10000]
-    @benchmark [Length(1)/Time(i) for i in 1:10000]
-    @benchmark [PhysicsScalar(Length(1)/Time(i)^2) for i in 1:10000]
-    @benchmark [Length(1)/Time(i)^2 for i in 1:10000]
-    @benchmark [kinetic_energy(Mass(10))(Speed(i)) for i in 1:10000]
-    @benchmark [kinetic_energy(Mass(10))(Velocity(i)) for i in 1:10000]
-    @benchmark [PhysicsScalar(kinetic_energy(Mass(10))(Speed(i))) for i in 1:10000]
-    @benchmark [PhysicsScalar(kinetic_energy(Mass(10))(Velocity(i))) for i in 1:10000]
-    @benchmark [ElectricField(4u"nC")(Length(i)) for i in 1:1000]
-    @benchmark [ElectricField(4u"nC")(Position(i)) for i in 1:1000]
 ##############################################
 
 ### w/ and w/o dimension constructor benchmarks ###
@@ -243,3 +205,12 @@ using BenchmarkTools
         # Time  (mean ± σ):   95.533 ms ±  29.757 ms
         # Memory estimate: 228.88 MiB, allocs estimate: 2.
 ###################################################
+using BenchmarkTools
+
+@benchmark [Acceleration(1,2,3) * Time(i) for i in 1:1000]
+@benchmark [Length(1)/Time(i) for i in 1:10000]
+@benchmark [Length(1)/Time(i)^2 for i in 1:10000]
+@benchmark [kinetic_energy(Mass(10))(Speed(i)) for i in 1:10000]
+@benchmark [kinetic_energy(Mass(10))(Velocity(i)) for i in 1:10000]
+@benchmark [ElectricField(4u"nC")(Length(i)) for i in 1:1000]
+@benchmark [ElectricField(4u"nC")(Position(i)) for i in 1:1000]
