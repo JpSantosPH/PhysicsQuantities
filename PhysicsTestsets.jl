@@ -184,6 +184,11 @@ end
     @test MagneticFlux() == MagneticFlux(0)
 end
 
+@testset "Induction Functionalities" begin
+    @test Induction(12//1000) == Induction(12.0u"T")
+    @test Induction() == Induction(0)
+end
+
 @testset "Inductance Functionalities" begin
     @test Inductance(12//1000) == Inductance(12.0u"mH")
     @test Inductance() == Inductance(0)

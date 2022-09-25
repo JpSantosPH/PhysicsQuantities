@@ -205,6 +205,17 @@ abstract type PhysicsScalar <: Number end
             new(m)
         end
     end
+    
+    struct Induction <: PhysicsScalar
+        m::typeof(1.0u"T")
+    
+        function Induction(m::Number=0.0u"T")
+            if !(m isa Quantity)
+                m = m * u"T"
+            end
+            new(m)
+        end
+    end
 
     struct Inductance <: PhysicsScalar
         m::typeof(1.0u"H")

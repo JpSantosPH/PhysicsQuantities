@@ -28,6 +28,7 @@ scalar_dict = Dict(
     dimension(u"Ω") => Resistance,
     dimension(u"S") => Conductance,
     dimension(u"Wb") => MagneticFlux,
+    dimension(u"T") => Induction,
     dimension(u"H") => Inductance,
 
     dimension(u"m/s") => Speed
