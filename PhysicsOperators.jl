@@ -117,6 +117,15 @@ end
 function Base.one(PS::PhysicsScalar)
     return one(PS.m)
 end
+function Base.abs(PS::PhysicsScalar)
+    return PhysicsScalar(abs(PS.m))
+end
+function Base.abs2(PS::PhysicsScalar)
+    return PhysicsScalar(abs2(PS.m))
+end
+function Base.inv(PS::PhysicsScalar)
+    return PhysicsScalar(inv(PS.m))
+end
 
 ### bolean ###
 function Base. ==(PS₁::PhysicsScalar, PS₂::PhysicsScalar)

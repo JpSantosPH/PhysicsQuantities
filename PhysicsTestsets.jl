@@ -1,7 +1,7 @@
 using Test
 
 @testset " PhysicsScalar Functionalities" begin
-    @test PhysicsScalar(12u"m/s") == Speed(12)
+    @test PhysicsScalar(12u"m/s") isa Speed
     @test Time(1) + Time(2) isa Time
     @test Time(1) + 2u"s" isa Time
     @test Length(1) - Length(2) isa Length
@@ -17,6 +17,13 @@ using Test
     @test cbrt(Time(12)) isa Quantity
     @test inv(Time(12)) isa Frequency
     @test one(Length(3)) == 1
+    @test abs(Length(-1)) == Length(1)
+    @test abs2(Length(-2)) == 4u"m^2"
+    @test inv(Time(1)) isa Frequency
+    @test sign(Length(1)) == 1.0
+    @test min(Time(2), Time(5), Time(1)) == Time(1)
+    @test max(Time(2), Time(5), Time(1)) == Time(5)
+    @test minmax(Time(5), Time(2)) == (Time(2), Time(5))
 end
 
 @testset "PhysicsVector Functionalities" begin
