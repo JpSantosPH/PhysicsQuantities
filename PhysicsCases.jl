@@ -23,6 +23,7 @@ end
 
 function PhysicsScalar(m::Number)
     d = dimension(m)
+    u = unit(m)
 ### SI base units ###
     if d == dimension(u"s")
         return Time(m)
@@ -39,7 +40,7 @@ function PhysicsScalar(m::Number)
     elseif d == dimension(u"cd")
         return Luminous(m)
 ### Named units derived from SI base units ###
-    elseif d == dimension(u"Hz")
+    elseif d == dimension(u"Hz") && u != u"Bq"
         return Frequency(m)
     elseif unit(m) == unit(1.0u"rad")
         return Angle(m)
@@ -65,15 +66,15 @@ function PhysicsScalar(m::Number)
         return Induction(m)
     elseif d == dimension(u"H")
         return Inductance(m)
-    elseif d == dimension(u"lm")
+    elseif d == dimension(u"lm") && u == u"lm"
         return LuminousFlux(m)
     elseif d == dimension(u"lx")
         return Illuminance(m)
-    elseif d == dimension(u"Bq")
+    elseif d == dimension(u"Bq") && u == u"Bq"
         return Radioactivity(m)
-    elseif d == dimension(u"Gy")
+    elseif d == dimension(u"Gy") && u == u"Gy"
         return AbsorbedDose(m)
-    elseif d == dimension(u"Sv")
+    elseif d == dimension(u"Sv") && u == u"Sv"
         return EquivalentDose(m)
     elseif d == dimension(u"kat")
         return CatalyticActivity(m)
@@ -86,4 +87,4 @@ function PhysicsScalar(m::Number)
         return m
     end
 end
-    PhysicsScalar(args) = PhysicsScalar(args...)
+    PhysicsScalar(PS::PhysicsScalar) = PhysicsScalar(PS.m)
