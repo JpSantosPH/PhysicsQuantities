@@ -228,6 +228,72 @@ abstract type PhysicsScalar <: Number end
         end
     end
 
+    struct LuminousFlux <: PhysicsScalar
+        m::typeof(1.0u"lm")
+    
+        function LuminousFlux(m::Number=0.0u"lm")
+            if !(m isa Quantity)
+                m = m * u"lm"
+            end
+            new(m)
+        end
+    end
+
+    struct Illuminance <: PhysicsScalar
+        m::typeof(1.0u"lx")
+    
+        function Illuminance(m::Number=0.0u"lx")
+            if !(m isa Quantity)
+                m = m * u"lx"
+            end
+            new(m)
+        end
+    end
+    
+    struct Radioactivity <: PhysicsScalar
+        m::typeof(1.0u"Bq")
+    
+        function Radioactivity(m::Number=0.0u"Bq")
+            if !(m isa Quantity)
+                m = m * u"Bq"
+            end
+            new(m)
+        end
+    end
+
+    struct AbsorbedDose <: PhysicsScalar
+        m::typeof(1.0u"Gy")
+    
+        function AbsorbedDose(m::Number=0.0u"Gy")
+            if !(m isa Quantity)
+                m = m * u"Gy"
+            end
+            new(m)
+        end
+    end
+
+    struct EquivalentDose <: PhysicsScalar
+        m::typeof(1.0u"Sv")
+    
+        function EquivalentDose(m::Number=0.0u"Sv")
+            if !(m isa Quantity)
+                m = m * u"Sv"
+            end
+            new(m)
+        end
+    end
+
+    struct CatalyticActivity <: PhysicsScalar
+        m::typeof(1.0u"kat")
+    
+        function CatalyticActivity(m::Number=0.0u"kat")
+            if !(m isa Quantity)
+                m = m * u"kat"
+            end
+            new(m)
+        end
+    end
+
 ### Kinematic SI derived units ###
     struct Speed <: PhysicsScalar
         m::typeof(1.0u"m/s")

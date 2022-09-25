@@ -30,6 +30,12 @@ scalar_dict = Dict(
     dimension(u"Wb") => MagneticFlux,
     dimension(u"T") => Induction,
     dimension(u"H") => Inductance,
+    dimension(u"lm") => LuminousFlux,
+    dimension(u"lx") => Illuminance,
+    dimension(u"Bq") => Radioactivity,
+    dimension(u"Gy") => AbsorbedDose,
+    dimension(u"Sv") => EquivalentDose,
+    dimension(u"kat") => CatalyticActivity,
 
     dimension(u"m/s") => Speed
 )

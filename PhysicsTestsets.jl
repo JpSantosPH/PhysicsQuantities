@@ -194,6 +194,36 @@ end
     @test Inductance() == Inductance(0)
 end
 
+@testset "LuminousFlux Functionalities" begin
+    @test LuminousFlux(12//1000) == LuminousFlux(12.0u"lm")
+    @test LuminousFlux() == LuminousFlux(0)
+end
+
+@testset "Illuminance Functionalities" begin
+    @test Illuminance(12//1000) == Illuminance(12.0u"lx")
+    @test Illuminance() == Illuminance(0)
+end
+
+@testset "Radioactivity Functionalities" begin
+    @test Radioactivity(12//1000) == Radioactivity(12.0u"Bq")
+    @test Radioactivity() == Radioactivity(0)
+end
+
+@testset "AbsorbedDose Functionalities" begin
+    @test AbsorbedDose(12//1000) == AbsorbedDose(12.0u"Gy")
+    @test AbsorbedDose() == AbsorbedDose(0)
+end
+
+@testset "EquivalentDose Functionalities" begin
+    @test EquivalentDose(12//1000) == EquivalentDose(12.0u"Sv")
+    @test EquivalentDose() == EquivalentDose(0)
+end
+
+@testset "CatalyticActivity Functionalities" begin
+    @test CatalyticActivity(12//1000) == CatalyticActivity(12.0u"kat")
+    @test CatalyticActivity() == CatalyticActivity(0)
+end
+
 ### Kinematic SI derived units ###
 @testset "Speed Functionalities" begin
     @test Speed(12//1000) == Speed(12.0u"mm/s")
