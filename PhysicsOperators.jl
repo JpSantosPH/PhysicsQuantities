@@ -45,8 +45,20 @@ end
 function Base.:+(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
     return PhysicsScalar(PS₁.m + PS₂.m)
 end
+function Base.:+(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
+    return PhysicsScalar(PS.m + AQ)
+end
+function Base.:+(AQ::Unitful.AbstractQuantity, PS::PhysicsScalar)
+    return PhysicsScalar(AQ + PS.m)
+end
 function Base.:-(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
     return PhysicsScalar(PS₁.m - PS₂.m)
+end
+function Base.:-(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
+    return PhysicsScalar(PS.m - AQ)
+end
+function Base.:-(AQ::Unitful.AbstractQuantity, PS::PhysicsScalar)
+    return PhysicsScalar(AQ - PS.m)
 end
 function Base.:-(PS::PhysicsScalar)
     return PhysicsScalar(-PS.m)
@@ -105,6 +117,18 @@ end
 function Base.one(PS::PhysicsScalar)
     return one(PS.m)
 end
+
+Time(2) > 2u"s"
+### bolean ###
+
+Time(2) == 2.0u"s"
+### broadcasting ###
+Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector}) = Broadcast.ArrayStyle{PhysicsVector}()
+function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{PhysicsVector}}, ::Type{ElType}) where ElType
+    PhysicsVector(bc...)
+end
+
+### Unitful ###
 function Unitful.dimension(PS::PhysicsScalar)
     return dimension(PS.m)
 end
@@ -116,10 +140,4 @@ function Unitful.uconvert(a::Unitful.Units, PS::PhysicsScalar)
 end
 function Unitful.uconvert(a::Unitful.Units, PV::PhysicsVector)
     return GeneralVector(uconvert(a, PV.x), uconvert(a, PV.y), uconvert(a, PV.z))
-end
-
-### broadcasting ###
-Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector}) = Broadcast.ArrayStyle{PhysicsVector}()
-function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{PhysicsVector}}, ::Type{ElType}) where ElType
-    PhysicsVector(bc...)
 end

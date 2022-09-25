@@ -3,7 +3,9 @@ using Test
 @testset " PhysicsScalar Functionalities" begin
     @test PhysicsScalar(12u"m/s") == Speed(12)
     @test Time(1) + Time(2) isa Time
+    @test Time(1) + 2u"s" isa Time
     @test Length(1) - Length(2) isa Length
+    @test Length(1) - 2u"m" isa Length
     @test -Length(1) isa Length
     @test Length(1) * Frequency(2) isa Speed
     @test Speed(1) * 2 isa Speed
@@ -14,7 +16,7 @@ using Test
     @test sqrt(Length(12)) isa Quantity
     @test cbrt(Time(12)) isa Quantity
     @test inv(Time(12)) isa Frequency
-    @test one(length(3)) == 1
+    @test one(Length(3)) == 1
 end
 
 @testset "PhysicsVector Functionalities" begin
@@ -25,14 +27,19 @@ end
     @test Velocity(1, 2, 3) * 4 isa Velocity
     @test Velocity(8, 6, 4) / 2 isa Velocity
     @test Acceleration(1,2,3) * Time(4) isa Velocity
+    @test Velocity(1, 2, 3) * 4u"s" isa Position
     @test Velocity(8, 6, 4) / Time(2) isa Acceleration
+    @test Position(8, 6, 4) / u"s" isa Velocity
+    @test Acceleration(1, 2, 3) * 2u"s" isa Velocity
     @test Position(1, 2, 3) * Position(4, 5, 6) == 32.0u"m^2"
     @test Velocity(1, 2, 3)^2 == 14.0u"m^2/s^2"
     @test unitvec(Position(1,2,3)) isa CartesianCoordinate
-    @test Velocity(1,2,3) .* 4u"s" isa Position
-    @test Velocity(1,2,3) ./ Time(4) isa Acceleration
+    @test Velocity(1, 2, 3) .* 4u"s" isa Position
+    @test Velocity(1, 2, 3) ./ Time(4) isa Acceleration
+    @test Velocity(1, 2, 3) .+ 4u"m/s" isa Velocity
+    @test Velocity(4, 3, 2) .- 1u"m/s" isa Velocity
 end
-
+  
 @testset "Unitful added Functionalities" begin
     @test dimension(Speed(12)) == dimension(12u"m/s")
     @test dimension(Velocity(1,2)) == dimension(12u"m/s")

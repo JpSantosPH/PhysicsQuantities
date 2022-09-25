@@ -72,7 +72,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         end
     end
         Position(args) = Position(args...)
-        
 
     struct Force <: PhysicsVector
         x::typeof(1.0u"N")
