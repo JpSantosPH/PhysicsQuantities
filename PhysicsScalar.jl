@@ -294,13 +294,34 @@ abstract type PhysicsScalar <: Number end
         end
     end
 
-### Kinematic SI derived units ###
     struct Speed <: PhysicsScalar
         m::typeof(1.0u"m/s")
 
         function Speed(m::Number=0.0u"m/s")
             if !(m isa Quantity)
                 m = m * u"m/s"
+            end
+            new(m)
+        end
+    end
+
+    struct Area <: PhysicsScalar
+        m::typeof(1.0u"m^2")
+    
+        function Area(m::Number=0.0u"m^2")
+            if !(m isa Quantity)
+                m = m * u"m^2"
+            end
+            new(m)
+        end
+    end
+
+    struct Volume <: PhysicsScalar
+        m::typeof(1.0u"m^3")
+    
+        function Volume(m::Number=0.0u"m^3")
+            if !(m isa Quantity)
+                m = m * u"m^3"
             end
             new(m)
         end

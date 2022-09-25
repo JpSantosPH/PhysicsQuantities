@@ -3,6 +3,11 @@ elseif d == dimension(u"_")
 
 dimension(u"_") => -,
 
+@testset "- Functionalities" begin
+    @test -(12//1000000) == -(12.0u"m_")
+    @test -() == -(0)
+end
+
 struct - <: PhysicsScalar
     m::typeof(1.0u"_")
 
@@ -12,9 +17,4 @@ struct - <: PhysicsScalar
         end
         new(m)
     end
-end
-
-@testset "- Functionalities" begin
-    @test -(12//1000) == -(12.0u"m_")
-    @test -() == -(0)
 end

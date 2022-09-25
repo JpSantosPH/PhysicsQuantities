@@ -91,7 +91,6 @@ end
     @test uconvert(u"Hz", 1/Time(1)) == 1.0u"Hz"
 end
 
-### SI base units ###
 @testset "Time Functionalities" begin
     @test Time(12//1000) == Time(12.0u"ms")
     @test Time() == Time(0)
@@ -127,7 +126,6 @@ end
     @test Luminous() == Luminous(0)
 end
 
-### Named units derived from SI base units ###
 @testset "Frequency Functionalities" begin
     @test Frequency(12//1000) == Frequency(12.0u"mHz")
     @test Frequency() == Frequency(0)
@@ -184,10 +182,10 @@ end
     @test MagneticFlux() == MagneticFlux(0)
 end
 
-#@testset "Induction Functionalities" begin
+@testset "Induction Functionalities" begin
     @test Induction(12//1000) == Induction(12.0u"mT")
     @test Induction() == Induction(0)
-#end
+end
 
 @testset "Inductance Functionalities" begin
     @test Inductance(12//1000) == Inductance(12.0u"mH")
@@ -224,10 +222,19 @@ end
     @test CatalyticActivity() == CatalyticActivity(0)
 end
 
-### Kinematic SI derived units ###
 @testset "Speed Functionalities" begin
     @test Speed(12//1000) == Speed(12.0u"mm/s")
     @test Speed() == Speed(0)
+end
+
+@testset "Area Functionalities" begin
+    @test Area(12//1000000) == Area(12.0u"mm^2")
+    @test Area() == Area(0)
+end
+
+@testset "Volume Functionalities" begin
+    @test Volume(12//1000000) == Volume(12.0u"cm^3")
+    @test Volume() == Volume(0)
 end
 
 @testset "CartesianCoordinate Functionalities" begin
@@ -263,6 +270,11 @@ end
 @testset "Snap Functionalities" begin
     @test Snap(1, 2//1000) == Snap(1 * u"m/s^4", 2//1 * u"mm/s^4", 0.0u"m/s^4")
     @test Snap() == Snap(0, 0, 0)
+end
+
+@testset "Momentum Functionalities" begin
+    @test Momentum(1, 2//1000) == Momentum(1 * u"kg * m/s", 2//1 * u"g * m/s", 0.0u"kg * m/s")
+    @test Momentum() == Momentum(0, 0, 0)
 end
 
 @testset "ElectricField Functionalities" begin

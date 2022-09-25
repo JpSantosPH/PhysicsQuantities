@@ -6,8 +6,9 @@ vector_dict = Dict(
     dimension(u"m/s^2") => Acceleration,
     dimension(u"m/s^3") => Jerk,
     dimension(u"m/s^4") => Snap,
+    dimension(u"kg * m/s") => Momentum,
 
-    dimension(u"N/C") => ElectricField
+    dimension(u"N/C") => ElectricField,
 )
 
 scalar_dict = Dict(
@@ -18,7 +19,6 @@ scalar_dict = Dict(
     dimension(u"K") => Temperature,
     dimension(u"mol") => Substance,
     dimension(u"cd") => Luminous,
-
     dimension(u"Hz") => Frequency,
     dimension(u"rad") => Angle,
     dimension(u"kPa") => Pressure,
@@ -38,6 +38,7 @@ scalar_dict = Dict(
     dimension(u"Gy") => AbsorbedDose,
     dimension(u"Sv") => EquivalentDose,
     dimension(u"kat") => CatalyticActivity,
-
-    dimension(u"m/s") => Speed
+    dimension(u"m/s") => Speed,
+    dimension(u"m^2") => Area,
+    dimension(u"m^3") => Volume,
 )

@@ -15,6 +15,8 @@ function PhysicsVector(x::Number, y::Number, z::Number)
             return Jerk(x, y, z)
         elseif d == dimension(u"m/s^4")
             return Snap(x, y, z)
+        elseif d == dimension(u"kg * m/s")
+            return Momentum(x, y, z)
         elseif d == dimension(u"N/C")
             return ElectricField(x, y, z)
         else
@@ -28,7 +30,6 @@ end
 function PhysicsScalar(m::Number)
     d = dimension(m)
     u = unit(m)
-### SI base units ###
     if d == dimension(u"s")
         return Time(m)
     elseif d == dimension(u"m")
@@ -43,7 +44,6 @@ function PhysicsScalar(m::Number)
         return Substance(m)
     elseif d == dimension(u"cd")
         return Luminous(m)
-### Named units derived from SI base units ###
     elseif d == dimension(u"Hz") && u != u"Bq"
         return Frequency(m)
     elseif unit(m) == unit(1.0u"rad")
@@ -82,11 +82,12 @@ function PhysicsScalar(m::Number)
         return EquivalentDose(m)
     elseif d == dimension(u"kat")
         return CatalyticActivity(m)
-
-    
-### Kinematic SI derived units ###
     elseif d == dimension(u"m/s")
         return Speed(m)
+    elseif d == dimension(u"m^2")
+        return Area(m)
+    elseif d == dimension(u"m^3")
+        return Volume(m)
     else
         return m
     end
