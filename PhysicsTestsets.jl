@@ -45,6 +45,13 @@ end
     @test Velocity(1, 2, 3) ./ Time(4) isa Acceleration
     @test Velocity(1, 2, 3) .+ 4u"m/s" isa Velocity
     @test Velocity(4, 3, 2) .- 1u"m/s" isa Velocity
+    @test let 
+        PV = Position(1, 2, 3)
+        M = [   1 2 3
+                4 5 6
+                7 8 9   ]
+        M * PV == Position(14, 32, 50)
+    end
 end
 
 @testset "Boolean Functionalities" begin

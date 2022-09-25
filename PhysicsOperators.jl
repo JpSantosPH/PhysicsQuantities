@@ -40,6 +40,36 @@ end
 function LinearAlgebra.norm(PV::PhysicsVector)
     return PhysicsScalar(sqrt(PV.x^2 + PV.y^2 + PV.z^2))
 end
+function Base.:*(M::AbstractMatrix, PV::PhysicsVector)
+    i, k = size(M)
+    if k != 3 || i != 3
+        return error("DimensionMismatch: matrix must have a dimension of (3,3)")
+    end
+    
+    M₁₁, M₁₂, M₁₃ = @view M[1, 1:3]
+    M₂₁, M₂₂, M₂₃ = @view M[2, 1:3]
+    M₃₁, M₃₂, M₃₃ = @view M[3, 1:3]
+
+    x = M₁₁*PV.x + M₁₂*PV.y + M₁₃*PV.z
+    y = M₂₁*PV.x + M₂₂*PV.y + M₂₃*PV.z
+    z = M₃₁*PV.x + M₃₂*PV.y + M₃₃*PV.z
+    return PhysicsVector(x, y, z)
+end
+function Base.:*(PV::PhysicsVector, M::AbstractMatrix)
+    i, k = size(M)
+    if k != 3 || i != 3
+        return error("DimensionMismatch: matrix must have a dimension of (3,3)")
+    end
+    
+    M₁₁, M₁₂, M₁₃ = @view M[1, 1:3]
+    M₂₁, M₂₂, M₂₃ = @view M[2, 1:3]
+    M₃₁, M₃₂, M₃₃ = @view M[3, 1:3]
+
+    x = M₁₁*PV.x + M₁₂*PV.y + M₁₃*PV.z
+    y = M₂₁*PV.x + M₂₂*PV.y + M₂₃*PV.z
+    z = M₃₁*PV.x + M₃₂*PV.y + M₃₃*PV.z
+    return PhysicsVector(x, y, z)
+end
 
 ### PhysicsScalar ###
 function Base.:+(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
