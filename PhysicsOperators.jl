@@ -34,8 +34,8 @@ function Base.:^(PV::PhysicsVector, i::Integer)
     return *((PV for x in 1:i)...)
 end
 function unitvec(PV::PhysicsVector)
-    n = sqrt(PV.x^2 + PV.y^2 + PV.z^2)
-    return CartesianCoordinate(PV.x/n, PV.y/n, PV.z/n)
+    n = norm(PV)
+    return PhysicsVector(PV.x/n, PV.y/n, PV.z/n)
 end
 function LinearAlgebra.norm(PV::PhysicsVector)
     return PhysicsScalar(sqrt(PV.x^2 + PV.y^2 + PV.z^2))
