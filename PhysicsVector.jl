@@ -133,6 +133,46 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         end
     end
         Acceleration(args) = Acceleration(args...)
+    
+    struct Jerk <: PhysicsVector
+    x::typeof(1.0u"m/s^3")
+    y::typeof(1.0u"m/s^3")
+    z::typeof(1.0u"m/s^3")
+
+    function Jerk(x::Number=0.0u"m/s^3", y::Number=0.0u"m/s^3", z::Number=0.0u"m/s^3")
+        if !isa(x, Quantity)
+            x = x * u"m/s^3"
+        end
+        if !isa(y, Quantity)
+            y = y * u"m/s^3"
+        end
+        if !isa(z, Quantity)
+            z = z * u"m/s^3"
+        end
+        return new(x, y, z)
+    end
+end
+    Jerk(args) = Jerk(args...)
+
+    struct Snap <: PhysicsVector
+        x::typeof(1.0u"m/s^4")
+        y::typeof(1.0u"m/s^4")
+        z::typeof(1.0u"m/s^4")
+    
+        function Snap(x::Number=0.0u"m/s^4", y::Number=0.0u"m/s^4", z::Number=0.0u"m/s^4")
+            if !isa(x, Quantity)
+                x = x * u"m/s^4"
+            end
+            if !isa(y, Quantity)
+                y = y * u"m/s^4"
+            end
+            if !isa(z, Quantity)
+                z = z * u"m/s^4"
+            end
+            return new(x, y, z)
+        end
+    end
+        Snap(args) = Snap(args...)
 
     struct ElectricField <: PhysicsVector
         x::typeof(1.0u"N/C")

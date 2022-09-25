@@ -40,7 +40,7 @@ end
     @test Acceleration(1, 2, 3) * 2u"s" isa Velocity
     @test Position(1, 2, 3) * Position(4, 5, 6) == 32.0u"m^2"
     @test Velocity(1, 2, 3)^2 == 14.0u"m^2/s^2"
-    @test unitvec(Position(1,2,3)) isa CartesianCoordinate
+    @test unitvec(Position(1,2,3)) isa GeneralVector
     @test Velocity(1, 2, 3) .* 4u"s" isa Position
     @test Velocity(1, 2, 3) ./ Time(4) isa Acceleration
     @test Velocity(1, 2, 3) .+ 4u"m/s" isa Velocity
@@ -184,10 +184,10 @@ end
     @test MagneticFlux() == MagneticFlux(0)
 end
 
-@testset "Induction Functionalities" begin
-    @test Induction(12//1000) == Induction(12.0u"T")
+#@testset "Induction Functionalities" begin
+    @test Induction(12//1000) == Induction(12.0u"mT")
     @test Induction() == Induction(0)
-end
+#end
 
 @testset "Inductance Functionalities" begin
     @test Inductance(12//1000) == Inductance(12.0u"mH")
@@ -195,32 +195,32 @@ end
 end
 
 @testset "LuminousFlux Functionalities" begin
-    @test LuminousFlux(12//1000) == LuminousFlux(12.0u"lm")
+    @test LuminousFlux(12//1000) == LuminousFlux(12.0u"mlm")
     @test LuminousFlux() == LuminousFlux(0)
 end
 
 @testset "Illuminance Functionalities" begin
-    @test Illuminance(12//1000) == Illuminance(12.0u"lx")
+    @test Illuminance(12//1000) == Illuminance(12.0u"mlx")
     @test Illuminance() == Illuminance(0)
 end
 
 @testset "Radioactivity Functionalities" begin
-    @test Radioactivity(12//1000) == Radioactivity(12.0u"Bq")
+    @test Radioactivity(12//1000) == Radioactivity(12.0u"mBq")
     @test Radioactivity() == Radioactivity(0)
 end
 
 @testset "AbsorbedDose Functionalities" begin
-    @test AbsorbedDose(12//1000) == AbsorbedDose(12.0u"Gy")
+    @test AbsorbedDose(12//1000) == AbsorbedDose(12.0u"mGy")
     @test AbsorbedDose() == AbsorbedDose(0)
 end
 
 @testset "EquivalentDose Functionalities" begin
-    @test EquivalentDose(12//1000) == EquivalentDose(12.0u"Sv")
+    @test EquivalentDose(12//1000) == EquivalentDose(12.0u"mSv")
     @test EquivalentDose() == EquivalentDose(0)
 end
 
 @testset "CatalyticActivity Functionalities" begin
-    @test CatalyticActivity(12//1000) == CatalyticActivity(12.0u"kat")
+    @test CatalyticActivity(12//1000) == CatalyticActivity(12.0u"mkat")
     @test CatalyticActivity() == CatalyticActivity(0)
 end
 
@@ -253,6 +253,16 @@ end
 @testset "Acceleration Functionalities" begin
     @test Acceleration(1, 2//1000) == Acceleration(1 * u"m/s^2", 2//1 * u"mm/s^2", 0.0u"m/s^2")
     @test Acceleration() == Acceleration(0, 0, 0)
+end
+
+@testset "Jerk Functionalities" begin
+    @test Jerk(1, 2//1000) == Jerk(1 * u"m/s^3", 2//1 * u"mm/s^3", 0.0u"m/s^3")
+    @test Jerk() == Jerk(0, 0, 0)
+end
+
+@testset "Snap Functionalities" begin
+    @test Snap(1, 2//1000) == Snap(1 * u"m/s^4", 2//1 * u"mm/s^4", 0.0u"m/s^4")
+    @test Snap() == Snap(0, 0, 0)
 end
 
 @testset "ElectricField Functionalities" begin

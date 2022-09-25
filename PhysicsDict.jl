@@ -4,6 +4,8 @@ vector_dict = Dict(
     
     dimension(u"m/s") => Velocity,
     dimension(u"m/s^2") => Acceleration,
+    dimension(u"m/s^3") => Jerk,
+    dimension(u"m/s^4") => Snap,
 
     dimension(u"N/C") => ElectricField
 )
