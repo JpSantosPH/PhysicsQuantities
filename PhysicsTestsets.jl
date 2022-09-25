@@ -237,6 +237,36 @@ end
     @test Volume() == Volume(0)
 end
 
+@testset "Wavenumber Functionalities" begin
+    @test Wavenumber(12//1000) == Wavenumber(12.0u"km^-1")
+    @test Wavenumber() == Wavenumber(0)
+end
+
+@testset "LinearDensity Functionalities" begin
+    @test LinearDensity(12//1000) == LinearDensity(12.0u"g/m")
+    @test LinearDensity() == LinearDensity(0)
+end
+
+@testset "AreaDensity Functionalities" begin
+    @test AreaDensity(12//1000) == AreaDensity(12.0u"g/m^2")
+    @test AreaDensity() == AreaDensity(0)
+end
+
+@testset "Density Functionalities" begin
+    @test Density(12//1000) == Density(12.0u"g/m^3")
+    @test Density() == Density(0)
+end
+
+@testset "SpecificVolume Functionalities" begin
+    @test SpecificVolume(12//1000) == SpecificVolume(12.0u"cm^3/g")
+    @test SpecificVolume() == SpecificVolume(0)
+end
+
+@testset "Action Functionalities" begin
+    @test Action(12//1000) == Action(12.0u"mJ*s")
+    @test Action() == Action(0)
+end
+
 @testset "CartesianCoordinate Functionalities" begin
     @test CartesianCoordinate(1, 2, 3) isa CartesianCoordinate
     @test CartesianCoordinate( (1, 2) ) == CartesianCoordinate(1, 2, 0)
@@ -273,7 +303,7 @@ end
 end
 
 @testset "Momentum Functionalities" begin
-    @test Momentum(1, 2//1000) == Momentum(1 * u"kg * m/s", 2//1 * u"g * m/s", 0.0u"kg * m/s")
+    @test Momentum(1, 2//1000) == Momentum(1 * u"kg*m/s", 2//1 * u"g*m/s", 0.0u"kg*m/s")
     @test Momentum() == Momentum(0, 0, 0)
 end
 

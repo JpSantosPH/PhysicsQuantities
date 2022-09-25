@@ -326,3 +326,71 @@ abstract type PhysicsScalar <: Number end
             new(m)
         end
     end
+
+    struct Wavenumber <: PhysicsScalar
+        m::typeof(1.0u"m^-1")
+    
+        function Wavenumber(m::Number=0.0u"m^-1")
+            if !(m isa Quantity)
+                m = m * u"m^-1"
+            end
+            new(m)
+        end
+    end
+
+    struct LinearDensity <: PhysicsScalar
+        m::typeof(1.0u"kg/m")
+    
+        function LinearDensity(m::Number=0.0u"kg/m")
+            if !(m isa Quantity)
+                m = m * u"kg/m"
+            end
+            new(m)
+        end
+    end
+
+    struct AreaDensity <: PhysicsScalar
+        m::typeof(1.0u"kg/m^2")
+    
+        function AreaDensity(m::Number=0.0u"kg/m^2")
+            if !(m isa Quantity)
+                m = m * u"kg/m^2"
+            end
+            new(m)
+        end
+    end
+
+    struct Density <: PhysicsScalar
+        m::typeof(1.0u"kg/m^3")
+    
+        function Density(m::Number=0.0u"kg/m^3")
+            if !(m isa Quantity)
+                m = m * u"kg/m^3"
+            end
+            new(m)
+        end
+    end
+    
+    struct SpecificVolume <: PhysicsScalar
+        m::typeof(1.0u"m^3/kg")
+    
+        function SpecificVolume(m::Number=0.0u"m^3/kg")
+            if !(m isa Quantity)
+                m = m * u"m^3/kg"
+            end
+            new(m)
+        end
+    end
+    
+    struct Action <: PhysicsScalar
+        m::typeof(1.0u"J*s")
+    
+        function Action(m::Number=0.0u"J*s")
+            if !(m isa Quantity)
+                m = m * u"J*s"
+            end
+            new(m)
+        end
+    end
+
+    

@@ -1,19 +1,19 @@
-elseif d == dimension(u"_")
-    return -(m)
+elseif d == dimension(u"kg/m")
+    return LinearDensity(m)
 
-dimension(u"_") => -,
+dimension(u"kg/m") => LinearDensity,
 
-@testset "- Functionalities" begin
-    @test -(12//1000000) == -(12.0u"m_")
-    @test -() == -(0)
+@testset "LinearDensity Functionalities" begin
+    @test LinearDensity(12//1000) == LinearDensity(12.0u"g/m")
+    @test LinearDensity() == LinearDensity(0)
 end
 
-struct - <: PhysicsScalar
-    m::typeof(1.0u"_")
+struct LinearDensity <: PhysicsScalar
+    m::typeof(1.0u"kg/m")
 
-    function -(m::Number=0.0u"_")
+    function LinearDensity(m::Number=0.0u"kg/m")
         if !(m isa Quantity)
-            m = m * u"_"
+            m = m * u"kg/m"
         end
         new(m)
     end

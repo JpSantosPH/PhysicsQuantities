@@ -6,7 +6,7 @@ vector_dict = Dict(
     dimension(u"m/s^2") => Acceleration,
     dimension(u"m/s^3") => Jerk,
     dimension(u"m/s^4") => Snap,
-    dimension(u"kg * m/s") => Momentum,
+    dimension(u"kg*m/s") => Momentum,
 
     dimension(u"N/C") => ElectricField,
 )
@@ -41,4 +41,10 @@ scalar_dict = Dict(
     dimension(u"m/s") => Speed,
     dimension(u"m^2") => Area,
     dimension(u"m^3") => Volume,
+    dimension(u"m^-1") => Wavenumber,
+    dimension(u"kg/m") => LinearDensity,
+    dimension(u"kg/m^2") => AreaDensity,
+    dimension(u"kg/m^3") => Density,
+    dimension(u"m^3/kg") => SpecificVolume,
+    dimension(u"J*s") => Action,
 )
