@@ -39,6 +39,37 @@ end
     @test Velocity(1, 2, 3) .+ 4u"m/s" isa Velocity
     @test Velocity(4, 3, 2) .- 1u"m/s" isa Velocity
 end
+
+@testset "Boolean Functionalities" begin
+    @test isequal(Time(1), Time(1))
+    @test isequal(Time(1), 1u"s")
+    @test isequal(1u"s", Time(1))
+    @test Time(1) == Time(1)
+    @test Time(1) == 1u"s"
+    @test 1u"s" == Time(1)
+    @test Time(1) != Time(2)
+    @test Time(1) != 2u"s"
+    @test 1u"s" != Time(2)
+    @test isless(Time(1), Time(2))
+    @test isless(Time(1), 2u"s")
+    @test isless(1u"s", Time(2))
+    @test Time(1) < Time(2)
+    @test Time(1) < 2u"s"
+    @test 1u"s" < Time(2)
+    @test Time(2) > Time(1)
+    @test Time(2) > 1u"s"
+    @test 2u"s" > Time(1)
+    @test Time(1) <= Time(2)
+    @test Time(1) <= Time(2)
+    @test Time(1) <= 2u"s"
+    @test 1u"s" <= Time(2)
+    @test Time(2) >= Time(1)
+    @test Time(2) >= 1u"s"
+    @test 2u"s" >= Time(1)
+    @test cmp(Time(1), Time(2)) == -1
+    @test cmp(Time(1), 1u"s") == 0
+    @test cmp(2u"s", Time(1)) == 1
+end
   
 @testset "Unitful added Functionalities" begin
     @test dimension(Speed(12)) == dimension(12u"m/s")

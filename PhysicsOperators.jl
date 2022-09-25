@@ -118,10 +118,44 @@ function Base.one(PS::PhysicsScalar)
     return one(PS.m)
 end
 
-Time(2) > 2u"s"
 ### bolean ###
+function Base. ==(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
+    return PS₁.m == PS₂.m
+end
+function Base. ==(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
+    return PS.m == AQ
+end
+function Base. ==(AQ::Unitful.AbstractQuantity, PS::PhysicsScalar)
+    return AQ == PS.m
+end
+function Base.:<(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
+    return PS₁.m < PS₂.m
+end
+function Base.:<(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
+    return PS.m < AQ
+end
+function Base.:<(AQ::Unitful.AbstractQuantity, PS::PhysicsScalar)
+    return AQ < PS.m
+end
+function Base.isequal(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
+    return isequal(PS₁.m, PS₂.m)
+end
+function Base.isequal(AQ::Unitful.AbstractQuantity, PS::PhysicsScalar)
+    return isequal(AQ, PS.m)
+end
+function Base.isequal(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
+    return isequal(PS.m, AQ)
+end
+function Base.isless(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
+    return isless(PS₁.m, PS₂.m)
+end
+function Base.isless(AQ::Unitful.AbstractQuantity, PS::PhysicsScalar)
+    return isless(AQ, PS.m)
+end
+function Base.isless(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
+    return isless(PS.m, AQ)
+end
 
-Time(2) == 2.0u"s"
 ### broadcasting ###
 Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector}) = Broadcast.ArrayStyle{PhysicsVector}()
 function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{PhysicsVector}}, ::Type{ElType}) where ElType
