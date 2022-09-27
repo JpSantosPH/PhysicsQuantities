@@ -30,6 +30,12 @@ end
 function Base.:*(PV₁::PhysicsVector, PV₂::PhysicsVector)
     return PhysicsScalar(PV₁.x*PV₂.x + PV₁.y*PV₂.y + PV₁.z*PV₂.z)
 end
+function LinearAlgebra.:⋅(PV₁::PhysicsVector, PV₂::PhysicsVector)
+    return PhysicsScalar(PV₁.x*PV₂.x + PV₁.y*PV₂.y + PV₁.z*PV₂.z)
+end
+function LinearAlgebra.:×(PV₁::PhysicsVector, PV₂::PhysicsVector)
+    return PhysicsVector(PV₁.y*PV₂.z - PV₁.z*PV₂.y, PV₁.z*PV₂.x - PV₁.x*PV₂.z, PV₁.x*PV₂.y - PV₁.y*PV₂.x)
+end
 function Base.:^(PV::PhysicsVector, i::Integer)
     return *((PV for x in 1:i)...)
 end
