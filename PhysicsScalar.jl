@@ -305,6 +305,28 @@ abstract type PhysicsScalar <: Number end
         end
     end
 
+    struct FrequencyDrift <: PhysicsScalar
+        m::typeof(1.0u"Hz/s")
+    
+        function FrequencyDrift(m::Number=0.0u"Hz/s")
+            if !(m isa Quantity)
+                m = m * u"Hz/s"
+            end
+            new(m)
+        end
+    end
+    
+    struct VolumetricFlow <: PhysicsScalar
+        m::typeof(1.0u"m^3/s")
+    
+        function VolumetricFlow(m::Number=0.0u"m^3/s")
+            if !(m isa Quantity)
+                m = m * u"m^3/s"
+            end
+            new(m)
+        end
+    end
+
     struct Area <: PhysicsScalar
         m::typeof(1.0u"m^2")
     

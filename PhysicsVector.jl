@@ -174,6 +174,46 @@ end
     end
         Snap(args) = Snap(args...)
 
+    struct AngularVelocity <: PhysicsVector
+        x::typeof(1.0u"rad/s")
+        y::typeof(1.0u"rad/s")
+        z::typeof(1.0u"rad/s")
+
+        function AngularVelocity(x::Number=0.0u"rad/s", y::Number=0.0u"rad/s", z::Number=0.0u"rad/s")
+            if !isa(x, Quantity)
+                x = x * u"rad/s"
+            end
+            if !isa(y, Quantity)
+                y = y * u"rad/s"
+            end
+            if !isa(z, Quantity)
+                z = z * u"rad/s"
+            end
+            return new(x, y, z)
+        end
+    end
+        AngularVelocity(args) = AngularVelocity(args...)
+
+    struct AngularAcceleration <: PhysicsVector
+        x::typeof(1.0u"rad/s^2")
+        y::typeof(1.0u"rad/s^2")
+        z::typeof(1.0u"rad/s^2")
+
+        function AngularAcceleration(x::Number=0.0u"rad/s^2", y::Number=0.0u"rad/s^2", z::Number=0.0u"rad/s^2")
+            if !isa(x, Quantity)
+                x = x * u"rad/s^2"
+            end
+            if !isa(y, Quantity)
+                y = y * u"rad/s^2"
+            end
+            if !isa(z, Quantity)
+                z = z * u"rad/s^2"
+            end
+            return new(x, y, z)
+        end
+    end
+        AngularAcceleration(args) = AngularAcceleration(args...)
+
     struct Momentum <: PhysicsVector
         x::typeof(1.0u"kg*m/s")
         y::typeof(1.0u"kg*m/s")
@@ -193,6 +233,46 @@ end
         end
     end
         Momentum(args) = Momentum(args...)
+        
+    struct AngularMomentum <: PhysicsVector
+        x::typeof(1.0u"N*m*s")
+        y::typeof(1.0u"N*m*s")
+        z::typeof(1.0u"N*m*s")
+
+        function AngularMomentum(x::Number=0.0u"N*m*s", y::Number=0.0u"N*m*s", z::Number=0.0u"N*m*s")
+            if !isa(x, Quantity)
+                x = x * u"N*m*s"
+            end
+            if !isa(y, Quantity)
+                y = y * u"N*m*s"
+            end
+            if !isa(z, Quantity)
+                z = z * u"N*m*s"
+            end
+            return new(x, y, z)
+        end
+    end
+        AngularMomentum(args) = AngularMomentum(args...)
+
+    struct Torque <: PhysicsVector
+        x::typeof(1.0u"N*m")
+        y::typeof(1.0u"N*m")
+        z::typeof(1.0u"N*m")
+
+        function Torque(x::Number=0.0u"N*m", y::Number=0.0u"N*m", z::Number=0.0u"N*m")
+            if !isa(x, Quantity)
+                x = x * u"N*m"
+            end
+            if !isa(y, Quantity)
+                y = y * u"N*m"
+            end
+            if !isa(z, Quantity)
+                z = z * u"N*m"
+            end
+            return new(x, y, z)
+        end
+    end
+        Torque(args) = Torque(args...)
 
     struct ElectricFieldStrength <: PhysicsVector
         x::typeof(1.0u"N/C")
@@ -200,3 +280,4 @@ end
         z::typeof(1.0u"N/C")
     end
         ElectricFieldStrength( (x, y, z) ) = ElectricFieldStrength(x, y, z)
+    

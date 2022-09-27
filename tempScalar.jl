@@ -1,19 +1,19 @@
-elseif d == dimension(u"kg/m")
-    return LinearDensity(m)
+elseif d == dimension(u"Hz/s")
+    return FrequencyDrift(m)
 
-dimension(u"kg/m") => LinearDensity,
+dimension(u"Hz/s") => FrequencyDrift,
 
-@testset "LinearDensity Functionalities" begin
-    @test LinearDensity(12//1000) == LinearDensity(12.0u"g/m")
-    @test LinearDensity() == LinearDensity(0)
+@testset "FrequencyDrift Functionalities" begin
+    @test FrequencyDrift(12//1000) == FrequencyDrift(12u"mHz/s")
+    @test FrequencyDrift() == FrequencyDrift(0)
 end
 
-struct LinearDensity <: PhysicsScalar
-    m::typeof(1.0u"kg/m")
+struct FrequencyDrift <: PhysicsScalar
+    m::typeof(1.0u"Hz/s")
 
-    function LinearDensity(m::Number=0.0u"kg/m")
+    function FrequencyDrift(m::Number=0.0u"Hz/s")
         if !(m isa Quantity)
-            m = m * u"kg/m"
+            m = m * u"Hz/s"
         end
         new(m)
     end

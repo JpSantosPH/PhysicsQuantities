@@ -228,6 +228,16 @@ end
     @test Speed() == Speed(0)
 end
 
+@testset "FrequencyDrift Functionalities" begin
+    @test FrequencyDrift(12//1000) == FrequencyDrift(12u"mHz/s")
+    @test FrequencyDrift() == FrequencyDrift(0)
+end
+
+@testset "VolumetricFlow Functionalities" begin
+    @test VolumetricFlow(12//1000) == VolumetricFlow(0.012u"m^3/s")
+    @test VolumetricFlow() == VolumetricFlow(0)
+end
+
 @testset "Area Functionalities" begin
     @test Area(12//1000000) == Area(12.0u"mm^2")
     @test Area() == Area(0)
@@ -303,9 +313,29 @@ end
     @test Snap() == Snap(0, 0, 0)
 end
 
+@testset "AngularVelocity Functionalities" begin
+    @test AngularVelocity(1, 2//1000) == AngularVelocity(1 * u"rad/s", 2//1 * u"mrad/s", 0.0u"rad/s")
+    @test AngularVelocity() == AngularVelocity(0, 0, 0)
+end
+
+@testset "AngularAcceleration Functionalities" begin
+    @test AngularAcceleration(1, 2//1000) == AngularAcceleration(1 * u"rad/s^2", 2//1 * u"mrad/s^2", 0.0u"rad/s^2")
+    @test AngularAcceleration() == AngularAcceleration(0, 0, 0)
+end
+
 @testset "Momentum Functionalities" begin
     @test Momentum(1, 2//1000) == Momentum(1 * u"kg*m/s", 2//1 * u"g*m/s", 0.0u"kg*m/s")
     @test Momentum() == Momentum(0, 0, 0)
+end
+
+@testset "AngularMomentum Functionalities" begin
+    @test AngularMomentum(1, 2//1000) == AngularMomentum(1 * u"N*m*s", 2//1 * u"mN*m*s", 0.0u"N*m*s")
+    @test AngularMomentum() == AngularMomentum(0, 0, 0)
+end
+
+@testset "Torque Functionalities" begin
+    @test Torque(1, 2//1000) == Torque(1 * u"N*m", 2//1 * u"mN*m", 0.0u"N*m")
+    @test Torque() == Torque(0, 0, 0)
 end
 
 @testset "ElectricFieldStrength Functionalities" begin

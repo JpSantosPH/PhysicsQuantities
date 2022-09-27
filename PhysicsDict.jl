@@ -6,7 +6,11 @@ vector_dict = Dict(
     dimension(u"m/s^2") => Acceleration,
     dimension(u"m/s^3") => Jerk,
     dimension(u"m/s^4") => Snap,
+    dimension(u"rad/s") => AngularVelocity,
+    dimension(u"rad/s^2") => AngularAcceleration,
     dimension(u"kg*m/s") => Momentum,
+    dimension(u"N*m*s") => AngularMomentum,
+    dimension(u"N*m") => Torque,
 
     dimension(u"N/C") => ElectricFieldStrength,
 )
@@ -39,6 +43,8 @@ scalar_dict = Dict(
     dimension(u"Sv") => EquivalentDose,
     dimension(u"kat") => CatalyticActivity,
     dimension(u"m/s") => Speed,
+    dimension(u"Hz/s") => FrequencyDrift,
+    dimension(u"m^3/s") => VolumetricFlow,
     dimension(u"m^2") => Area,
     dimension(u"m^3") => Volume,
     dimension(u"m^-1") => Wavenumber,
