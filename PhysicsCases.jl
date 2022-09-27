@@ -18,7 +18,7 @@ function PhysicsVector(x::Number, y::Number, z::Number)
         elseif d == dimension(u"kg*m/s")
             return Momentum(x, y, z)
         elseif d == dimension(u"N/C")
-            return ElectricField(x, y, z)
+            return ElectricFieldStrength(x, y, z)
         else
             return GeneralVector(x, y, z)
         end

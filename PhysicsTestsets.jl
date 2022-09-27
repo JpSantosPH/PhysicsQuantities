@@ -1,4 +1,5 @@
 using Test
+using Unicode
 
 @testset " PhysicsScalar Functionalities" begin
     @test PhysicsScalar(12u"m/s") isa Speed
@@ -307,7 +308,7 @@ end
     @test Momentum() == Momentum(0, 0, 0)
 end
 
-@testset "ElectricField Functionalities" begin
-    @test ElectricField(4u"nC")(Position(2)) isa ElectricField
-    @test dimension(ElectricField(4u"nC")(Length(2))) == dimension(u"N/C")
+@testset "ElectricFieldStrength Functionalities" begin
+    @test ElectricFieldStrength(4u"nC")(Position(2)) isa ElectricFieldStrength
+    @test dimension(ElectricFieldStrength(4u"nC")(Length(2))) == dimension(u"N/C")
 end

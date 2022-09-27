@@ -63,11 +63,11 @@ using BenchmarkTools
             # Time  (mean ± σ):   38.695 μs ± 137.350 μs
             # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
-        @benchmark [ElectricField(4u"nC")(Length(i)) for i in 1:1000]
+        @benchmark [ElectricFieldStrength(4u"nC")(Length(i)) for i in 1:1000]
             # Time  (mean ± σ):     2.092 μs ±   8.833 μs
             # Memory estimate: 7.94 KiB, allocs estimate: 1.
 
-        @benchmark [ElectricField(4u"nC")(Position(i)) for i in 1:1000]
+        @benchmark [ElectricFieldStrength(4u"nC")(Position(i)) for i in 1:1000]
             # Time  (mean ± σ):   43.850 μs ± 92.302 μs
             # Memory estimate: 23.48 KiB, allocs estimate: 2.
 
@@ -92,11 +92,11 @@ using BenchmarkTools
             # Time  (mean ± σ):   27.091 μs ± 99.707 μs
             # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
-        @benchmark [ElectricField(4u"nC")(Length(i)) for i in 1:1000]
+        @benchmark [ElectricFieldStrength(4u"nC")(Length(i)) for i in 1:1000]
             # Time  (mean ± σ):   2.706 μs ±  13.011 μs
             # Memory estimate: 7.94 KiB, allocs estimate: 1.
 
-        @benchmark [ElectricField(4u"nC")(Position(i)) for i in 1:1000]
+        @benchmark [ElectricFieldStrength(4u"nC")(Position(i)) for i in 1:1000]
             # Time  (mean ± σ):   39.235 μs ± 51.262 μs#
             # Memory estimate: 23.48 KiB, allocs estimate: 2.
         1
@@ -141,11 +141,11 @@ using BenchmarkTools
             # Time  (mean ± σ):   26.832 μs ± 99.389 μs
             # Memory estimate: 78.17 KiB, allocs estimate: 2.
 
-        @benchmark [ElectricField(4u"nC")(Length(i)) for i in 1:1000]
+        @benchmark [ElectricFieldStrength(4u"nC")(Length(i)) for i in 1:1000]
             # Time  (mean ± σ):     2.260 μs
             # Memory estimate: 7.94 KiB, allocs estimate: 1.
 
-        @benchmark [ElectricField(4u"nC")(Position(i)) for i in 1:1000]
+        @benchmark [ElectricFieldStrength(4u"nC")(Position(i)) for i in 1:1000]
             # Time  (mean ± σ):   1.264 ms ± 348.767 μs
             # Memory estimate: 351.89 KiB, allocs estimate: 18009.
 
@@ -212,5 +212,5 @@ using BenchmarkTools
 @benchmark [Length(1)/Time(i)^2 for i in 1:10000]
 @benchmark [kinetic_energy(Mass(10))(Speed(i)) for i in 1:10000]
 @benchmark [kinetic_energy(Mass(10))(Velocity(i)) for i in 1:10000]
-@benchmark [ElectricField(4u"nC")(Length(i)) for i in 1:1000]
-@benchmark [ElectricField(4u"nC")(Position(i)) for i in 1:1000]
+@benchmark [ElectricFieldStrength(4u"nC")(Length(i)) for i in 1:1000]
+@benchmark [ElectricFieldStrength(4u"nC")(Position(i)) for i in 1:1000]

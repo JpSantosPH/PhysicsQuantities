@@ -194,9 +194,9 @@ end
     end
         Momentum(args) = Momentum(args...)
 
-    struct ElectricField <: PhysicsVector
+    struct ElectricFieldStrength <: PhysicsVector
         x::typeof(1.0u"N/C")
         y::typeof(1.0u"N/C")
         z::typeof(1.0u"N/C")
     end
-        ElectricField( (x, y, z) ) = ElectricField(x, y, z)
+        ElectricFieldStrength( (x, y, z) ) = ElectricFieldStrength(x, y, z)

@@ -8,7 +8,7 @@ vector_dict = Dict(
     dimension(u"m/s^4") => Snap,
     dimension(u"kg*m/s") => Momentum,
 
-    dimension(u"N/C") => ElectricField,
+    dimension(u"N/C") => ElectricFieldStrength,
 )
 
 scalar_dict = Dict(
