@@ -43,7 +43,7 @@ abstract type PhysicsVector <: AbstractVector{Number} end
     end
         CartesianCoordinate(args) = CartesianCoordinate(args...)
 
-    struct GeneralVector{T<:AbstractFloat} <: PhysicsVector
+    struct GeneralVector{T<:Number} <: PhysicsVector
         x::T
         y::T
         z::T
@@ -54,9 +54,9 @@ abstract type PhysicsVector <: AbstractVector{Number} end
     
 ### Named units derived from SI base units ###
     struct Position <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"m")}
-        y::Quantity{AbstractFloat, dimension(u"m")}
-        z::Quantity{AbstractFloat, dimension(u"m")}
+        x::typeof(1.0u"m")
+        y::typeof(1.0u"m")
+        z::typeof(1.0u"m")
 
         function Position(x::Number=0.0u"m", y::Number=0.0u"m", z::Number=0.0u"m")
             if !(x isa Quantity)
@@ -74,9 +74,9 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         Position(args) = Position(args...)
 
     struct Force <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"N")}
-        y::Quantity{AbstractFloat, dimension(u"N")}
-        z::Quantity{AbstractFloat, dimension(u"N")}
+        x::typeof(1.0u"N")
+        y::typeof(1.0u"N")
+        z::typeof(1.0u"N")
 
         function Force(x::Number=0.0u"N", y::Number=0.0u"N", z::Number=0.0u"N")
             if !(x isa Quantity)
@@ -95,9 +95,9 @@ abstract type PhysicsVector <: AbstractVector{Number} end
 
 ### Kinematic SI derived units ###
     struct Velocity <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"m/s")}
-        y::Quantity{AbstractFloat, dimension(u"m/s")}
-        z::Quantity{AbstractFloat, dimension(u"m/s")}
+        x::typeof(1.0u"m/s")
+        y::typeof(1.0u"m/s")
+        z::typeof(1.0u"m/s")
 
         function Velocity(x::Number=0.0u"m/s", y::Number=0.0u"m/s", z::Number=0.0u"m/s")
             if !isa(x, Quantity)
@@ -115,9 +115,9 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         Velocity(args) = Velocity(args...)
 
     struct Acceleration <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"m/s^2")}
-        y::Quantity{AbstractFloat, dimension(u"m/s^2")}
-        z::Quantity{AbstractFloat, dimension(u"m/s^2")}
+        x::typeof(1.0u"m/s^2")
+        y::typeof(1.0u"m/s^2")
+        z::typeof(1.0u"m/s^2")
 
         function Acceleration(x::Number=0.0u"m/s^2", y::Number=0.0u"m/s^2", z::Number=0.0u"m/s^2")
             if !isa(x, Quantity)
@@ -135,9 +135,9 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         Acceleration(args) = Acceleration(args...)
     
     struct Jerk <: PhysicsVector
-    x::Quantity{AbstractFloat, dimension(u"m/s^3")}
-    y::Quantity{AbstractFloat, dimension(u"m/s^3")}
-    z::Quantity{AbstractFloat, dimension(u"m/s^3")}
+    x::typeof(1.0u"m/s^3")
+    y::typeof(1.0u"m/s^3")
+    z::typeof(1.0u"m/s^3")
 
     function Jerk(x::Number=0.0u"m/s^3", y::Number=0.0u"m/s^3", z::Number=0.0u"m/s^3")
         if !isa(x, Quantity)
@@ -155,9 +155,9 @@ end
     Jerk(args) = Jerk(args...)
 
     struct Snap <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"m/s^4")}
-        y::Quantity{AbstractFloat, dimension(u"m/s^4")}
-        z::Quantity{AbstractFloat, dimension(u"m/s^4")}
+        x::typeof(1.0u"m/s^4")
+        y::typeof(1.0u"m/s^4")
+        z::typeof(1.0u"m/s^4")
     
         function Snap(x::Number=0.0u"m/s^4", y::Number=0.0u"m/s^4", z::Number=0.0u"m/s^4")
             if !isa(x, Quantity)
@@ -175,9 +175,9 @@ end
         Snap(args) = Snap(args...)
 
     struct AngularVelocity <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"rad/s")}
-        y::Quantity{AbstractFloat, dimension(u"rad/s")}
-        z::Quantity{AbstractFloat, dimension(u"rad/s")}
+        x::typeof(1.0u"rad/s")
+        y::typeof(1.0u"rad/s")
+        z::typeof(1.0u"rad/s")
 
         function AngularVelocity(x::Number=0.0u"rad/s", y::Number=0.0u"rad/s", z::Number=0.0u"rad/s")
             if !isa(x, Quantity)
@@ -195,9 +195,9 @@ end
         AngularVelocity(args) = AngularVelocity(args...)
 
     struct AngularAcceleration <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"rad/s^2")}
-        y::Quantity{AbstractFloat, dimension(u"rad/s^2")}
-        z::Quantity{AbstractFloat, dimension(u"rad/s^2")}
+        x::typeof(1.0u"rad/s^2")
+        y::typeof(1.0u"rad/s^2")
+        z::typeof(1.0u"rad/s^2")
 
         function AngularAcceleration(x::Number=0.0u"rad/s^2", y::Number=0.0u"rad/s^2", z::Number=0.0u"rad/s^2")
             if !isa(x, Quantity)
@@ -215,9 +215,9 @@ end
         AngularAcceleration(args) = AngularAcceleration(args...)
 
     struct Momentum <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"kg*m/s")}
-        y::Quantity{AbstractFloat, dimension(u"kg*m/s")}
-        z::Quantity{AbstractFloat, dimension(u"kg*m/s")}
+        x::typeof(1.0u"kg*m/s")
+        y::typeof(1.0u"kg*m/s")
+        z::typeof(1.0u"kg*m/s")
 
         function Momentum(x::Number=0.0u"kg*m/s", y::Number=0.0u"kg*m/s", z::Number=0.0u"kg*m/s")
             if !isa(x, Quantity)
@@ -235,9 +235,9 @@ end
         Momentum(args) = Momentum(args...)
         
     struct AngularMomentum <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"N*m*s")}
-        y::Quantity{AbstractFloat, dimension(u"N*m*s")}
-        z::Quantity{AbstractFloat, dimension(u"N*m*s")}
+        x::typeof(1.0u"N*m*s")
+        y::typeof(1.0u"N*m*s")
+        z::typeof(1.0u"N*m*s")
 
         function AngularMomentum(x::Number=0.0u"N*m*s", y::Number=0.0u"N*m*s", z::Number=0.0u"N*m*s")
             if !isa(x, Quantity)
@@ -255,9 +255,9 @@ end
         AngularMomentum(args) = AngularMomentum(args...)
 
     struct Torque <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"N*m")}
-        y::Quantity{AbstractFloat, dimension(u"N*m")}
-        z::Quantity{AbstractFloat, dimension(u"N*m")}
+        x::typeof(1.0u"N*m")
+        y::typeof(1.0u"N*m")
+        z::typeof(1.0u"N*m")
 
         function Torque(x::Number=0.0u"N*m", y::Number=0.0u"N*m", z::Number=0.0u"N*m")
             if !isa(x, Quantity)
@@ -275,8 +275,9 @@ end
         Torque(args) = Torque(args...)
 
     struct ElectricFieldStrength <: PhysicsVector
-        x::Quantity{AbstractFloat, dimension(u"N/C")}
-        y::Quantity{AbstractFloat, dimension(u"N/C")}
-        z::Quantity{AbstractFloat, dimension(u"N/C")}
+        x::typeof(1.0u"N/C")
+        y::typeof(1.0u"N/C")
+        z::typeof(1.0u"N/C")
     end
         ElectricFieldStrength( (x, y, z) ) = ElectricFieldStrength(x, y, z)
+    
