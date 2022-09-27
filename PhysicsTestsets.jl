@@ -40,6 +40,7 @@ end
     @test Position(8, 6, 4) / u"s" isa Velocity
     @test Acceleration(1, 2, 3) * 2u"s" isa Velocity
     @test Position(1, 2, 3) * Position(4, 5, 6) == 32.0u"m^2"
+    @test Position(1, 2, 3) × Force(4, 5, 6) isa Torque
     @test Velocity(1, 2, 3)^2 == 14.0u"m^2/s^2"
     @test unitvec(Position(1,2,3)) isa GeneralVector
     @test Velocity(1, 2, 3) .* 4u"s" isa Position
