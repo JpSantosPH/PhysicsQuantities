@@ -5,7 +5,7 @@ abstract type PhysicsScalar <: Number end
 
 ### SI base units ###
     struct Time <: PhysicsScalar
-        m::typeof(1.0u"s")
+        m::Quantity{AbstractFloat, dimension(u"s")}
 
         function Time(m::Number=0.0u"s")
             if !(m isa Quantity)
@@ -14,9 +14,9 @@ abstract type PhysicsScalar <: Number end
             new(m)
         end
     end
-
+Time(1)
     struct Length <: PhysicsScalar
-        m::typeof(1.0u"m")
+        m::Quantity{AbstractFloat, dimension(u"m")}
 
         function Length(m::Number=0.0u"m")
             if !(m isa Quantity)
@@ -27,7 +27,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Mass <: PhysicsScalar
-        m::typeof(1.0u"kg")
+        m::Quantity{AbstractFloat, dimension(u"kg")}
 
         function Mass(m::Number=0.0u"kg")
             if !(m isa Quantity)
@@ -38,7 +38,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Current <: PhysicsScalar
-        m::typeof(1.0u"A")
+        m::Quantity{AbstractFloat, dimension(u"A")}
 
         function Current(m::Number=0.0u"A")
             if !(m isa Quantity)
@@ -49,7 +49,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Temperature <: PhysicsScalar
-        m::typeof(1.0u"K")
+        m::Quantity{AbstractFloat, dimension(u"K")}
 
         function Temperature(m::Number=273.15u"K")
             if ustrip(m) ≤ 0
@@ -63,7 +63,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Substance <: PhysicsScalar
-        m::typeof(1.0u"mol")
+        m::Quantity{AbstractFloat, dimension(u"mol")}
 
         function Substance(m::Number=0.0u"mol")
             if !(m isa Quantity)
@@ -74,7 +74,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Luminous <: PhysicsScalar
-        m::typeof(1.0u"cd")
+        m::Quantity{AbstractFloat, dimension(u"cd")}
 
         function Luminous(m::Number=0.0u"cd")
             if !(m isa Quantity)
@@ -86,7 +86,7 @@ abstract type PhysicsScalar <: Number end
 
 ### Named units derived from SI base units ###
     struct Frequency <: PhysicsScalar
-        m::typeof(1.0u"Hz")
+        m::Quantity{AbstractFloat, dimension(u"Hz")}
 
         function Frequency(m::Number=0.0u"Hz")
             if !(m isa Quantity)
@@ -97,7 +97,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Angle <: PhysicsScalar
-        m::typeof(1.0u"rad")
+        m::Quantity{AbstractFloat, dimension(u"rad")}
 
         function Angle(m::Number=0.0u"rad")
             if !(m isa Quantity)
@@ -108,7 +108,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Pressure <: PhysicsScalar
-        m::typeof(1.0u"kPa")
+        m::Quantity{AbstractFloat, dimension(u"kPa")}
     
         function Pressure(m::Number=100.0u"kPa")
             if !(m isa Quantity)
@@ -119,7 +119,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Energy <: PhysicsScalar
-        m::typeof(1.0u"J")
+        m::Quantity{AbstractFloat, dimension(u"J")}
 
         function Energy(m::Number=0.0u"J")
             if !(m isa Quantity)
@@ -130,7 +130,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Power <: PhysicsScalar
-        m::typeof(1.0u"W")
+        m::Quantity{AbstractFloat, dimension(u"W")}
 
         function Power(m::Number=0.0u"W")
             if !(m isa Quantity)
@@ -141,7 +141,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Charge <: PhysicsScalar
-        m::typeof(1.0u"C")
+        m::Quantity{AbstractFloat, dimension(u"C")}
 
         function Charge(m::Number=0.0u"C")
             if !(m isa Quantity)
@@ -152,7 +152,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Voltage <: PhysicsScalar
-        m::typeof(1.0u"V")
+        m::Quantity{AbstractFloat, dimension(u"V")}
 
         function Voltage(m::Number=0.0u"V")
             if !(m isa Quantity)
@@ -163,7 +163,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Capacitance <: PhysicsScalar
-        m::typeof(1.0u"F")
+        m::Quantity{AbstractFloat, dimension(u"F")}
 
         function Capacitance(m::Number=0.0u"F")
             if !(m isa Quantity)
@@ -174,7 +174,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Resistance <: PhysicsScalar
-        m::typeof(1.0u"Ω")
+        m::Quantity{AbstractFloat, dimension(u"Ω")}
 
         function Resistance(m::Number=0.0u"Ω")
             if !(m isa Quantity)
@@ -185,7 +185,7 @@ abstract type PhysicsScalar <: Number end
     end
  
     struct Conductance <: PhysicsScalar
-        m::typeof(1.0u"S")
+        m::Quantity{AbstractFloat, dimension(u"S")}
 
         function Conductance(m::Number=0.0u"S")
             if !(m isa Quantity)
@@ -196,7 +196,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct MagneticFlux <: PhysicsScalar
-        m::typeof(1.0u"Wb")
+        m::Quantity{AbstractFloat, dimension(u"Wb")}
 
         function MagneticFlux(m::Number=0.0u"Wb")
             if !(m isa Quantity)
@@ -207,7 +207,7 @@ abstract type PhysicsScalar <: Number end
     end
     
     struct Induction <: PhysicsScalar
-        m::typeof(1.0u"T")
+        m::Quantity{AbstractFloat, dimension(u"T")}
     
         function Induction(m::Number=0.0u"T")
             if !(m isa Quantity)
@@ -218,7 +218,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Inductance <: PhysicsScalar
-        m::typeof(1.0u"H")
+        m::Quantity{AbstractFloat, dimension(u"H")}
 
         function Inductance(m::Number=0.0u"H")
             if !(m isa Quantity)
@@ -229,7 +229,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct LuminousFlux <: PhysicsScalar
-        m::typeof(1.0u"lm")
+        m::Quantity{AbstractFloat, dimension(u"lm")}
     
         function LuminousFlux(m::Number=0.0u"lm")
             if !(m isa Quantity)
@@ -240,7 +240,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Illuminance <: PhysicsScalar
-        m::typeof(1.0u"lx")
+        m::Quantity{AbstractFloat, dimension(u"lx")}
     
         function Illuminance(m::Number=0.0u"lx")
             if !(m isa Quantity)
@@ -251,7 +251,7 @@ abstract type PhysicsScalar <: Number end
     end
     
     struct Radioactivity <: PhysicsScalar
-        m::typeof(1.0u"Bq")
+        m::Quantity{AbstractFloat, dimension(1.0u"Bq")}
     
         function Radioactivity(m::Number=0.0u"Bq")
             if !(m isa Quantity)
@@ -262,7 +262,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct AbsorbedDose <: PhysicsScalar
-        m::typeof(1.0u"Gy")
+        m::Quantity{AbstractFloat, dimension(1.0u"Gy")}
     
         function AbsorbedDose(m::Number=0.0u"Gy")
             if !(m isa Quantity)
@@ -273,7 +273,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct EquivalentDose <: PhysicsScalar
-        m::typeof(1.0u"Sv")
+        m::Quantity{AbstractFloat, dimension(1.0u"Sv")}
     
         function EquivalentDose(m::Number=0.0u"Sv")
             if !(m isa Quantity)
@@ -284,7 +284,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct CatalyticActivity <: PhysicsScalar
-        m::typeof(1.0u"kat")
+        m::Quantity{AbstractFloat, dimension(1.0u"kat")}
     
         function CatalyticActivity(m::Number=0.0u"kat")
             if !(m isa Quantity)
@@ -295,7 +295,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Speed <: PhysicsScalar
-        m::typeof(1.0u"m/s")
+        m::Quantity{AbstractFloat, dimension(1.0u"m/s")}
 
         function Speed(m::Number=0.0u"m/s")
             if !(m isa Quantity)
@@ -306,7 +306,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct FrequencyDrift <: PhysicsScalar
-        m::typeof(1.0u"Hz/s")
+        m::Quantity{AbstractFloat, dimension(1.0u"Hz/s")}
     
         function FrequencyDrift(m::Number=0.0u"Hz/s")
             if !(m isa Quantity)
@@ -317,7 +317,7 @@ abstract type PhysicsScalar <: Number end
     end
     
     struct VolumetricFlow <: PhysicsScalar
-        m::typeof(1.0u"m^3/s")
+        m::Quantity{AbstractFloat, dimension(1.0u"m^3/s")}
     
         function VolumetricFlow(m::Number=0.0u"m^3/s")
             if !(m isa Quantity)
@@ -328,7 +328,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Area <: PhysicsScalar
-        m::typeof(1.0u"m^2")
+        m::Quantity{AbstractFloat, dimension(1.0u"m^2")}
     
         function Area(m::Number=0.0u"m^2")
             if !(m isa Quantity)
@@ -339,7 +339,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Volume <: PhysicsScalar
-        m::typeof(1.0u"m^3")
+        m::Quantity{AbstractFloat, dimension(1.0u"m^3")}
     
         function Volume(m::Number=0.0u"m^3")
             if !(m isa Quantity)
@@ -350,7 +350,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Wavenumber <: PhysicsScalar
-        m::typeof(1.0u"m^-1")
+        m::Quantity{AbstractFloat, dimension(1.0u"m^-1")}
     
         function Wavenumber(m::Number=0.0u"m^-1")
             if !(m isa Quantity)
@@ -361,7 +361,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct LinearDensity <: PhysicsScalar
-        m::typeof(1.0u"kg/m")
+        m::Quantity{AbstractFloat, dimension(1.0u"kg/m")}
     
         function LinearDensity(m::Number=0.0u"kg/m")
             if !(m isa Quantity)
@@ -372,7 +372,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct AreaDensity <: PhysicsScalar
-        m::typeof(1.0u"kg/m^2")
+        m::Quantity{AbstractFloat, dimension(1.0u"kg/m^2")}
     
         function AreaDensity(m::Number=0.0u"kg/m^2")
             if !(m isa Quantity)
@@ -383,7 +383,7 @@ abstract type PhysicsScalar <: Number end
     end
 
     struct Density <: PhysicsScalar
-        m::typeof(1.0u"kg/m^3")
+        m::Quantity{AbstractFloat, dimension(1.0u"kg/m^3")}
     
         function Density(m::Number=0.0u"kg/m^3")
             if !(m isa Quantity)
@@ -394,7 +394,7 @@ abstract type PhysicsScalar <: Number end
     end
     
     struct SpecificVolume <: PhysicsScalar
-        m::typeof(1.0u"m^3/kg")
+        m::Quantity{AbstractFloat, dimension(1.0u"m^3/kg")}
     
         function SpecificVolume(m::Number=0.0u"m^3/kg")
             if !(m isa Quantity)
@@ -405,7 +405,7 @@ abstract type PhysicsScalar <: Number end
     end
     
     struct Action <: PhysicsScalar
-        m::typeof(1.0u"J*s")
+        m::Quantity{AbstractFloat, dimension(1.0u"J*s")}
     
         function Action(m::Number=0.0u"J*s")
             if !(m isa Quantity)
