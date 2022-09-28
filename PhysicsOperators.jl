@@ -150,9 +150,6 @@ end
 function Base.Math.:cbrt(PS::PhysicsScalar)
     return PhysicsScalar(cbrt(PS.m))
 end
-function Base.one(PS::PhysicsScalar)
-    return one(PS.m)
-end
 function Base.abs(PS::PhysicsScalar)
     return PhysicsScalar(abs(PS.m))
 end
@@ -161,6 +158,12 @@ function Base.abs2(PS::PhysicsScalar)
 end
 function Base.inv(PS::PhysicsScalar)
     return PhysicsScalar(inv(PS.m))
+end
+function Base.sign(PS::PhysicsScalar)
+    return sign(PS.m)
+end
+function Base.one(PS::PhysicsScalar)
+    return one(PS.m)
 end
 
 ### bolean ###
@@ -204,7 +207,17 @@ end
 ### broadcasting ###
 Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector}) = Broadcast.ArrayStyle{PhysicsVector}()
 function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{PhysicsVector}}, ::Type{ElType}) where ElType
-    PhysicsVector(bc...)
+    return PhysicsVector(ps_strip(bc...))
+end
+function ps_strip(x::Number)
+    if x isa PhysicsScalar; x = x.m end
+    return x
+end
+function ps_strip(x::Number, y::Number, z::Number)
+    if x isa PhysicsScalar; x = x.m end
+    if y isa PhysicsScalar; y = y.m end
+    if z isa PhysicsScalar; z = z.m end
+    return x, y, z
 end
 
 ### Unitful ###
