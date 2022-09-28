@@ -206,10 +206,9 @@ using BenchmarkTools
         # Memory estimate: 228.88 MiB, allocs estimate: 2.
 ###################################################
 using BenchmarkTools
-a = Time(1)
-dump(a)
+
 @benchmark [Acceleration(1,2,3) * Time(i) for i in 1:1000]
-@benchmark [Length(i)/Time(i) for i in 1:10000]
+@benchmark [Length(1)/Time(i) for i in 1:10000]
 @benchmark [Length(1)/Time(i)^2 for i in 1:10000]
 @benchmark [kinetic_energy(Mass(10))(Speed(i)) for i in 1:10000]
 @benchmark [kinetic_energy(Mass(10))(Velocity(i)) for i in 1:10000]

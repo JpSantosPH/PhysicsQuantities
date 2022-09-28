@@ -2,375 +2,417 @@ using LinearAlgebra
 using Unitful
 
 abstract type PhysicsScalar <: Number end
-    struct Time{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"s"), Unitful.FreeUnits{T, dimension(u"s"), nothing}}
-    end
-        Base.show(io::IO, PS::Time) = print(io, Time,"(", PS.m, ")")
+
+### SI base units ###
+    struct Time <: PhysicsScalar
+        m::typeof(1.0u"s")
+
         function Time(m::Number=0.0u"s")
-            if !(m isa Quantity); m = m*u"s" end
-            m = convert(Quantity{Float64, dimension(u"s")}, m)
-            return Time(m)
+            if !(m isa Quantity)
+                m = m * u"s"
+            end
+            new(m)
         end
-
-    struct Length{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"m"), Unitful.FreeUnits{T, dimension(u"m"), nothing}}
     end
-        Base.show(io::IO, PS::Length) = print(io, Length,"(", PS.m, ")")
+
+    struct Length <: PhysicsScalar
+        m::typeof(1.0u"m")
+
         function Length(m::Number=0.0u"m")
-            if !(m isa Quantity); m = m*u"m" end
-            m = convert(Quantity{Float64, dimension(u"m")}, m)
-            return Length(m)
+            if !(m isa Quantity)
+                m = m * u"m"
+            end
+            new(m)
         end
-
-    struct Mass{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"kg"), Unitful.FreeUnits{T, dimension(u"kg"), nothing}}
     end
-        Base.show(io::IO, PS::Mass) = print(io, Mass,"(", PS.m, ")")
+
+    struct Mass <: PhysicsScalar
+        m::typeof(1.0u"kg")
+
         function Mass(m::Number=0.0u"kg")
-            if !(m isa Quantity); m = m*u"kg" end
-            m = convert(Quantity{Float64, dimension(u"kg")}, m)
-            return Mass(m)
+            if !(m isa Quantity)
+                m = m * u"kg"
+            end
+            new(m)
         end
-
-    struct Current{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"A"), Unitful.FreeUnits{T, dimension(u"A"), nothing}}
     end
-        Base.show(io::IO, PS::Current) = print(io, Current,"(", PS.m, ")")
+
+    struct Current <: PhysicsScalar
+        m::typeof(1.0u"A")
+
         function Current(m::Number=0.0u"A")
-            if !(m isa Quantity); m = m*u"A" end
-            m = convert(Quantity{Float64, dimension(u"A")}, m)
-            return Current(m)
+            if !(m isa Quantity)
+                m = m * u"A"
+            end
+            new(m)
         end
-
-    struct Temperature{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"K"), Unitful.FreeUnits{T, dimension(u"K"), nothing}}
     end
-        Base.show(io::IO, PS::Temperature) = print(io, Temperature,"(", PS.m, ")")
+
+    struct Temperature <: PhysicsScalar
+        m::typeof(1.0u"K")
+
         function Temperature(m::Number=273.15u"K")
-            if !(m isa Quantity); m = m*u"K" end
-            if m ≤ 0u"K"; error("Physics Error") end
-            m = convert(Quantity{Float64, dimension(u"K")}, m)
-            return Temperature(m)
+            if ustrip(m) ≤ 0
+                error("Physics Error")
+            end
+            if !(m isa Quantity)
+                m = m * u"K"
+            end
+            new(m)
         end
-
-    struct Substance{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"mol"), Unitful.FreeUnits{T, dimension(u"mol"), nothing}}
     end
-        Base.show(io::IO, PS::Substance) = print(io, Substance,"(", PS.m, ")")
+
+    struct Substance <: PhysicsScalar
+        m::typeof(1.0u"mol")
+
         function Substance(m::Number=0.0u"mol")
-            if !(m isa Quantity); m = m*u"mol" end
-            m = convert(Quantity{Float64, dimension(u"mol")}, m)
-            return Substance(m)
+            if !(m isa Quantity)
+                m = m * u"mol"
+            end
+            new(m)
         end
-
-    struct Luminous{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"cd"), Unitful.FreeUnits{T, dimension(u"cd"), nothing}}
     end
-        Base.show(io::IO, PS::Luminous) = print(io, Luminous,"(", PS.m, ")")
+
+    struct Luminous <: PhysicsScalar
+        m::typeof(1.0u"cd")
+
         function Luminous(m::Number=0.0u"cd")
-            if !(m isa Quantity); m = m*u"cd" end
-            m = convert(Quantity{Float64, dimension(u"cd")}, m)
-            return Luminous(m)
+            if !(m isa Quantity)
+                m = m * u"cd"
+            end
+            new(m)
         end
-
-    struct Frequency{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"Hz"), Unitful.FreeUnits{T, dimension(u"Hz"), nothing}}
     end
-        Base.show(io::IO, PS::Frequency) = print(io, Frequency,"(", PS.m, ")")
+
+### Named units derived from SI base units ###
+    struct Frequency <: PhysicsScalar
+        m::typeof(1.0u"Hz")
+
         function Frequency(m::Number=0.0u"Hz")
-            if !(m isa Quantity); m = m*u"Hz" end
-            m = convert(Quantity{Float64, dimension(u"Hz")}, m)
-            return Frequency(m)
+            if !(m isa Quantity)
+                m = m * u"Hz"
+            end
+            new(m)
         end
-
-    struct Angle{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"rad"), Unitful.FreeUnits{T, dimension(u"rad"), nothing}}
     end
-        Base.show(io::IO, PS::Angle) = print(io, Angle,"(", PS.m, ")")
+
+    struct Angle <: PhysicsScalar
+        m::typeof(1.0u"rad")
+
         function Angle(m::Number=0.0u"rad")
-            if !(m isa Quantity); m = m*u"rad" end
-            m = convert(Quantity{Float64, dimension(u"rad")}, m)
-            return Angle(m)
+            if !(m isa Quantity)
+                m = m * u"rad"
+            end
+            new(m)
         end
-
-    struct Pressure{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"kPa"), Unitful.FreeUnits{T, dimension(u"kPa"), nothing}}
     end
-        Base.show(io::IO, PS::Pressure) = print(io, Pressure,"(", PS.m, ")")
+
+    struct Pressure <: PhysicsScalar
+        m::typeof(1.0u"kPa")
+    
         function Pressure(m::Number=100.0u"kPa")
-            if !(m isa Quantity); m = m*u"kPa" end
-            m = convert(Quantity{Float64, dimension(u"kPa")}, m)
-            return Pressure(m)
+            if !(m isa Quantity)
+                m = m * u"kPa"
+            end
+            new(m)
         end
-
-    struct Energy{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"J"), Unitful.FreeUnits{T, dimension(u"J"), nothing}}
     end
-        Base.show(io::IO, PS::Energy) = print(io, Energy,"(", PS.m, ")")
+
+    struct Energy <: PhysicsScalar
+        m::typeof(1.0u"J")
+
         function Energy(m::Number=0.0u"J")
-            if !(m isa Quantity); m = m*u"J" end
-            m = convert(Quantity{Float64, dimension(u"J")}, m)
-            return Energy(m)
+            if !(m isa Quantity)
+                m = m * u"J"
+            end
+            new(m)
         end
-
-    struct Power{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"W"), Unitful.FreeUnits{T, dimension(u"W"), nothing}}
     end
-        Base.show(io::IO, PS::Power) = print(io, Power,"(", PS.m, ")")
+
+    struct Power <: PhysicsScalar
+        m::typeof(1.0u"W")
+
         function Power(m::Number=0.0u"W")
-            if !(m isa Quantity); m = m*u"W" end
-            m = convert(Quantity{Float64, dimension(u"W")}, m)
-            return Power(m)
+            if !(m isa Quantity)
+                m = m * u"W"
+            end
+            new(m)
         end
-
-    struct Charge{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"C"), Unitful.FreeUnits{T, dimension(u"C"), nothing}}
     end
-        Base.show(io::IO, PS::Charge) = print(io, Charge,"(", PS.m, ")")
+
+    struct Charge <: PhysicsScalar
+        m::typeof(1.0u"C")
+
         function Charge(m::Number=0.0u"C")
-            if !(m isa Quantity); m = m*u"C" end
-            m = convert(Quantity{Float64, dimension(u"C")}, m)
-            return Charge(m)
+            if !(m isa Quantity)
+                m = m * u"C"
+            end
+            new(m)
         end
-
-    struct Voltage{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"V"), Unitful.FreeUnits{T, dimension(u"V"), nothing}}
     end
-        Base.show(io::IO, PS::Voltage) = print(io, Voltage,"(", PS.m, ")")
+
+    struct Voltage <: PhysicsScalar
+        m::typeof(1.0u"V")
+
         function Voltage(m::Number=0.0u"V")
-            if !(m isa Quantity); m = m*u"V" end
-            m = convert(Quantity{Float64, dimension(u"V")}, m)
-            return Voltage(m)
+            if !(m isa Quantity)
+                m = m * u"V"
+            end
+            new(m)
         end
-
-    struct Capacitance{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"F"), Unitful.FreeUnits{T, dimension(u"F"), nothing}}
     end
-        Base.show(io::IO, PS::Capacitance) = print(io, Capacitance,"(", PS.m, ")")
+
+    struct Capacitance <: PhysicsScalar
+        m::typeof(1.0u"F")
+
         function Capacitance(m::Number=0.0u"F")
-            if !(m isa Quantity); m = m*u"F" end
-            m = convert(Quantity{Float64, dimension(u"F")}, m)
-            return Capacitance(m)
+            if !(m isa Quantity)
+                m = m * u"F"
+            end
+            new(m)
         end
-
-    struct Resistance{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"Ω"), Unitful.FreeUnits{T, dimension(u"Ω"), nothing}}
     end
-        Base.show(io::IO, PS::Resistance) = print(io, Resistance,"(", PS.m, ")")
+
+    struct Resistance <: PhysicsScalar
+        m::typeof(1.0u"Ω")
+
         function Resistance(m::Number=0.0u"Ω")
-            if !(m isa Quantity); m = m*u"Ω" end
-            m = convert(Quantity{Float64, dimension(u"Ω")}, m)
-            return Resistance(m)
+            if !(m isa Quantity)
+                m = m * u"Ω"
+            end
+            new(m)
         end
+    end
  
-    struct Conductance{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"S"), Unitful.FreeUnits{T, dimension(u"S"), nothing}}
-    end
-        Base.show(io::IO, PS::Conductance) = print(io, Conductance,"(", PS.m, ")")
+    struct Conductance <: PhysicsScalar
+        m::typeof(1.0u"S")
+
         function Conductance(m::Number=0.0u"S")
-            if !(m isa Quantity); m = m*u"S" end
-            m = convert(Quantity{Float64, dimension(u"S")}, m)
-            return Conductance(m)
+            if !(m isa Quantity)
+                m = m * u"S"
+            end
+            new(m)
         end
-
-    struct MagneticFlux{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"Wb"), Unitful.FreeUnits{T, dimension(u"Wb"), nothing}}
     end
-        Base.show(io::IO, PS::MagneticFlux) = print(io, MagneticFlux,"(", PS.m, ")")
+
+    struct MagneticFlux <: PhysicsScalar
+        m::typeof(1.0u"Wb")
+
         function MagneticFlux(m::Number=0.0u"Wb")
-            if !(m isa Quantity); m = m*u"Wb" end
-            m = convert(Quantity{Float64, dimension(u"Wb")}, m)
-            return MagneticFlux(m)
+            if !(m isa Quantity)
+                m = m * u"Wb"
+            end
+            new(m)
         end
-    
-    struct Induction{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"T"), Unitful.FreeUnits{T, dimension(u"T"), nothing}}
     end
-        Base.show(io::IO, PS::Induction) = print(io, Induction,"(", PS.m, ")")
+    
+    struct Induction <: PhysicsScalar
+        m::typeof(1.0u"T")
+    
         function Induction(m::Number=0.0u"T")
-            if !(m isa Quantity); m = m*u"T" end
-            m = convert(Quantity{Float64, dimension(u"T")}, m)
-            return Induction(m)
+            if !(m isa Quantity)
+                m = m * u"T"
+            end
+            new(m)
         end
-
-    struct Inductance{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"H"), Unitful.FreeUnits{T, dimension(u"H"), nothing}}
     end
-        Base.show(io::IO, PS::Inductance) = print(io, Inductance,"(", PS.m, ")")
+
+    struct Inductance <: PhysicsScalar
+        m::typeof(1.0u"H")
+
         function Inductance(m::Number=0.0u"H")
-            if !(m isa Quantity); m = m*u"H" end
-            m = convert(Quantity{Float64, dimension(u"H")}, m)
-            return Inductance(m)
+            if !(m isa Quantity)
+                m = m * u"H"
+            end
+            new(m)
         end
-
-    struct LuminousFlux{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"lm"), Unitful.FreeUnits{T, dimension(u"lm"), nothing}}
     end
-        Base.show(io::IO, PS::LuminousFlux) = print(io, LuminousFlux,"(", PS.m, ")")
+
+    struct LuminousFlux <: PhysicsScalar
+        m::typeof(1.0u"lm")
+    
         function LuminousFlux(m::Number=0.0u"lm")
-            if !(m isa Quantity); m = m*u"lm" end
-            m = convert(Quantity{Float64, dimension(u"lm")}, m)
-            return LuminousFlux(m)
+            if !(m isa Quantity)
+                m = m * u"lm"
+            end
+            new(m)
         end
-
-    struct Illuminance{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"lx"), Unitful.FreeUnits{T, dimension(u"lx"), nothing}}
     end
-        Base.show(io::IO, PS::Illuminance) = print(io, Illuminance,"(", PS.m, ")")
+
+    struct Illuminance <: PhysicsScalar
+        m::typeof(1.0u"lx")
+    
         function Illuminance(m::Number=0.0u"lx")
-            if !(m isa Quantity); m = m*u"lx" end
-            m = convert(Quantity{Float64, dimension(u"lx")}, m)
-            return Illuminance(m)
+            if !(m isa Quantity)
+                m = m * u"lx"
+            end
+            new(m)
         end
-    
-    struct Radioactivity{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"Bq"), Unitful.FreeUnits{T, dimension(u"Bq"), nothing}}
     end
-        Base.show(io::IO, PS::Radioactivity) = print(io, Radioactivity,"(", PS.m, ")")
+    
+    struct Radioactivity <: PhysicsScalar
+        m::typeof(1.0u"Bq")
+    
         function Radioactivity(m::Number=0.0u"Bq")
-            if !(m isa Quantity); m = m*u"Bq" end
-            m = convert(Quantity{Float64, dimension(u"Bq")}, m)
-            return Radioactivity(m)
+            if !(m isa Quantity)
+                m = m * u"Bq"
+            end
+            new(m)
         end
-
-    struct AbsorbedDose{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"Gy"), Unitful.FreeUnits{T, dimension(u"Gy"), nothing}}
     end
-        Base.show(io::IO, PS::AbsorbedDose) = print(io, AbsorbedDose,"(", PS.m, ")")
+
+    struct AbsorbedDose <: PhysicsScalar
+        m::typeof(1.0u"Gy")
+    
         function AbsorbedDose(m::Number=0.0u"Gy")
-            if !(m isa Quantity); m = m*u"Gy" end
-            m = convert(Quantity{Float64, dimension(u"Gy")}, m)
-            return AbsorbedDose(m)
+            if !(m isa Quantity)
+                m = m * u"Gy"
+            end
+            new(m)
         end
-
-    struct EquivalentDose{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"Sv"), Unitful.FreeUnits{T, dimension(u"Sv"), nothing}}
     end
-        Base.show(io::IO, PS::EquivalentDose) = print(io, EquivalentDose,"(", PS.m, ")")
+
+    struct EquivalentDose <: PhysicsScalar
+        m::typeof(1.0u"Sv")
+    
         function EquivalentDose(m::Number=0.0u"Sv")
-            if !(m isa Quantity); m = m*u"Sv" end
-            m = convert(Quantity{Float64, dimension(u"Sv")}, m)
-            return EquivalentDose(m)
+            if !(m isa Quantity)
+                m = m * u"Sv"
+            end
+            new(m)
         end
-
-    struct CatalyticActivity{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"kat"), Unitful.FreeUnits{T, dimension(u"kat"), nothing}}
     end
-        Base.show(io::IO, PS::CatalyticActivity) = print(io, CatalyticActivity,"(", PS.m, ")")
+
+    struct CatalyticActivity <: PhysicsScalar
+        m::typeof(1.0u"kat")
+    
         function CatalyticActivity(m::Number=0.0u"kat")
-            if !(m isa Quantity); m = m*u"kat" end
-            m = convert(Quantity{Float64, dimension(u"kat")}, m)
-            return CatalyticActivity(m)
+            if !(m isa Quantity)
+                m = m * u"kat"
+            end
+            new(m)
         end
-
-    struct Speed{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"m/s"), Unitful.FreeUnits{T, dimension(u"m/s"), nothing}}
     end
-        Base.show(io::IO, PS::Speed) = print(io, Speed,"(", PS.m, ")")
+
+    struct Speed <: PhysicsScalar
+        m::typeof(1.0u"m/s")
+
         function Speed(m::Number=0.0u"m/s")
-            if !(m isa Quantity); m = m*u"m/s" end
-            m = convert(Quantity{Float64, dimension(u"m/s")}, m)
-            return Speed(m)
+            if !(m isa Quantity)
+                m = m * u"m/s"
+            end
+            new(m)
         end
-
-    struct FrequencyDrift{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"Hz/s"), Unitful.FreeUnits{T, dimension(u"Hz/s"), nothing}}
     end
-        Base.show(io::IO, PS::FrequencyDrift) = print(io, FrequencyDrift,"(", PS.m, ")")
+
+    struct FrequencyDrift <: PhysicsScalar
+        m::typeof(1.0u"Hz/s")
+    
         function FrequencyDrift(m::Number=0.0u"Hz/s")
-            if !(m isa Quantity); m = m*u"Hz/s" end
-            m = convert(Quantity{Float64, dimension(u"Hz/s")}, m)
-            return FrequencyDrift(m)
+            if !(m isa Quantity)
+                m = m * u"Hz/s"
+            end
+            new(m)
         end
-    
-    struct VolumetricFlow{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"m^3/s"), Unitful.FreeUnits{T, dimension(u"m^3/s"), nothing}}
     end
-        Base.show(io::IO, PS::VolumetricFlow) = print(io, VolumetricFlow,"(", PS.m, ")")
+    
+    struct VolumetricFlow <: PhysicsScalar
+        m::typeof(1.0u"m^3/s")
+    
         function VolumetricFlow(m::Number=0.0u"m^3/s")
-            if !(m isa Quantity); m = m*u"m^3/s" end
-            m = convert(Quantity{Float64, dimension(u"m^3/s")}, m)
-            return VolumetricFlow(m)
+            if !(m isa Quantity)
+                m = m * u"m^3/s"
+            end
+            new(m)
         end
-
-    struct Area{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"m^2"), Unitful.FreeUnits{T, dimension(u"m^2"), nothing}}
     end
-        Base.show(io::IO, PS::Area) = print(io, Area,"(", PS.m, ")")
+
+    struct Area <: PhysicsScalar
+        m::typeof(1.0u"m^2")
+    
         function Area(m::Number=0.0u"m^2")
-            if !(m isa Quantity); m = m*u"m^2" end
-            m = convert(Quantity{Float64, dimension(u"m^2")}, m)
-            return Area(m)
+            if !(m isa Quantity)
+                m = m * u"m^2"
+            end
+            new(m)
         end
-
-    struct Volume{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"m^3"), Unitful.FreeUnits{T, dimension(u"m^3"), nothing}}
     end
-        Base.show(io::IO, PS::Volume) = print(io, Volume,"(", PS.m, ")")
+
+    struct Volume <: PhysicsScalar
+        m::typeof(1.0u"m^3")
+    
         function Volume(m::Number=0.0u"m^3")
-            if !(m isa Quantity); m = m*u"m^3" end
-            m = convert(Quantity{Float64, dimension(u"m^3")}, m)
-            return Volume(m)
+            if !(m isa Quantity)
+                m = m * u"m^3"
+            end
+            new(m)
         end
-
-    struct Wavenumber{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"m^-1"), Unitful.FreeUnits{T, dimension(u"m^-1"), nothing}}
     end
-        Base.show(io::IO, PS::Wavenumber) = print(io, Wavenumber,"(", PS.m, ")")
+
+    struct Wavenumber <: PhysicsScalar
+        m::typeof(1.0u"m^-1")
+    
         function Wavenumber(m::Number=0.0u"m^-1")
-            if !(m isa Quantity); m = m*u"m^-1" end
-            m = convert(Quantity{Float64, dimension(u"m^-1")}, m)
-            return Wavenumber(m)
+            if !(m isa Quantity)
+                m = m * u"m^-1"
+            end
+            new(m)
         end
-
-    struct LinearDensity{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"kg/m"), Unitful.FreeUnits{T, dimension(u"kg/m"), nothing}}
     end
-        Base.show(io::IO, PS::LinearDensity) = print(io, LinearDensity,"(", PS.m, ")")
+
+    struct LinearDensity <: PhysicsScalar
+        m::typeof(1.0u"kg/m")
+    
         function LinearDensity(m::Number=0.0u"kg/m")
-            if !(m isa Quantity); m = m*u"kg/m" end
-            m = convert(Quantity{Float64, dimension(u"kg/m")}, m)
-            return LinearDensity(m)
+            if !(m isa Quantity)
+                m = m * u"kg/m"
+            end
+            new(m)
         end
-
-    struct AreaDensity{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"kg/m^2"), Unitful.FreeUnits{T, dimension(u"kg/m^2"), nothing}}
     end
-        Base.show(io::IO, PS::AreaDensity) = print(io, AreaDensity,"(", PS.m, ")")
+
+    struct AreaDensity <: PhysicsScalar
+        m::typeof(1.0u"kg/m^2")
+    
         function AreaDensity(m::Number=0.0u"kg/m^2")
-            if !(m isa Quantity); m = m*u"kg/m^2" end
-            m = convert(Quantity{Float64, dimension(u"kg/m^2")}, m)
-            return AreaDensity(m)
+            if !(m isa Quantity)
+                m = m * u"kg/m^2"
+            end
+            new(m)
         end
+    end
 
-    struct Density{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"kg/m^3"), Unitful.FreeUnits{T, dimension(u"kg/m^3"), nothing}}
-    end
-        Base.show(io::IO, PS::Density) = print(io, Density,"(", PS.m, ")")
+    struct Density <: PhysicsScalar
+        m::typeof(1.0u"kg/m^3")
+    
         function Density(m::Number=0.0u"kg/m^3")
-            if !(m isa Quantity); m = m*u"kg/m^3" end
-            m = convert(Quantity{Float64, dimension(u"kg/m^3")}, m)
-            return Density(m)
+            if !(m isa Quantity)
+                m = m * u"kg/m^3"
+            end
+            new(m)
         end
-    
-    struct SpecificVolume{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"m^3/kg"), Unitful.FreeUnits{T, dimension(u"m^3/kg"), nothing}}
     end
-        Base.show(io::IO, PS::SpecificVolume) = print(io, SpecificVolume,"(", PS.m, ")")
+    
+    struct SpecificVolume <: PhysicsScalar
+        m::typeof(1.0u"m^3/kg")
+    
         function SpecificVolume(m::Number=0.0u"m^3/kg")
-            if !(m isa Quantity); m = m*u"m^3/kg" end
-            m = convert(Quantity{Float64, dimension(u"m^3/kg")}, m)
-            return SpecificVolume(m)
+            if !(m isa Quantity)
+                m = m * u"m^3/kg"
+            end
+            new(m)
         end
-    
-    struct Action{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"J*s"), Unitful.FreeUnits{T, dimension(u"J*s"), nothing}}
     end
-        Base.show(io::IO, PS::Action) = print(io, Action,"(", PS.m, ")")
+    
+    struct Action <: PhysicsScalar
+        m::typeof(1.0u"J*s")
+    
         function Action(m::Number=0.0u"J*s")
-            if !(m isa Quantity); m = m*u"J*s" end
-            m = convert(Quantity{Float64, dimension(u"J*s")}, m)
-            return Action(m)
+            if !(m isa Quantity)
+                m = m * u"J*s"
+            end
+            new(m)
         end
+    end
 
     

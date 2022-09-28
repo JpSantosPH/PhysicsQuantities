@@ -26,6 +26,7 @@ using Unicode
     @test max(Time(2), Time(5), Time(1)) == Time(5)
     @test minmax(Time(5), Time(2)) == (Time(2), Time(5))
 end
+
 @testset "PhysicsVector Functionalities" begin
     @test PhysicsVector([1u"m/s", 2u"m/s", 3u"m/s"]) isa Velocity
     @test Position(1, 2, 3) + Position(4, 5, 6) isa Position
@@ -323,12 +324,11 @@ end
     @test AngularAcceleration() == AngularAcceleration(0, 0, 0)
 end
 
-#@testset "Momentum Functionalities" begin
+@testset "Momentum Functionalities" begin
     @test Momentum(1, 2//1000) == Momentum(1 * u"kg*m/s", 2//1 * u"g*m/s", 0.0u"kg*m/s")
     @test Momentum() == Momentum(0, 0, 0)
-#end
-Momentum(1, 2//1000)
-Momentum(1 * u"kg*m/s", 2//1 * u"g*m/s", 0.0u"kg*m/s")
+end
+
 @testset "AngularMomentum Functionalities" begin
     @test AngularMomentum(1, 2//1000) == AngularMomentum(1 * u"N*m*s", 2//1 * u"mN*m*s", 0.0u"N*m*s")
     @test AngularMomentum() == AngularMomentum(0, 0, 0)
