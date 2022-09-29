@@ -2,6 +2,11 @@ using LinearAlgebra
 using Unitful
 
 abstract type PhysicsScalar <: Number end
+    struct GeneralScalar{T<:Number} <: PhysicsScalar
+        m::T
+    end
+    Base.show(io::IO, PS::GeneralScalar) = print(io, GeneralScalar,"(", PS.m, ")")
+
     struct Time{T} <: PhysicsScalar where {T}
         m::Quantity{Float64, dimension(u"s"), Unitful.FreeUnits{T, dimension(u"s"), nothing}}
     end
