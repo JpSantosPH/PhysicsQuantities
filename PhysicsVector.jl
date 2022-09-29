@@ -14,7 +14,7 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         val = ps_strip(val)
         if     i == 1; return PhysicsVector(val,  PV.y, PV.z)
         elseif i == 2; return PhysicsVector(PV.x, val,  PV.z)
-        elseif i == 3; return PhysicsVector(PV.x, PV.y, val)
+        elseif i == 3; return PhysicsVector(PV.x, PV.y, val )
         end
     end
 

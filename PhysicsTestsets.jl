@@ -14,8 +14,8 @@ using Unicode
     @test Length(1) / 2u"s" isa Speed
     @test 1/2 * Mass(10) * Speed(5)^2 isa Energy
     @test dimension(Speed(12)^5) == dimension(1u"m^5/s^5") 
-    @test sqrt(Length(12)) isa Quantity
-    @test cbrt(Time(12)) isa Quantity
+    @test sqrt(Length(12)) isa GeneralScalar
+    @test cbrt(Time(12)) isa GeneralScalar
     @test inv(Time(12)) isa Frequency
     @test one(Length(3)) == 1
     @test abs(Length(-1)) == Length(1)
@@ -26,6 +26,7 @@ using Unicode
     @test max(Time(2), Time(5), Time(1)) == Time(5)
     @test minmax(Time(5), Time(2)) == (Time(2), Time(5))
 end
+
 @testset "PhysicsVector Functionalities" begin
     @test PhysicsVector([1u"m/s", 2u"m/s", 3u"m/s"]) isa Velocity
     @test Position(1, 2, 3) + Position(4, 5, 6) isa Position
@@ -43,9 +44,13 @@ end
     @test Velocity(1, 2, 3)^2 == 14.0u"m^2/s^2"
     @test unitvec(Position(1,2,3)) isa GeneralVector
     @test Velocity(1, 2, 3) .* 4u"s" isa Position
-    @test Velocity(1, 2, 3) ./ Time(4) isa Acceleration
+    @test Position(1, 2, 3) ./ 4u"s" isa Velocity
     @test Velocity(1, 2, 3) .+ 4u"m/s" isa Velocity
     @test Velocity(4, 3, 2) .- 1u"m/s" isa Velocity
+    @test Velocity(1, 2, 3) .* Time(4) isa Position
+    @test Position(1, 2, 3) ./ Time(4) isa Velocity
+    @test Velocity(1, 2, 3) .+ Speed(4) isa Velocity
+    @test Velocity(4, 3, 2) .- Speed(1) isa Velocity
     @test let 
         PV = Position(1, 2, 3)
         M = [   1 2 3
@@ -341,5 +346,5 @@ end
 
 @testset "ElectricFieldStrength Functionalities" begin
     @test ElectricFieldStrength(4u"nC")(Position(2)) isa ElectricFieldStrength
-    @test dimension(ElectricFieldStrength(4u"nC")(Length(2))) == dimension(u"N/C")
+    @test ElectricFieldStrength(4u"nC")(Length(2)) isa GeneralScalar
 end

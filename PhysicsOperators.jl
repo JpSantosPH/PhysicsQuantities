@@ -48,7 +48,7 @@ function LinearAlgebra.norm(PV::PhysicsVector)
 end
 function Base.:*(M::AbstractMatrix, PV::PhysicsVector)
     i, k = size(M)
-    if k != 3 || i != 3
+    if k ≠ 3 || i ≠ 3
         return error("DimensionMismatch: matrix must have a dimension of (3,3)")
     end
     
@@ -63,7 +63,7 @@ function Base.:*(M::AbstractMatrix, PV::PhysicsVector)
 end
 function Base.:*(PV::PhysicsVector, M::AbstractMatrix)
     i, k = size(M)
-    if k != 3 || i != 3
+    if k ≠ 3 || i ≠ 3
         return error("DimensionMismatch: matrix must have a dimension of (3,3)")
     end
     
@@ -130,10 +130,10 @@ function Base.:/(AQ::Unitful.AbstractQuantity, PS::PhysicsScalar)
     return PhysicsScalar(AQ / PS.m)
 end
 function Base.:^(PS::PhysicsScalar, i::Integer)
-    return *((PS.m for x in 1:i)...)
+    return *((PS for x in 1:i)...)
 end
-function Base.:^(PS::PhysicsScalar, n::Rational)
-    return PS.m^n
+function Base.:^(PS::PhysicsScalar, n::Number)
+    return PhysicsScalar(PS.m^n)
 end
 function Base.inv(PS::PhysicsScalar)
     return PhysicsScalar(inv(PS.m))
@@ -207,7 +207,7 @@ end
 ### broadcasting ###
 Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector}) = Broadcast.ArrayStyle{PhysicsVector}()
 function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{PhysicsVector}}, ::Type{ElType}) where ElType
-    return PhysicsVector(ps_strip(bc...))
+    return PhysicsVector(ps_strip(bc))
 end
 function ps_strip(x::Number)
     if x isa PhysicsScalar; x = x.m end
@@ -219,6 +219,9 @@ function ps_strip(x::Number, y::Number, z::Number)
     if z isa PhysicsScalar; z = z.m end
     return x, y, z
 end
+function ps_strip( (x, y, z) )
+    return ps_strip(x, y, z)
+end
 
 ### Unitful ###
 function Unitful.dimension(PS::PhysicsScalar)
@@ -228,8 +231,8 @@ function Unitful.dimension(PV::PhysicsVector)
     return dimension(PV.x)
 end
 function Unitful.uconvert(a::Unitful.Units, PS::PhysicsScalar)
-    return uconvert(a, PS.m)
+    return PhysicsScalar(uconvert(a, PS.m))
 end
 function Unitful.uconvert(a::Unitful.Units, PV::PhysicsVector)
-    return GeneralVector(uconvert(a, PV.x), uconvert(a, PV.y), uconvert(a, PV.z))
+    return PhysicsVector(uconvert(a, PV.x), uconvert(a, PV.y), uconvert(a, PV.z))
 end

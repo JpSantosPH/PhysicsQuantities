@@ -14,7 +14,7 @@ function PhysicsVector(x::Number, y::Number, z::Number)
         elseif d == dimension(u"N*m*s");    return AngularMomentum(x, y, z)
         elseif d == dimension(u"N*m");      return Torque(x, y, z)
         elseif d == dimension(u"N/C");      return ElectricFieldStrength(x, y, z)
-        else;                               return GeneralVector(x, y, z)
+        else;  x, y, z = ps_strip(x, y, z); return GeneralVector(x, y, z)
         end
     end
 end
@@ -61,7 +61,7 @@ function PhysicsScalar(m::Number)
     elseif d == dimension(u"Bq")  && u == u"Bq";    return Radioactivity(m)
     elseif d == dimension(u"Gy")  && u == u"Gy";    return AbsorbedDose(m)
     elseif d == dimension(u"Sv")  && u == u"Sv";    return EquivalentDose(m)
-    else; return m
+    else; m = ps_strip(m); return GeneralScalar(m)
     end
 end
     PhysicsScalar(PS::PhysicsScalar) = PhysicsScalar(PS.m)
