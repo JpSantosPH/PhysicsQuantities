@@ -208,6 +208,36 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         Base.showarg(io::IO, V::Torque, toplevel) = print(io, Torque)
         Torque(args) = Torque(args...)
 
+    struct ElectricDisplacementField{A,B,C} <: PhysicsVector where {A,B,C}
+        x::Quantity{Float64, dimension(u"C/m^2"), Unitful.FreeUnits{A, dimension(u"C/m^2"), nothing}}
+        y::Quantity{Float64, dimension(u"C/m^2"), Unitful.FreeUnits{B, dimension(u"C/m^2"), nothing}}
+        z::Quantity{Float64, dimension(u"C/m^2"), Unitful.FreeUnits{C, dimension(u"C/m^2"), nothing}}
+    end
+        function ElectricDisplacementField(x::Number=0.0u"C/m^2", y::Number=0.0u"C/m^2", z::Number=0.0u"C/m^2")
+            if !(x isa Quantity); x = x*u"C/m^2" end
+            if !(y isa Quantity); y = y*u"C/m^2" end
+            if !(z isa Quantity); z = z*u"C/m^2" end
+            x, y, z = convert.(Quantity{Float64, dimension(u"C/m^2")}, (x, y, z))
+            return ElectricDisplacementField(x, y, z)
+        end
+        Base.showarg(io::IO, V::ElectricDisplacementField, toplevel) = print(io, ElectricDisplacementField)
+        ElectricDisplacementField(args) = ElectricDisplacementField(args...)
+
+    struct CurrentDensity{A,B,C} <: PhysicsVector where {A,B,C}
+        x::Quantity{Float64, dimension(u"A/m^2"), Unitful.FreeUnits{A, dimension(u"A/m^2"), nothing}}
+        y::Quantity{Float64, dimension(u"A/m^2"), Unitful.FreeUnits{B, dimension(u"A/m^2"), nothing}}
+        z::Quantity{Float64, dimension(u"A/m^2"), Unitful.FreeUnits{C, dimension(u"A/m^2"), nothing}}
+    end
+        function CurrentDensity(x::Number=0.0u"A/m^2", y::Number=0.0u"A/m^2", z::Number=0.0u"A/m^2")
+            if !(x isa Quantity); x = x*u"A/m^2" end
+            if !(y isa Quantity); y = y*u"A/m^2" end
+            if !(z isa Quantity); z = z*u"A/m^2" end
+            x, y, z = convert.(Quantity{Float64, dimension(u"A/m^2")}, (x, y, z))
+            return CurrentDensity(x, y, z)
+        end
+        Base.showarg(io::IO, V::CurrentDensity, toplevel) = print(io, CurrentDensity)
+        CurrentDensity(args) = CurrentDensity(args...)
+
     struct ElectricFieldStrength{A,B,C} <: PhysicsVector where {A,B,C}
         x::Quantity{Float64, dimension(u"N/C"), Unitful.FreeUnits{A, dimension(u"N/C"), nothing}}
         y::Quantity{Float64, dimension(u"N/C"), Unitful.FreeUnits{B, dimension(u"N/C"), nothing}}

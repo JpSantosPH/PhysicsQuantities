@@ -10,6 +10,9 @@ vector_dict = Dict(
     u"kg*m/s"   => Momentum,
     u"N*m*s"    => AngularMomentum,
     u"N*m"      => Torque,
+    u"C/m^2"        => ElectricDisplacementField,
+    u"A/m^2"        => CurrentDensity,
+
     u"N/C"      => ElectricFieldStrength,
 )
 
@@ -71,4 +74,16 @@ scalar_dict = Dict(
     u"W/(sr*m^2)"   => Radiance,
     u"W/(sr*m^3)"   => SpectralRadiance,
     u"J/m^2"        => RadiantExposure,
-)
+    u"mol/m^3"        => Molarity,
+    u"m^3/mol"        => MolarVolume,
+    u"J/(K*mol)"        => MolarHeatCapacity,
+    u"J/mol"        => MolarEnergy,
+    u"S*m^2/mol"        => MolarConductivity,
+    u"mol/kg"        => Molality,
+    u"kg/mol"        => MolarMass,
+    u"m^3/(mol*s)"        => CatalyticEfficiency,
+    u"C/m^3"        => VolumeChargeDensity,
+    u"C/m^2"        => AreaChargeDensity,
+    u"C/m"        => LinearChargeDensity,
+    u"S/m"        => Conductivity,
+    )

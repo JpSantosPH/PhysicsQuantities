@@ -378,6 +378,63 @@ end
     @test RadiantExposure() == RadiantExposure(0)
 end
 
+@testset "Molarity Functionalities" begin
+    @test Molarity(12//1000) == Molarity(12.0u"mmol/m^3")
+    @test Molarity() == Molarity(0)
+end
+
+@testset "MolarVolume Functionalities" begin
+    @test MolarVolume(12//1000000) == MolarVolume(12.0u"cm^3/mol")
+    @test MolarVolume() == MolarVolume(0)
+end
+
+@testset "MolarHeatCapacity Functionalities" begin
+    @test MolarHeatCapacity(12//1000) == MolarHeatCapacity(12.0u"mJ/(K*mol)")
+    @test MolarHeatCapacity() == MolarHeatCapacity(0)
+end
+
+@testset "MolarEnergy Functionalities" begin
+    @test MolarEnergy(12//1000) == MolarEnergy(12.0u"mJ/mol")
+    @test MolarEnergy() == MolarEnergy(0)
+end
+
+@testset "MolarConductivity Functionalities" begin
+    @test MolarConductivity(12//1000) == MolarConductivity(12.0u"mS*m^2/mol")
+    @test MolarConductivity() == MolarConductivity(0)
+end
+
+@testset "Molality Functionalities" begin
+    @test Molality(12//1000) == Molality(12.0u"mmol/kg")
+    @test Molality() == Molality(0)
+end
+
+@testset "MolarMass Functionalities" begin
+    @test MolarMass(12//1000) == MolarMass(12.0u"g/mol")
+    @test MolarMass() == MolarMass(0)
+end
+
+@testset "CatalyticEfficiency Functionalities" begin
+    @test CatalyticEfficiency(12//1000000) == CatalyticEfficiency(12.0u"cm^3/(mol*s)")
+    @test CatalyticEfficiency() == CatalyticEfficiency(0)
+end
+
+@testset "VolumeChargeDensity Functionalities" begin
+    @test VolumeChargeDensity(12//1000) == VolumeChargeDensity(12.0u"mC/m^3")
+    @test VolumeChargeDensity() == VolumeChargeDensity(0)
+end
+
+@testset "AreaChargeDensity Functionalities" begin
+    @test AreaChargeDensity(12//1000) == AreaChargeDensity(12.0u"mC/m^2")
+    @test AreaChargeDensity() == AreaChargeDensity(0)
+end
+
+@testset "LinearChargeDensity Functionalities" begin
+    @test LinearChargeDensity(12//1000) == LinearChargeDensity(12.0u"mC/m")
+    @test LinearChargeDensity() == LinearChargeDensity(0)
+end
+
+
+
 @testset "CartesianCoordinate Functionalities" begin
     @test CartesianCoordinate(1, 2, 3) isa CartesianCoordinate
     @test CartesianCoordinate( (1, 2) ) == CartesianCoordinate(1, 2, 0)
@@ -436,6 +493,16 @@ end
 @testset "Torque Functionalities" begin
     @test Torque(1, 2//1000) == Torque(1 * u"N*m", 2//1 * u"mN*m", 0.0u"N*m")
     @test Torque() == Torque(0, 0, 0)
+end
+
+@testset "ElectricDisplacementField Functionalities" begin
+    @test ElectricDisplacementField(1, 2//1000) == ElectricDisplacementField(1 * u"C/m^2", 2//1 * u"mC/m^2", 0.0u"C/m^2")
+    @test ElectricDisplacementField() == ElectricDisplacementField(0, 0, 0)
+end
+
+@testset "LinearChargeDensity Functionalities" begin
+    @test LinearChargeDensity(12//1000) == LinearChargeDensity(12.0u"mC/m")
+    @test LinearChargeDensity() == LinearChargeDensity(0)
 end
 
 @testset "ElectricFieldStrength Functionalities" begin

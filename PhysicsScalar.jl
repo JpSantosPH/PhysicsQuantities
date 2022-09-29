@@ -577,3 +577,123 @@ abstract type PhysicsScalar <: Number end
             m = convert(Quantity{Float64, dimension(u"J/m^2")}, m)
             return RadiantExposure(m)
         end
+
+    struct Molarity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"mol/m^3"), Unitful.FreeUnits{T, dimension(u"mol/m^3"), nothing}}
+    end
+        Base.show(io::IO, PS::Molarity) = print(io, Molarity,"(", PS.m, ")")
+        function Molarity(m::Number=0.0u"mol/m^3")
+            if !(m isa Quantity); m = m*u"mol/m^3" end
+            m = convert(Quantity{Float64, dimension(u"mol/m^3")}, m)
+            return Molarity(m)
+        end
+
+        struct MolarVolume{T} <: PhysicsScalar where {T}
+            m::Quantity{Float64, dimension(u"m^3/mol"), Unitful.FreeUnits{T, dimension(u"m^3/mol"), nothing}}
+        end
+            Base.show(io::IO, PS::MolarVolume) = print(io, MolarVolume,"(", PS.m, ")")
+            function MolarVolume(m::Number=0.0u"m^3/mol")
+                if !(m isa Quantity); m = m*u"m^3/mol" end
+                m = convert(Quantity{Float64, dimension(u"m^3/mol")}, m)
+                return MolarVolume(m)
+            end
+
+    struct MolarHeatCapacity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"J/(K*mol)"), Unitful.FreeUnits{T, dimension(u"J/(K*mol)"), nothing}}
+    end
+        Base.show(io::IO, PS::MolarHeatCapacity) = print(io, MolarHeatCapacity,"(", PS.m, ")")
+        function MolarHeatCapacity(m::Number=0.0u"J/(K*mol)")
+            if !(m isa Quantity); m = m*u"J/(K*mol)" end
+            m = convert(Quantity{Float64, dimension(u"J/(K*mol)")}, m)
+            return MolarHeatCapacity(m)
+        end
+
+    struct MolarEnergy{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"J/mol"), Unitful.FreeUnits{T, dimension(u"J/mol"), nothing}}
+    end
+        Base.show(io::IO, PS::MolarEnergy) = print(io, MolarEnergy,"(", PS.m, ")")
+        function MolarEnergy(m::Number=0.0u"J/mol")
+            if !(m isa Quantity); m = m*u"J/mol" end
+            m = convert(Quantity{Float64, dimension(u"J/mol")}, m)
+            return MolarEnergy(m)
+        end
+
+    struct MolarConductivity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"S*m^2/mol"), Unitful.FreeUnits{T, dimension(u"S*m^2/mol"), nothing}}
+    end
+        Base.show(io::IO, PS::MolarConductivity) = print(io, MolarConductivity,"(", PS.m, ")")
+        function MolarConductivity(m::Number=0.0u"S*m^2/mol")
+            if !(m isa Quantity); m = m*u"S*m^2/mol" end
+            m = convert(Quantity{Float64, dimension(u"S*m^2/mol")}, m)
+            return MolarConductivity(m)
+        end
+
+    struct Molality{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"mol/kg"), Unitful.FreeUnits{T, dimension(u"mol/kg"), nothing}}
+    end
+        Base.show(io::IO, PS::Molality) = print(io, Molality,"(", PS.m, ")")
+        function Molality(m::Number=0.0u"mol/kg")
+            if !(m isa Quantity); m = m*u"mol/kg" end
+            m = convert(Quantity{Float64, dimension(u"mol/kg")}, m)
+            return Molality(m)
+        end
+
+    struct MolarMass{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"kg/mol"), Unitful.FreeUnits{T, dimension(u"kg/mol"), nothing}}
+    end
+        Base.show(io::IO, PS::MolarMass) = print(io, MolarMass,"(", PS.m, ")")
+        function MolarMass(m::Number=0.0u"kg/mol")
+            if !(m isa Quantity); m = m*u"kg/mol" end
+            m = convert(Quantity{Float64, dimension(u"kg/mol")}, m)
+            return MolarMass(m)
+        end
+
+    struct CatalyticEfficiency{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"m^3/(mol*s)"), Unitful.FreeUnits{T, dimension(u"m^3/(mol*s)"), nothing}}
+    end
+        Base.show(io::IO, PS::CatalyticEfficiency) = print(io, CatalyticEfficiency,"(", PS.m, ")")
+        function CatalyticEfficiency(m::Number=0.0u"m^3/(mol*s)")
+            if !(m isa Quantity); m = m*u"m^3/(mol*s)" end
+            m = convert(Quantity{Float64, dimension(u"m^3/(mol*s)")}, m)
+            return CatalyticEfficiency(m)
+        end
+
+    struct VolumeChargeDensity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"C/m^3"), Unitful.FreeUnits{T, dimension(u"C/m^3"), nothing}}
+    end
+        Base.show(io::IO, PS::VolumeChargeDensity) = print(io, VolumeChargeDensity,"(", PS.m, ")")
+        function VolumeChargeDensity(m::Number=0.0u"C/m^3")
+            if !(m isa Quantity); m = m*u"C/m^3" end
+            m = convert(Quantity{Float64, dimension(u"C/m^3")}, m)
+            return VolumeChargeDensity(m)
+        end
+
+    struct AreaChargeDensity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"C/m^2"), Unitful.FreeUnits{T, dimension(u"C/m^2"), nothing}}
+    end
+        Base.show(io::IO, PS::AreaChargeDensity) = print(io, AreaChargeDensity,"(", PS.m, ")")
+        function AreaChargeDensity(m::Number=0.0u"C/m^2")
+            if !(m isa Quantity); m = m*u"C/m^2" end
+            m = convert(Quantity{Float64, dimension(u"C/m^2")}, m)
+            return AreaChargeDensity(m)
+        end
+
+    struct LinearChargeDensity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"C/m"), Unitful.FreeUnits{T, dimension(u"C/m"), nothing}}
+    end
+        Base.show(io::IO, PS::LinearChargeDensity) = print(io, LinearChargeDensity,"(", PS.m, ")")
+        function LinearChargeDensity(m::Number=0.0u"C/m")
+            if !(m isa Quantity); m = m*u"C/m" end
+            m = convert(Quantity{Float64, dimension(u"C/m")}, m)
+            return LinearChargeDensity(m)
+        end
+
+    struct Conductivity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"S/m"), Unitful.FreeUnits{T, dimension(u"S/m"), nothing}}
+    end
+        Base.show(io::IO, PS::Conductivity) = print(io, Conductivity,"(", PS.m, ")")
+        function Conductivity(m::Number=0.0u"S/m")
+            if !(m isa Quantity); m = m*u"S/m" end
+            m = convert(Quantity{Float64, dimension(u"S/m")}, m)
+            return Conductivity(m)
+        end

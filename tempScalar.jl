@@ -1,18 +1,20 @@
-elseif d == dimension(u"W/(sr*m)");        return SpectralIntensity(m)
+elseif d == dimension(u"S/m");        return Conductivity(m)
 
-u"W/(sr*m)"        => SpectralIntensity,
+u"S/m"        => Conductivity,
 
-@testset "SpectralIntensity Functionalities" begin
-    @test SpectralIntensity(12//1000) == SpectralIntensity(12.0u"kW/(sr*m)")
-    @test SpectralIntensity() == SpectralIntensity(0)
-end
+1
 
-    struct SpectralIntensity{T} <: PhysicsScalar where {T}
-        m::Quantity{Float64, dimension(u"W/(sr*m)"), Unitful.FreeUnits{T, dimension(u"W/(sr*m)"), nothing}}
+    struct Conductivity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"S/m"), Unitful.FreeUnits{T, dimension(u"S/m"), nothing}}
     end
-        Base.show(io::IO, PS::SpectralIntensity) = print(io, SpectralIntensity,"(", PS.m, ")")
-        function SpectralIntensity(m::Number=0.0u"W/(sr*m)")
-            if !(m isa Quantity); m = m*u"W/(sr*m)" end
-            m = convert(Quantity{Float64, dimension(u"W/(sr*m)")}, m)
-            return SpectralIntensity(m)
+        Base.show(io::IO, PS::Conductivity) = print(io, Conductivity,"(", PS.m, ")")
+        function Conductivity(m::Number=0.0u"S/m")
+            if !(m isa Quantity); m = m*u"S/m" end
+            m = convert(Quantity{Float64, dimension(u"S/m")}, m)
+            return Conductivity(m)
         end
+
+@testset "Conductivity Functionalities" begin
+    @test Conductivity(12//1000) == Conductivity(12.0u"mS/m")
+    @test Conductivity() == Conductivity(0)
+end

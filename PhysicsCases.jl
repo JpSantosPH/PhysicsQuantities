@@ -13,6 +13,9 @@ function PhysicsVector(x::Number, y::Number, z::Number)
         elseif d == dimension(u"kg*m/s");   return Momentum(x, y, z)
         elseif d == dimension(u"N*m*s");    return AngularMomentum(x, y, z)
         elseif d == dimension(u"N*m");      return Torque(x, y, z)
+        elseif d == dimension(u"C/m^2");        return ElectricDisplacementField(x, y, z)
+        elseif d == dimension(u"A/m^2");        return CurrentDensity(x, y, z)
+
         elseif d == dimension(u"N/C");      return ElectricFieldStrength(x, y, z)
         else;  x, y, z = ps_strip(x, y, z); return GeneralVector(x, y, z)
         end
@@ -75,12 +78,28 @@ function PhysicsScalar(m::Number)
     elseif d == dimension(u"W/(sr*m^2)");   return Radiance(m)
     elseif d == dimension(u"W/(sr*m^3)");   return SpectralRadiance(m)
     elseif d == dimension(u"J/m^2");        return RadiantExposure(m)
+    elseif d == dimension(u"mol/m^3");      return Molarity(m)
+    elseif d == dimension(u"m^3/mol");        return MolarVolume(m)
+    elseif d == dimension(u"J/(K*mol)");        return MolarHeatCapacity(m)
+    elseif d == dimension(u"J/mol");        return MolarEnergy(m)
+    elseif d == dimension(u"S*m^2/mol");        return MolarConductivity(m)
+    elseif d == dimension(u"mol/kg");        return Molality(m)
+    elseif d == dimension(u"kg/mol");        return MolarMass(m)
+    elseif d == dimension(u"m^3/(mol*s)");        return CatalyticEfficiency(m)
+    elseif d == dimension(u"C/m^3");        return VolumeChargeDensity(m)
+    elseif d == dimension(u"C/m^2");        return AreaChargeDensity(m)
+    elseif d == dimension(u"C/m");        return LinearChargeDensity(m)
+    elseif d == dimension(u"S/m");        return Conductivity(m)
+
+
+
     elseif d == dimension(u"lm")  && u == u"lm";    return LuminousFlux(m)
     elseif d == dimension(u"Hz")  && u != u"Bq";    return Frequency(m)
     elseif d == dimension(u"rad") && u == u"rad";   return Angle(m)
     elseif d == dimension(u"Bq")  && u == u"Bq";    return Radioactivity(m)
     elseif d == dimension(u"Gy")  && u == u"Gy";    return AbsorbedDose(m)
     elseif d == dimension(u"Sv")  && u == u"Sv";    return EquivalentDose(m)
+        
     else; m = ps_strip(m); return GeneralScalar(m)
     end
 end
