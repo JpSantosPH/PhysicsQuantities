@@ -378,4 +378,202 @@ abstract type PhysicsScalar <: Number end
             return Action(m)
         end
 
-    
+    struct SpecificEnergy{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"J/kg"), Unitful.FreeUnits{T, dimension(u"J/kg"), nothing}}
+    end
+        Base.show(io::IO, PS::SpecificEnergy) = print(io, SpecificEnergy,"(", PS.m, ")")
+        function SpecificEnergy(m::Number=0.0u"J/kg")
+            if !(m isa Quantity); m = m*u"J/kg" end
+            m = convert(Quantity{Float64, dimension(u"J/kg")}, m)
+            return SpecificEnergy(m)
+        end
+
+    struct EnergyDensity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"J/m^3"), Unitful.FreeUnits{T, dimension(u"J/m^3"), nothing}}
+    end
+        Base.show(io::IO, PS::EnergyDensity) = print(io, EnergyDensity,"(", PS.m, ")")
+        function EnergyDensity(m::Number=0.0u"J/m^3")
+            if !(m isa Quantity); m = m*u"J/m^3" end
+            m = convert(Quantity{Float64, dimension(u"J/m^3")}, m)
+            return EnergyDensity(m)
+        end
+
+    struct SurfaceTension{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"N/m"), Unitful.FreeUnits{T, dimension(u"N/m"), nothing}}
+    end
+        Base.show(io::IO, PS::SurfaceTension) = print(io, SurfaceTension,"(", PS.m, ")")
+        function SurfaceTension(m::Number=0.0u"N/m")
+            if !(m isa Quantity); m = m*u"N/m" end
+            m = convert(Quantity{Float64, dimension(u"N/m")}, m)
+            return SurfaceTension(m)
+        end
+
+    struct KinematicViscosity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"m^2/s"), Unitful.FreeUnits{T, dimension(u"m^2/s"), nothing}}
+    end
+        Base.show(io::IO, PS::KinematicViscosity) = print(io, KinematicViscosity,"(", PS.m, ")")
+        function KinematicViscosity(m::Number=0.0u"m^2/s")
+            if !(m isa Quantity); m = m*u"m^2/s" end
+            m = convert(Quantity{Float64, dimension(u"m^2/s")}, m)
+            return KinematicViscosity(m)
+        end
+
+    struct DynamicViscosity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"Pa*s"), Unitful.FreeUnits{T, dimension(u"Pa*s"), nothing}}
+    end
+        Base.show(io::IO, PS::DynamicViscosity) = print(io, DynamicViscosity,"(", PS.m, ")")
+        function DynamicViscosity(m::Number=0.0u"Pa*s")
+            if !(m isa Quantity); m = m*u"Pa*s" end
+            m = convert(Quantity{Float64, dimension(u"Pa*s")}, m)
+            return DynamicViscosity(m)
+        end
+
+    struct MassFLowRate{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"kg/s"), Unitful.FreeUnits{T, dimension(u"kg/s"), nothing}}
+    end
+        Base.show(io::IO, PS::MassFLowRate) = print(io, MassFLowRate,"(", PS.m, ")")
+        function MassFLowRate(m::Number=0.0u"kg/s")
+            if !(m isa Quantity); m = m*u"kg/s" end
+            m = convert(Quantity{Float64, dimension(u"kg/s")}, m)
+            return MassFLowRate(m)
+        end
+
+    struct AbsorbedDoseRate{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"Gy/s"), Unitful.FreeUnits{T, dimension(u"Gy/s"), nothing}}
+    end
+        Base.show(io::IO, PS::AbsorbedDoseRate) = print(io, AbsorbedDoseRate,"(", PS.m, ")")
+        function AbsorbedDoseRate(m::Number=0.0u"Gy/s")
+            if !(m isa Quantity); m = m*u"Gy/s" end
+            m = convert(Quantity{Float64, dimension(u"Gy/s")}, m)
+            return AbsorbedDoseRate(m)
+        end
+
+    struct FuelEfficiency{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"m/m^3"), Unitful.FreeUnits{T, dimension(u"m/m^3"), nothing}}
+    end
+        Base.show(io::IO, PS::FuelEfficiency) = print(io, FuelEfficiency,"(", PS.m, ")")
+        function FuelEfficiency(m::Number=0.0u"m/m^3")
+            if !(m isa Quantity); m = m*u"m/m^3" end
+            m = convert(Quantity{Float64, dimension(u"m/m^3")}, m)
+            return FuelEfficiency(m)
+        end
+
+    struct EnergyFluxDensity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"J/(m^2*s)"), Unitful.FreeUnits{T, dimension(u"J/(m^2*s)"), nothing}}
+    end
+        Base.show(io::IO, PS::EnergyFluxDensity) = print(io, EnergyFluxDensity,"(", PS.m, ")")
+        function EnergyFluxDensity(m::Number=0.0u"J/(m^2*s)")
+            if !(m isa Quantity); m = m*u"J/(m^2*s)" end
+            m = convert(Quantity{Float64, dimension(u"J/(m^2*s)")}, m)
+            return EnergyFluxDensity(m)
+        end
+
+    struct Compressibility{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"Pa^-1"), Unitful.FreeUnits{T, dimension(u"Pa^-1"), nothing}}
+    end
+        Base.show(io::IO, PS::Compressibility) = print(io, Compressibility,"(", PS.m, ")")
+        function Compressibility(m::Number=0.0u"Pa^-1")
+            if !(m isa Quantity); m = m*u"Pa^-1" end
+            m = convert(Quantity{Float64, dimension(u"Pa^-1")}, m)
+            return Compressibility(m)
+        end
+
+    struct MomentOfInertia{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"kg*m^2"), Unitful.FreeUnits{T, dimension(u"kg*m^2"), nothing}}
+    end
+        Base.show(io::IO, PS::MomentOfInertia) = print(io, MomentOfInertia,"(", PS.m, ")")
+        function MomentOfInertia(m::Number=0.0u"kg*m^2")
+            if !(m isa Quantity); m = m*u"kg*m^2" end
+            m = convert(Quantity{Float64, dimension(u"kg*m^2")}, m)
+            return MomentOfInertia(m)
+        end
+
+    struct SpecificAngularMomentum{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"N*m*s/kg"), Unitful.FreeUnits{T, dimension(u"N*m*s/kg"), nothing}}
+    end
+        Base.show(io::IO, PS::SpecificAngularMomentum) = print(io, SpecificAngularMomentum,"(", PS.m, ")")
+        function SpecificAngularMomentum(m::Number=0.0u"N*m*s/kg")
+            if !(m isa Quantity); m = m*u"N*m*s/kg" end
+            m = convert(Quantity{Float64, dimension(u"N*m*s/kg")}, m)
+            return SpecificAngularMomentum(m)
+        end
+
+    struct SpectralPower{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"W/m"), Unitful.FreeUnits{T, dimension(u"W/m"), nothing}}
+    end
+        Base.show(io::IO, PS::SpectralPower) = print(io, SpectralPower,"(", PS.m, ")")
+        function SpectralPower(m::Number=0.0u"W/m")
+            if !(m isa Quantity); m = m*u"W/m" end
+            m = convert(Quantity{Float64, dimension(u"W/m")}, m)
+            return SpectralPower(m)
+        end
+
+    struct Irradiance{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"W/m^2"), Unitful.FreeUnits{T, dimension(u"W/m^2"), nothing}}
+    end
+        Base.show(io::IO, PS::Irradiance) = print(io, Irradiance,"(", PS.m, ")")
+        function Irradiance(m::Number=0.0u"W/m^2")
+            if !(m isa Quantity); m = m*u"W/m^2" end
+            m = convert(Quantity{Float64, dimension(u"W/m^2")}, m)
+            return Irradiance(m)
+        end
+
+    struct SpectralIrradiance{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"W/m^3"), Unitful.FreeUnits{T, dimension(u"W/m^3"), nothing}}
+    end
+        Base.show(io::IO, PS::SpectralIrradiance) = print(io, SpectralIrradiance,"(", PS.m, ")")
+        function SpectralIrradiance(m::Number=0.0u"W/m^3")
+            if !(m isa Quantity); m = m*u"W/m^3" end
+            m = convert(Quantity{Float64, dimension(u"W/m^3")}, m)
+            return SpectralIrradiance(m)
+        end
+
+    struct RadiantIntensity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"W/sr"), Unitful.FreeUnits{T, dimension(u"W/sr"), nothing}}
+    end
+        Base.show(io::IO, PS::RadiantIntensity) = print(io, RadiantIntensity,"(", PS.m, ")")
+        function RadiantIntensity(m::Number=0.0u"W/sr")
+            if !(m isa Quantity); m = m*u"W/sr" end
+            m = convert(Quantity{Float64, dimension(u"W/sr")}, m)
+            return RadiantIntensity(m)
+        end
+
+    struct SpectralIntensity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"W/(sr*m)"), Unitful.FreeUnits{T, dimension(u"W/(sr*m)"), nothing}}
+    end
+        Base.show(io::IO, PS::SpectralIntensity) = print(io, SpectralIntensity,"(", PS.m, ")")
+        function SpectralIntensity(m::Number=0.0u"W/(sr*m)")
+            if !(m isa Quantity); m = m*u"W/(sr*m)" end
+            m = convert(Quantity{Float64, dimension(u"W/(sr*m)")}, m)
+            return SpectralIntensity(m)
+        end
+
+    struct Radiance{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"W/(sr*m^2)"), Unitful.FreeUnits{T, dimension(u"W/(sr*m^2)"), nothing}}
+    end
+        Base.show(io::IO, PS::Radiance) = print(io, Radiance,"(", PS.m, ")")
+        function Radiance(m::Number=0.0u"W/(sr*m^2)")
+            if !(m isa Quantity); m = m*u"W/(sr*m^2)" end
+            m = convert(Quantity{Float64, dimension(u"W/(sr*m^2)")}, m)
+            return Radiance(m)
+        end
+
+    struct SpectralRadiance{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"W/(sr*m^3)"), Unitful.FreeUnits{T, dimension(u"W/(sr*m^3)"), nothing}}
+    end
+        Base.show(io::IO, PS::SpectralRadiance) = print(io, SpectralRadiance,"(", PS.m, ")")
+        function SpectralRadiance(m::Number=0.0u"W/(sr*m^3)")
+            if !(m isa Quantity); m = m*u"W/(sr*m^3)" end
+            m = convert(Quantity{Float64, dimension(u"W/(sr*m^3)")}, m)
+            return SpectralRadiance(m)
+        end
+
+    struct RadiantExposure{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"J/m^2"), Unitful.FreeUnits{T, dimension(u"J/m^2"), nothing}}
+    end
+        Base.show(io::IO, PS::RadiantExposure) = print(io, RadiantExposure,"(", PS.m, ")")
+        function RadiantExposure(m::Number=0.0u"J/m^2")
+            if !(m isa Quantity); m = m*u"J/m^2" end
+            m = convert(Quantity{Float64, dimension(u"J/m^2")}, m)
+            return RadiantExposure(m)
+        end

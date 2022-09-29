@@ -283,6 +283,101 @@ end
     @test Action() == Action(0)
 end
 
+@testset "SpecificEnergy Functionalities" begin
+    @test SpecificEnergy(12//1000) == SpecificEnergy(12.0u"mJ/kg")
+    @test SpecificEnergy() == SpecificEnergy(0)
+end
+
+@testset "EnergyDensity Functionalities" begin
+    @test EnergyDensity(12//1000) == EnergyDensity(12.0u"mJ/m^3")
+    @test EnergyDensity() == EnergyDensity(0)
+end
+
+@testset "SurfaceTension Functionalities" begin
+    @test SurfaceTension(12//1000) == SurfaceTension(12.0u"mN/m")
+    @test SurfaceTension() == SurfaceTension(0)
+end
+
+@testset "KinematicViscosity Functionalities" begin
+    @test KinematicViscosity(12//1000000) == KinematicViscosity(12.0u"mm^2/s")
+    @test KinematicViscosity() == KinematicViscosity(0)
+end
+
+@testset "MassFLowRate Functionalities" begin
+    @test MassFLowRate(12//1000) == MassFLowRate(12.0u"g/s")
+    @test MassFLowRate() == MassFLowRate(0)
+end
+
+@testset "AbsorbedDoseRate Functionalities" begin
+    @test AbsorbedDoseRate(12//1000) == AbsorbedDoseRate(12.0u"mGy/s")
+    @test AbsorbedDoseRate() == AbsorbedDoseRate(0)
+end
+
+@testset "FuelEfficiency Functionalities" begin
+    @test FuelEfficiency(12//1000) == FuelEfficiency(12.0u"mm/m^3")
+    @test FuelEfficiency() == FuelEfficiency(0)
+end
+
+@testset "EnergyFluxDensity Functionalities" begin
+    @test EnergyFluxDensity(12//1000) == EnergyFluxDensity(12.0u"mJ/(m^2*s)")
+    @test EnergyFluxDensity() == EnergyFluxDensity(0)
+end
+
+@testset "Compressibility Functionalities" begin
+    @test Compressibility(12//1000) == Compressibility(12.0u"kPa^-1")
+    @test Compressibility() == Compressibility(0)
+end
+
+@testset "MomentOfInertia Functionalities" begin
+    @test MomentOfInertia(12//1000) == MomentOfInertia(12.0u"g*m^2")
+    @test MomentOfInertia() == MomentOfInertia(0)
+end
+
+@testset "SpecificAngularMomentum Functionalities" begin
+    @test SpecificAngularMomentum(12//1000) == SpecificAngularMomentum(12.0u"mN*m*s/kg")
+    @test SpecificAngularMomentum() == SpecificAngularMomentum(0)
+end
+
+@testset "SpectralPower Functionalities" begin
+    @test SpectralPower(12//1000) == SpectralPower(12.0u"mW/m")
+    @test SpectralPower() == SpectralPower(0)
+end
+
+@testset "Irradiance Functionalities" begin
+    @test Irradiance(12//1000) == Irradiance(12.0u"mW/m^2")
+    @test Irradiance() == Irradiance(0)
+end
+
+@testset "SpectralIrradiance Functionalities" begin
+    @test SpectralIrradiance(12//1000) == SpectralIrradiance(12.0u"mW/m^3")
+    @test SpectralIrradiance() == SpectralIrradiance(0)
+end
+
+@testset "RadiantIntensity Functionalities" begin
+    @test RadiantIntensity(12//1000) == RadiantIntensity(12.0u"mW/sr")
+    @test RadiantIntensity() == RadiantIntensity(0)
+end
+
+@testset "SpectralIntensity Functionalities" begin
+    @test SpectralIntensity(12//1000) == SpectralIntensity(12.0u"mW/(sr*m)")
+    @test SpectralIntensity() == SpectralIntensity(0)
+end
+
+@testset "Radiance Functionalities" begin
+    @test Radiance(12//1000) == Radiance(12.0u"mW/(sr*m^2)")
+    @test Radiance() == Radiance(0)
+end
+
+@testset "SpectralRadiance Functionalities" begin
+    @test SpectralRadiance(12//1000) == SpectralRadiance(12.0u"mW/(sr*m^3)")
+    @test SpectralRadiance() == SpectralRadiance(0)
+end
+
+@testset "RadiantExposure Functionalities" begin
+    @test RadiantExposure(12//1000) == RadiantExposure(12.0u"mJ/m^2")
+    @test RadiantExposure() == RadiantExposure(0)
+end
+
 @testset "CartesianCoordinate Functionalities" begin
     @test CartesianCoordinate(1, 2, 3) isa CartesianCoordinate
     @test CartesianCoordinate( (1, 2) ) == CartesianCoordinate(1, 2, 0)
@@ -328,12 +423,11 @@ end
     @test AngularAcceleration() == AngularAcceleration(0, 0, 0)
 end
 
-#@testset "Momentum Functionalities" begin
+@testset "Momentum Functionalities" begin
     @test Momentum(1, 2//1000) == Momentum(1 * u"kg*m/s", 2//1 * u"g*m/s", 0.0u"kg*m/s")
     @test Momentum() == Momentum(0, 0, 0)
-#end
-Momentum(1, 2//1000)
-Momentum(1 * u"kg*m/s", 2//1 * u"g*m/s", 0.0u"kg*m/s")
+end
+
 @testset "AngularMomentum Functionalities" begin
     @test AngularMomentum(1, 2//1000) == AngularMomentum(1 * u"N*m*s", 2//1 * u"mN*m*s", 0.0u"N*m*s")
     @test AngularMomentum() == AngularMomentum(0, 0, 0)
