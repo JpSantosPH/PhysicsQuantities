@@ -252,3 +252,48 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         end
         Base.showarg(io::IO, V::ElectricFieldStrength, toplevel) = print(io, ElectricFieldStrength)
         ElectricFieldStrength(args) = ElectricFieldStrength(args...)
+
+    struct MagneticFieldStrength{A,B,C} <: PhysicsVector where {A,B,C}
+        x::Quantity{Float64, dimension(u"A/m"), Unitful.FreeUnits{A, dimension(u"A/m"), nothing}}
+        y::Quantity{Float64, dimension(u"A/m"), Unitful.FreeUnits{B, dimension(u"A/m"), nothing}}
+        z::Quantity{Float64, dimension(u"A/m"), Unitful.FreeUnits{C, dimension(u"A/m"), nothing}}
+    end
+        function MagneticFieldStrength(x::Number=0.0u"A/m", y::Number=0.0u"A/m", z::Number=0.0u"A/m")
+            if !(x isa Quantity); x = x*u"A/m" end
+            if !(y isa Quantity); y = y*u"A/m" end
+            if !(z isa Quantity); z = z*u"A/m" end
+            x, y, z = convert.(Quantity{Float64, dimension(u"A/m")}, (x, y, z))
+            return MagneticFieldStrength(x, y, z)
+        end
+        Base.showarg(io::IO, V::MagneticFieldStrength, toplevel) = print(io, MagneticFieldStrength)
+        MagneticFieldStrength(args) = MagneticFieldStrength(args...)
+
+    struct MagneticDipoleMoment{A,B,C} <: PhysicsVector where {A,B,C}
+        x::Quantity{Float64, dimension(u"J/T"), Unitful.FreeUnits{A, dimension(u"J/T"), nothing}}
+        y::Quantity{Float64, dimension(u"J/T"), Unitful.FreeUnits{B, dimension(u"J/T"), nothing}}
+        z::Quantity{Float64, dimension(u"J/T"), Unitful.FreeUnits{C, dimension(u"J/T"), nothing}}
+    end
+        function MagneticDipoleMoment(x::Number=0.0u"J/T", y::Number=0.0u"J/T", z::Number=0.0u"J/T")
+            if !(x isa Quantity); x = x*u"J/T" end
+            if !(y isa Quantity); y = y*u"J/T" end
+            if !(z isa Quantity); z = z*u"J/T" end
+            x, y, z = convert.(Quantity{Float64, dimension(u"J/T")}, (x, y, z))
+            return MagneticDipoleMoment(x, y, z)
+        end
+        Base.showarg(io::IO, V::MagneticDipoleMoment, toplevel) = print(io, MagneticDipoleMoment)
+        MagneticDipoleMoment(args) = MagneticDipoleMoment(args...)
+
+    struct MagneticVectorPotential{A,B,C} <: PhysicsVector where {A,B,C}
+        x::Quantity{Float64, dimension(u"Wb/m"), Unitful.FreeUnits{A, dimension(u"Wb/m"), nothing}}
+        y::Quantity{Float64, dimension(u"Wb/m"), Unitful.FreeUnits{B, dimension(u"Wb/m"), nothing}}
+        z::Quantity{Float64, dimension(u"Wb/m"), Unitful.FreeUnits{C, dimension(u"Wb/m"), nothing}}
+    end
+        function MagneticVectorPotential(x::Number=0.0u"Wb/m", y::Number=0.0u"Wb/m", z::Number=0.0u"Wb/m")
+            if !(x isa Quantity); x = x*u"Wb/m" end
+            if !(y isa Quantity); y = y*u"Wb/m" end
+            if !(z isa Quantity); z = z*u"Wb/m" end
+            x, y, z = convert.(Quantity{Float64, dimension(u"Wb/m")}, (x, y, z))
+            return MagneticVectorPotential(x, y, z)
+        end
+        Base.showarg(io::IO, V::MagneticVectorPotential, toplevel) = print(io, MagneticVectorPotential)
+        MagneticVectorPotential(args) = MagneticVectorPotential(args...)

@@ -697,3 +697,193 @@ abstract type PhysicsScalar <: Number end
             m = convert(Quantity{Float64, dimension(u"S/m")}, m)
             return Conductivity(m)
         end
+
+    struct Permittivity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"F/m"), Unitful.FreeUnits{T, dimension(u"F/m"), nothing}}
+    end
+        Base.show(io::IO, PS::Permittivity) = print(io, Permittivity,"(", PS.m, ")")
+        function Permittivity(m::Number=0.0u"F/m")
+            if !(m isa Quantity); m = m*u"F/m" end
+            m = convert(Quantity{Float64, dimension(u"F/m")}, m)
+            return Permittivity(m)
+        end
+
+    struct MagneticPermittivity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"H/m"), Unitful.FreeUnits{T, dimension(u"H/m"), nothing}}
+    end
+        Base.show(io::IO, PS::MagneticPermittivity) = print(io, MagneticPermittivity,"(", PS.m, ")")
+        function MagneticPermittivity(m::Number=0.0u"H/m")
+            if !(m isa Quantity); m = m*u"H/m" end
+            m = convert(Quantity{Float64, dimension(u"H/m")}, m)
+            return MagneticPermittivity(m)
+        end
+
+    struct Exposure{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"C/kg"), Unitful.FreeUnits{T, dimension(u"C/kg"), nothing}}
+    end
+        Base.show(io::IO, PS::Exposure) = print(io, Exposure,"(", PS.m, ")")
+        function Exposure(m::Number=0.0u"C/kg")
+            if !(m isa Quantity); m = m*u"C/kg" end
+            m = convert(Quantity{Float64, dimension(u"C/kg")}, m)
+            return Exposure(m)
+        end
+
+    struct Resistivity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"Ω*m"), Unitful.FreeUnits{T, dimension(u"Ω*m"), nothing}}
+    end
+        Base.show(io::IO, PS::Resistivity) = print(io, Resistivity,"(", PS.m, ")")
+        function Resistivity(m::Number=0.0u"Ω*m")
+            if !(m isa Quantity); m = m*u"Ω*m" end
+            m = convert(Quantity{Float64, dimension(u"Ω*m")}, m)
+            return Resistivity(m)
+        end
+
+    struct ElectronMobility{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"m^2/(V*s)"), Unitful.FreeUnits{T, dimension(u"m^2/(V*s)"), nothing}}
+    end
+        Base.show(io::IO, PS::ElectronMobility) = print(io, ElectronMobility,"(", PS.m, ")")
+        function ElectronMobility(m::Number=0.0u"m^2/(V*s)")
+            if !(m isa Quantity); m = m*u"m^2/(V*s)" end
+            m = convert(Quantity{Float64, dimension(u"m^2/(V*s)")}, m)
+            return ElectronMobility(m)
+        end
+
+    struct MagneticReluctance{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"H^-1"), Unitful.FreeUnits{T, dimension(u"H^-1"), nothing}}
+    end
+        Base.show(io::IO, PS::MagneticReluctance) = print(io, MagneticReluctance,"(", PS.m, ")")
+        function MagneticReluctance(m::Number=0.0u"H^-1")
+            if !(m isa Quantity); m = m*u"H^-1" end
+            m = convert(Quantity{Float64, dimension(u"H^-1")}, m)
+            return MagneticReluctance(m)
+        end
+
+    struct MagneticRrigidity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"T*m"), Unitful.FreeUnits{T, dimension(u"T*m"), nothing}}
+    end
+        Base.show(io::IO, PS::MagneticRrigidity) = print(io, MagneticRrigidity,"(", PS.m, ")")
+        function MagneticRrigidity(m::Number=0.0u"T*m")
+            if !(m isa Quantity); m = m*u"T*m" end
+            m = convert(Quantity{Float64, dimension(u"T*m")}, m)
+            return MagneticRrigidity(m)
+        end
+
+    struct MagnetomotiveForce{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"A*rad"), Unitful.FreeUnits{T, dimension(u"A*rad"), nothing}}
+    end
+        Base.show(io::IO, PS::MagnetomotiveForce) = print(io, MagnetomotiveForce,"(", PS.m, ")")
+        function MagnetomotiveForce(m::Number=0.0u"A*rad")
+            if !(m isa Quantity); m = m*u"A*rad" end
+            m = convert(Quantity{Float64, dimension(u"A*rad")}, m)
+            return MagnetomotiveForce(m)
+        end
+
+    struct MagneticSusceptibility{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"m/H"), Unitful.FreeUnits{T, dimension(u"m/H"), nothing}}
+    end
+        Base.show(io::IO, PS::MagneticSusceptibility) = print(io, MagneticSusceptibility,"(", PS.m, ")")
+        function MagneticSusceptibility(m::Number=0.0u"m/H")
+            if !(m isa Quantity); m = m*u"m/H" end
+            m = convert(Quantity{Float64, dimension(u"m/H")}, m)
+            return MagneticSusceptibility(m)
+        end
+
+    struct LuminousEnergy{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"lm*s"), Unitful.FreeUnits{T, dimension(u"lm*s"), nothing}}
+    end
+        Base.show(io::IO, PS::LuminousEnergy) = print(io, LuminousEnergy,"(", PS.m, ")")
+        function LuminousEnergy(m::Number=0.0u"lm*s")
+            if !(m isa Quantity); m = m*u"lm*s" end
+            m = convert(Quantity{Float64, dimension(u"lm*s")}, m)
+            return LuminousEnergy(m)
+        end
+
+    struct LuminousExposure{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"lx*s"), Unitful.FreeUnits{T, dimension(u"lx*s"), nothing}}
+    end
+        Base.show(io::IO, PS::LuminousExposure) = print(io, LuminousExposure,"(", PS.m, ")")
+        function LuminousExposure(m::Number=0.0u"lx*s")
+            if !(m isa Quantity); m = m*u"lx*s" end
+            m = convert(Quantity{Float64, dimension(u"lx*s")}, m)
+            return LuminousExposure(m)
+        end
+
+    struct Luminance{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"cd/m^2"), Unitful.FreeUnits{T, dimension(u"cd/m^2"), nothing}}
+    end
+        Base.show(io::IO, PS::Luminance) = print(io, Luminance,"(", PS.m, ")")
+        function Luminance(m::Number=0.0u"cd/m^2")
+            if !(m isa Quantity); m = m*u"cd/m^2" end
+            m = convert(Quantity{Float64, dimension(u"cd/m^2")}, m)
+            return Luminance(m)
+        end
+
+    struct LuminousEfficacy{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"lm/W"), Unitful.FreeUnits{T, dimension(u"lm/W"), nothing}}
+    end
+        Base.show(io::IO, PS::LuminousEfficacy) = print(io, LuminousEfficacy,"(", PS.m, ")")
+        function LuminousEfficacy(m::Number=0.0u"lm/W")
+            if !(m isa Quantity); m = m*u"lm/W" end
+            m = convert(Quantity{Float64, dimension(u"lm/W")}, m)
+            return LuminousEfficacy(m)
+        end
+
+    struct HeatCapacity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"J/K"), Unitful.FreeUnits{T, dimension(u"J/K"), nothing}}
+    end
+        Base.show(io::IO, PS::HeatCapacity) = print(io, HeatCapacity,"(", PS.m, ")")
+        function HeatCapacity(m::Number=0.0u"J/K")
+            if !(m isa Quantity); m = m*u"J/K" end
+            m = convert(Quantity{Float64, dimension(u"J/K")}, m)
+            return HeatCapacity(m)
+        end
+
+    struct SpecificHeatCapacity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"J/(K*kg)"), Unitful.FreeUnits{T, dimension(u"J/(K*kg)"), nothing}}
+    end
+        Base.show(io::IO, PS::SpecificHeatCapacity) = print(io, SpecificHeatCapacity,"(", PS.m, ")")
+        function SpecificHeatCapacity(m::Number=0.0u"J/(K*kg)")
+            if !(m isa Quantity); m = m*u"J/(K*kg)" end
+            m = convert(Quantity{Float64, dimension(u"J/(K*kg)")}, m)
+            return SpecificHeatCapacity(m)
+        end
+
+    struct ThermalConductivity{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"W/(m*K)"), Unitful.FreeUnits{T, dimension(u"W/(m*K)"), nothing}}
+    end
+        Base.show(io::IO, PS::ThermalConductivity) = print(io, ThermalConductivity,"(", PS.m, ")")
+        function ThermalConductivity(m::Number=0.0u"W/(m*K)")
+            if !(m isa Quantity); m = m*u"W/(m*K)" end
+            m = convert(Quantity{Float64, dimension(u"W/(m*K)")}, m)
+            return ThermalConductivity(m)
+        end
+
+    struct ThermalResistance{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"K/W"), Unitful.FreeUnits{T, dimension(u"K/W"), nothing}}
+    end
+        Base.show(io::IO, PS::ThermalResistance) = print(io, ThermalResistance,"(", PS.m, ")")
+        function ThermalResistance(m::Number=0.0u"K/W")
+            if !(m isa Quantity); m = m*u"K/W" end
+            m = convert(Quantity{Float64, dimension(u"K/W")}, m)
+            return ThermalResistance(m)
+        end
+
+    struct ThermalExpansionCoefficient{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"K^-1"), Unitful.FreeUnits{T, dimension(u"K^-1"), nothing}}
+    end
+        Base.show(io::IO, PS::ThermalExpansionCoefficient) = print(io, ThermalExpansionCoefficient,"(", PS.m, ")")
+        function ThermalExpansionCoefficient(m::Number=0.0u"K^-1")
+            if !(m isa Quantity); m = m*u"K^-1" end
+            m = convert(Quantity{Float64, dimension(u"K^-1")}, m)
+            return ThermalExpansionCoefficient(m)
+        end
+
+    struct TemperatureGradient{T} <: PhysicsScalar where {T}
+        m::Quantity{Float64, dimension(u"K/m"), Unitful.FreeUnits{T, dimension(u"K/m"), nothing}}
+    end
+        Base.show(io::IO, PS::TemperatureGradient) = print(io, TemperatureGradient,"(", PS.m, ")")
+        function TemperatureGradient(m::Number=0.0u"K/m")
+            if !(m isa Quantity); m = m*u"K/m" end
+            m = convert(Quantity{Float64, dimension(u"K/m")}, m)
+            return TemperatureGradient(m)
+        end

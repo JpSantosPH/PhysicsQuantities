@@ -4,12 +4,6 @@ function ElectricFieldStrength(q::Charge)
     return EFS
 end
 
-function ElectricFieldStrength(q::Quantity)
-    if dimension(q) == dimension(u"C")
-        return ElectricFieldStrength(Charge(q))
-    end
-end
-
 function kinetic_energy(m::Mass)
     KE(v::Velocity) = 1/2 * m * v^2
     KE(v::Speed) = 1/2 * m * v^2

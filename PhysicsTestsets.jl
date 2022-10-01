@@ -433,7 +433,105 @@ end
     @test LinearChargeDensity() == LinearChargeDensity(0)
 end
 
+@testset "Conductivity Functionalities" begin
+    @test Conductivity(12//1000) == Conductivity(12.0u"mS/m")
+    @test Conductivity() == Conductivity(0)
+end
 
+@testset "Permittivity Functionalities" begin
+    @test Permittivity(12//1000) == Permittivity(12.0u"mF/m")
+    @test Permittivity() == Permittivity(0)
+end
+
+@testset "MagneticPermittivity Functionalities" begin
+    @test MagneticPermittivity(12//1000) == MagneticPermittivity(12.0u"mH/m")
+    @test MagneticPermittivity() == MagneticPermittivity(0)
+end
+
+@testset "Exposure Functionalities" begin
+    @test Exposure(12//1000) == Exposure(12.0u"mC/kg")
+    @test Exposure() == Exposure(0)
+end
+
+@testset "Resistivity Functionalities" begin
+    @test Resistivity(12//1000) == Resistivity(12.0u"mΩ*m")
+    @test Resistivity() == Resistivity(0)
+end
+
+@testset "ElectronMobility Functionalities" begin
+    @test ElectronMobility(12//1000000) == ElectronMobility(12.0u"mm^2/(V*s)")
+    @test ElectronMobility() == ElectronMobility(0)
+end
+
+@testset "MagneticReluctance Functionalities" begin
+    @test MagneticReluctance(12//1000) == MagneticReluctance(12.0u"kH^-1")
+    @test MagneticReluctance() == MagneticReluctance(0)
+end
+
+@testset "MagneticRrigidity Functionalities" begin
+    @test MagneticRrigidity(12//1000) == MagneticRrigidity(12.0u"mT*m")
+    @test MagneticRrigidity() == MagneticRrigidity(0)
+end
+
+@testset "MagnetomotiveForce Functionalities" begin
+    @test MagnetomotiveForce(12//1000) == MagnetomotiveForce(12.0u"mA*rad")
+    @test MagnetomotiveForce() == MagnetomotiveForce(0)
+end
+
+@testset "MagneticSusceptibility Functionalities" begin
+    @test MagneticSusceptibility(12//1000) == MagneticSusceptibility(12.0u"mm/H")
+    @test MagneticSusceptibility() == MagneticSusceptibility(0)
+end
+
+@testset "LuminousEnergy Functionalities" begin
+    @test LuminousEnergy(12//1000) == LuminousEnergy(12.0u"mlm*s")
+    @test LuminousEnergy() == LuminousEnergy(0)
+end
+
+@testset "LuminousExposure Functionalities" begin
+    @test LuminousExposure(12//1000) == LuminousExposure(12.0u"mlx*s")
+    @test LuminousExposure() == LuminousExposure(0)
+end
+
+@testset "Luminance Functionalities" begin
+    @test Luminance(12//1000) == Luminance(12.0u"mcd/m^2")
+    @test Luminance() == Luminance(0)
+end
+
+@testset "LuminousEfficacy Functionalities" begin
+    @test LuminousEfficacy(12//1000) == LuminousEfficacy(12.0u"mlm/W")
+    @test LuminousEfficacy() == LuminousEfficacy(0)
+end
+
+@testset "HeatCapacity Functionalities" begin
+    @test HeatCapacity(12//1000) == HeatCapacity(12.0u"mJ/K")
+    @test HeatCapacity() == HeatCapacity(0)
+end
+
+@testset "SpecificHeatCapacity Functionalities" begin
+    @test SpecificHeatCapacity(12//1000) == SpecificHeatCapacity(12.0u"mJ/(K*kg)")
+    @test SpecificHeatCapacity() == SpecificHeatCapacity(0)
+end
+
+@testset "ThermalConductivity Functionalities" begin
+    @test ThermalConductivity(12//1000) == ThermalConductivity(12.0u"mW/(m*K)")
+    @test ThermalConductivity() == ThermalConductivity(0)
+end
+
+@testset "ThermalResistance Functionalities" begin
+    @test ThermalResistance(12//1000) == ThermalResistance(12.0u"mK/W")
+    @test ThermalResistance() == ThermalResistance(0)
+end
+
+@testset "ThermalExpansionCoefficient Functionalities" begin
+    @test ThermalExpansionCoefficient(12//1000) == ThermalExpansionCoefficient(12.0u"kK^-1")
+    @test ThermalExpansionCoefficient() == ThermalExpansionCoefficient(0)
+end
+
+@testset "TemperatureGradient Functionalities" begin
+    @test TemperatureGradient(12//1000) == TemperatureGradient(12.0u"mK/m")
+    @test TemperatureGradient() == TemperatureGradient(0)
+end
 
 @testset "CartesianCoordinate Functionalities" begin
     @test CartesianCoordinate(1, 2, 3) isa CartesianCoordinate
@@ -506,6 +604,21 @@ end
 end
 
 @testset "ElectricFieldStrength Functionalities" begin
-    @test ElectricFieldStrength(4u"nC")(Position(2)) isa ElectricFieldStrength
-    @test ElectricFieldStrength(4u"nC")(Length(2)) isa GeneralScalar
+    @test ElectricFieldStrength(1, 2//1000) == ElectricFieldStrength(1 * u"N/C", 2//1 * u"mN/C", 0.0u"N/C")
+    @test ElectricFieldStrength() == ElectricFieldStrength(0, 0, 0)
+end
+
+@testset "MagneticFieldStrength Functionalities" begin
+    @test MagneticFieldStrength(1, 2//1000) == MagneticFieldStrength(1 * u"A/m", 2//1 * u"mA/m", 0.0u"A/m")
+    @test MagneticFieldStrength() == MagneticFieldStrength(0, 0, 0)
+end
+
+@testset "MagneticDipoleMoment Functionalities" begin
+    @test MagneticDipoleMoment(1, 2//1000) == MagneticDipoleMoment(1 * u"J/T", 2//1 * u"mJ/T", 0.0u"J/T")
+    @test MagneticDipoleMoment() == MagneticDipoleMoment(0, 0, 0)
+end
+
+@testset "MagneticReluctance Functionalities" begin
+    @test MagneticReluctance(12//1000) == MagneticReluctance(12.0u"kH^-1")
+    @test MagneticReluctance() == MagneticReluctance(0)
 end
