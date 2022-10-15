@@ -1,5 +1,3 @@
-### PhysicsVector ###
-
 function Base.:+(PV₁::PhysicsVector, PV₂::PhysicsVector)
     return PhysicsVector(PV₁.x+PV₂.x, PV₁.y+PV₂.y, PV₁.z+PV₂.z)
 end
@@ -203,7 +201,7 @@ end
 function Base.isless(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
     return isless(PS.m, AQ)
 end
-
+# add div "÷" functionality
 ### broadcasting ###
 Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector}) = Broadcast.ArrayStyle{PhysicsVector}()
 function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{PhysicsVector}}, ::Type{ElType}) where ElType
