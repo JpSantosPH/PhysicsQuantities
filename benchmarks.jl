@@ -1,31 +1,6 @@
 using BenchmarkTools
 
 ### w/ and w/o auto constructor benchmarks ###
-    ### Base Julia ###
-        @benchmark [[1u"m/s^2", 2u"m/s^2", 3u"m/s^2"] .* i*u"s" for i in 1:1000]
-            # Time  (mean ± σ):   153.382 μs ± 195.937 μs
-            # Memory estimate: 242.31 KiB, allocs estimate: 3001.
-
-        @benchmark [1u"m" / (i*u"s") for i in 1:10000]
-            # Time  (mean ± σ):   43.568 μs ± 142.308 μs
-            # Memory estimate: 78.17 KiB, allocs estimate: 2.
-
-        @benchmark [(1u"m")/((i*u"s")^2) for i in 1:10000]
-            # Time  (mean ± σ):   45.247 μs ± 147.801 μs
-            # Memory estimate: 78.17 KiB, allocs estimate: 2.
-
-        @benchmark [1/2 * 10u"kg" * (i*u"m/s")^2 for i in 1:10000]
-            # Time  (mean ± σ):   33.340 μs ± 120.274 μs
-            # Memory estimate: 78.17 KiB, allocs estimate: 2.
-
-        @benchmark [my_electric_field(4u"nC")(i*u"m") for i in 1:1000]
-            # Time  (mean ± σ):   2.898 μs ±  10.503 μs
-            # Memory estimate: 7.94 KiB, allocs estimate: 1.
-
-        @benchmark [my_electric_field(4u"nC")([i*u"m", 0u"m", 0u"m"]) for i in 1:1000]
-            # Time  (mean ± σ):   196.312 μs ± 263.195 μs
-            # Memory estimate: 242.31 KiB, allocs estimate: 3001.
-
     ### w/o auto convert ###
         @benchmark [PhysicsVector(Acceleration(1,2,3) * Time(i)) for i in 1:1000]
             # Time  (mean ± σ):   21.371 μs ±  44.728 μs
@@ -208,10 +183,3 @@ using BenchmarkTools
 using BenchmarkTools
 a = Time(1)
 dump(a)
-@benchmark [Acceleration(1,2,3) * Time(i) for i in 1:1000]
-@benchmark [Length(i)/Time(i) for i in 1:10000]
-@benchmark [Length(1)/Time(i)^2 for i in 1:10000]
-@benchmark [kinetic_energy(Mass(10))(Speed(i)) for i in 1:10000]
-@benchmark [kinetic_energy(Mass(10))(Velocity(i)) for i in 1:10000]
-@benchmark [ElectricFieldStrength(4u"nC")(Length(i)) for i in 1:1000]
-@benchmark [ElectricFieldStrength(4u"nC")(Position(i)) for i in 1:1000]

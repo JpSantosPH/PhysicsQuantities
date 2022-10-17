@@ -1,6 +1,3 @@
-using LinearAlgebra
-using Unitful
-
 abstract type PhysicsScalar <: Number end
     struct GeneralScalar{T<:Number} <: PhysicsScalar
         m::T

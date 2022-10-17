@@ -1,5 +1,4 @@
 using Test
-using Unicode
 
 @testset " PhysicsScalar Functionalities" begin
     @test PhysicsScalar(12u"m/s") isa Speed

@@ -1,5 +1,3 @@
-### PhysicsVector ###
-
 function Base.:+(PV₁::PhysicsVector, PV₂::PhysicsVector)
     return PhysicsVector(PV₁.x+PV₂.x, PV₁.y+PV₂.y, PV₁.z+PV₂.z)
 end
@@ -166,7 +164,6 @@ function Base.one(PS::PhysicsScalar)
     return one(PS.m)
 end
 
-### bolean ###
 function Base. ==(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
     return PS₁.m == PS₂.m
 end
@@ -204,7 +201,6 @@ function Base.isless(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
     return isless(PS.m, AQ)
 end
 
-### broadcasting ###
 Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector}) = Broadcast.ArrayStyle{PhysicsVector}()
 function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{PhysicsVector}}, ::Type{ElType}) where ElType
     return PhysicsVector(ps_strip(bc))
@@ -223,7 +219,6 @@ function ps_strip( (x, y, z) )
     return ps_strip(x, y, z)
 end
 
-### Unitful ###
 function Unitful.dimension(PS::PhysicsScalar)
     return dimension(PS.m)
 end
@@ -236,3 +231,14 @@ end
 function Unitful.uconvert(a::Unitful.Units, PV::PhysicsVector)
     return PhysicsVector(uconvert(a, PV.x), uconvert(a, PV.y), uconvert(a, PV.z))
 end
+
+function correct_args(x::Number, y::Number, z::Number, unit::Unitful.Units)
+    if !(x isa Quantity); x = x*unit end
+    if !(y isa Quantity); y = y*unit end
+    if !(z isa Quantity); z = z*unit end
+    x = convert(Quantity{Float64, dimension(unit)}, x)
+    y = convert(Quantity{Float64, dimension(unit)}, y)
+    z = convert(Quantity{Float64, dimension(unit)}, z)
+    return x, y, z
+end
+

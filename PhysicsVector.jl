@@ -1,6 +1,3 @@
-using LinearAlgebra
-using Unitful
-
 abstract type PhysicsVector <: AbstractVector{Number} end
     Base.size(PV::PhysicsVector) = (3,)
     function Base.getindex(PV::PhysicsVector, i::Int)
