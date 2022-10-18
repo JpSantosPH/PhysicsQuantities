@@ -1,6 +1,7 @@
 using Test
 
 @testset " PhysicsScalar Functionalities" begin
+    @test correct_units(1.0, u"m") == 1.0u"m"
     @test PhysicsScalar(12u"m/s") isa Speed
     @test Time(1) + Time(2) isa Time
     @test Time(1) + 2u"s" isa Time
@@ -27,6 +28,7 @@ using Test
 end
 
 @testset "PhysicsVector Functionalities" begin
+    @test correct_units(1, 2.0, 3//1, u"s") == (1*u"s", 2.0*u"s", 3//1*u"s")
     @test PhysicsVector([1u"m/s", 2u"m/s", 3u"m/s"]) isa Velocity
     @test Position(1, 2, 3) + Position(4, 5, 6) isa Position
     @test Position(1, 2, 3) - Position(4, 5, 6) isa Position
@@ -94,6 +96,120 @@ end
     @test dimension(Speed(12)) == dimension(12u"m/s")
     @test dimension(Velocity(1,2)) == dimension(12u"m/s")
     @test uconvert(u"Hz", 1/Time(1)) == 1.0u"Hz"
+end
+
+@testset "PhysicsCases Functionalities" begin
+    m = 1//1
+    x = 2.0
+    y = 3
+    z = 4//1
+    @test PhysicsScalar(Luminance(m)) isa Luminance
+    @test PhysicsScalar(LuminousFlux(m)) isa LuminousFlux
+    @test PhysicsScalar(Radioactivity(m)) isa Radioactivity
+    @test PhysicsScalar(AbsorbedDose(m)) isa AbsorbedDose
+    @test PhysicsScalar(EquivalentDose(m)) isa EquivalentDose
+    @test PhysicsScalar(MagnetomotiveForce(m)) isa MagnetomotiveForce
+    @test PhysicsScalar(RadiantExposure(m)) isa RadiantExposure
+    @test PhysicsScalar(SpectralRadiance(m)) isa SpectralRadiance
+    @test PhysicsScalar(EnergyDensity(m)) isa EnergyDensity
+    @test PhysicsScalar(Radiance(m)) isa Radiance
+    @test PhysicsScalar(Irradiance(m)) isa Irradiance
+    @test PhysicsScalar(SpectralIntensity(m)) isa SpectralIntensity
+    @test PhysicsScalar(RadiantIntensity(m)) isa RadiantIntensity
+    @test PhysicsScalar(KinematicViscosity(m)) isa KinematicViscosity
+    @test PhysicsScalar(Angle(m)) isa Angle
+    @test PhysicsScalar(Time(m)) isa Time
+    @test PhysicsScalar(Length(m)) isa Length
+    @test PhysicsScalar(Mass(m)) isa Mass
+    @test PhysicsScalar(Current(m)) isa Current
+    @test PhysicsScalar(Temperature(m)) isa Temperature
+    @test PhysicsScalar(Substance(m)) isa Substance
+    @test PhysicsScalar(Luminous(m)) isa Luminous
+    @test PhysicsScalar(Pressure(m)) isa Pressure
+    @test PhysicsScalar(Energy(m)) isa Energy
+    @test PhysicsScalar(Power(m)) isa Power
+    @test PhysicsScalar(Charge(m)) isa Charge
+    @test PhysicsScalar(Voltage(m)) isa Voltage
+    @test PhysicsScalar(Capacitance(m)) isa Capacitance
+    @test PhysicsScalar(Resistance(m)) isa Resistance
+    @test PhysicsScalar(Conductance(m)) isa Conductance
+    @test PhysicsScalar(MagneticFlux(m)) isa MagneticFlux
+    @test PhysicsScalar(Induction(m)) isa Induction
+    @test PhysicsScalar(Inductance(m)) isa Inductance
+    @test PhysicsScalar(Illuminance(m)) isa Illuminance
+    @test PhysicsScalar(CatalyticActivity(m)) isa CatalyticActivity
+    @test PhysicsScalar(Speed(m)) isa Speed
+    @test PhysicsScalar(VolumetricFlow(m)) isa VolumetricFlow
+    @test PhysicsScalar(FrequencyDrift(m)) isa FrequencyDrift
+    @test PhysicsScalar(Area(m)) isa Area
+    @test PhysicsScalar(Volume(m)) isa Volume
+    @test PhysicsScalar(Wavenumber(m)) isa Wavenumber
+    @test PhysicsScalar(LinearDensity(m)) isa LinearDensity
+    @test PhysicsScalar(AreaDensity(m)) isa AreaDensity
+    @test PhysicsScalar(Density(m)) isa Density
+    @test PhysicsScalar(SpecificVolume(m)) isa SpecificVolume
+    @test PhysicsScalar(Action(m)) isa Action
+    @test PhysicsScalar(SpecificEnergy(m)) isa SpecificEnergy
+    @test PhysicsScalar(SurfaceTension(m)) isa SurfaceTension
+    @test PhysicsScalar(DynamicViscosity(m)) isa DynamicViscosity
+    @test PhysicsScalar(MassFLowRate(m)) isa MassFLowRate
+    @test PhysicsScalar(AbsorbedDoseRate(m)) isa AbsorbedDoseRate
+    @test PhysicsScalar(FuelEfficiency(m)) isa FuelEfficiency
+    @test PhysicsScalar(EnergyFluxDensity(m)) isa EnergyFluxDensity
+    @test PhysicsScalar(Compressibility(m)) isa Compressibility
+    @test PhysicsScalar(MomentOfInertia(m)) isa MomentOfInertia
+    @test PhysicsScalar(SpecificAngularMomentum(m)) isa SpecificAngularMomentum
+    @test PhysicsScalar(SpectralPower(m)) isa SpectralPower
+    @test PhysicsScalar(SpectralIrradiance(m)) isa SpectralIrradiance
+    @test PhysicsScalar(Molarity(m)) isa Molarity
+    @test PhysicsScalar(MolarVolume(m)) isa MolarVolume
+    @test PhysicsScalar(MolarHeatCapacity(m)) isa MolarHeatCapacity
+    @test PhysicsScalar(MolarEnergy(m)) isa MolarEnergy
+    @test PhysicsScalar(MolarConductivity(m)) isa MolarConductivity
+    @test PhysicsScalar(Molality(m)) isa Molality
+    @test PhysicsScalar(MolarMass(m)) isa MolarMass
+    @test PhysicsScalar(CatalyticEfficiency(m)) isa CatalyticEfficiency
+    @test PhysicsScalar(VolumeChargeDensity(m)) isa VolumeChargeDensity
+    @test PhysicsScalar(AreaChargeDensity(m)) isa AreaChargeDensity
+    @test PhysicsScalar(LinearChargeDensity(m)) isa LinearChargeDensity
+    @test PhysicsScalar(Conductivity(m)) isa Conductivity
+    @test PhysicsScalar(Permittivity(m)) isa Permittivity
+    @test PhysicsScalar(MagneticPermittivity(m)) isa MagneticPermittivity
+    @test PhysicsScalar(Exposure(m)) isa Exposure
+    @test PhysicsScalar(Resistivity(m)) isa Resistivity
+    @test PhysicsScalar(ElectronMobility(m)) isa ElectronMobility
+    @test PhysicsScalar(MagneticReluctance(m)) isa MagneticReluctance
+    @test PhysicsScalar(MagneticRrigidity(m)) isa MagneticRrigidity
+    @test PhysicsScalar(MagneticSusceptibility(m)) isa MagneticSusceptibility
+    @test PhysicsScalar(LuminousEnergy(m)) isa LuminousEnergy
+    @test PhysicsScalar(LuminousExposure(m)) isa LuminousExposure
+    @test PhysicsScalar(LuminousEfficacy(m)) isa LuminousEfficacy
+    @test PhysicsScalar(HeatCapacity(m)) isa HeatCapacity
+    @test PhysicsScalar(SpecificHeatCapacity(m)) isa SpecificHeatCapacity
+    @test PhysicsScalar(ThermalConductivity(m)) isa ThermalConductivity
+    @test PhysicsScalar(ThermalResistance(m)) isa ThermalResistance
+    @test PhysicsScalar(ThermalExpansionCoefficient(m)) isa ThermalExpansionCoefficient
+    @test PhysicsScalar(TemperatureGradient(m)) isa TemperatureGradient
+    @test PhysicsScalar(Frequency(m)) isa Frequency
+    @test PhysicsScalar(GeneralScalar(m)) isa GeneralScalar
+
+    @test PhysicsVector(Position(x, y, z)) isa Position
+    @test PhysicsVector(Force(x, y, z)) isa Force
+    @test PhysicsVector(Velocity(x, y, z)) isa Velocity
+    @test PhysicsVector(Acceleration(x, y, z)) isa Acceleration
+    @test PhysicsVector(Jerk(x, y, z)) isa Jerk
+    @test PhysicsVector(Snap(x, y, z)) isa Snap
+    @test PhysicsVector(AngularVelocity(x, y, z)) isa AngularVelocity
+    @test PhysicsVector(AngularAcceleration(x, y, z)) isa AngularAcceleration
+    @test PhysicsVector(Momentum(x, y, z)) isa Momentum
+    @test PhysicsVector(AngularMomentum(x, y, z)) isa AngularMomentum
+    @test PhysicsVector(Torque(x, y, z)) isa Torque
+    @test PhysicsVector(ElectricDisplacementField(x, y, z)) isa ElectricDisplacementField
+    @test PhysicsVector(CurrentDensity(x, y, z)) isa CurrentDensity
+    @test PhysicsVector(ElectricFieldStrength(x, y, z)) isa ElectricFieldStrength
+    @test PhysicsVector(MagneticFieldStrength(x, y, z)) isa MagneticFieldStrength
+    @test PhysicsVector(MagneticDipoleMoment(x, y, z)) isa MagneticDipoleMoment
+    @test PhysicsVector(MagneticVectorPotential(x, y, z)) isa MagneticVectorPotential
 end
 
 @testset "Time Functionalities" begin
@@ -238,7 +354,7 @@ end
 end
 
 @testset "VolumetricFlow Functionalities" begin
-    @test VolumetricFlow(12//1000) == VolumetricFlow(0.012u"m^3/s")
+    @test VolumetricFlow(12/1000) == VolumetricFlow(0.012u"m^3/s")
     @test VolumetricFlow() == VolumetricFlow(0)
 end
 
