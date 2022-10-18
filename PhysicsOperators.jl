@@ -232,13 +232,21 @@ function Unitful.uconvert(a::Unitful.Units, PV::PhysicsVector)
     return PhysicsVector(uconvert(a, PV.x), uconvert(a, PV.y), uconvert(a, PV.z))
 end
 
-function correct_args(x::Number, y::Number, z::Number, unit::Unitful.Units)
+function correct_units(x::Number, y::Number, z::Number, unit::Unitful.Units)
     if !(x isa Quantity); x = x*unit end
     if !(y isa Quantity); y = y*unit end
     if !(z isa Quantity); z = z*unit end
-    x = convert(Quantity{Float64, dimension(unit)}, x)
-    y = convert(Quantity{Float64, dimension(unit)}, y)
-    z = convert(Quantity{Float64, dimension(unit)}, z)
+    x = convert(Quantity{<:Number, dimension(unit)}, x)
+    y = convert(Quantity{<:Number, dimension(unit)}, y)
+    z = convert(Quantity{<:Number, dimension(unit)}, z)
     return x, y, z
 end
 
+function correct_units(m::Number, unit::Unitful.Units)
+    if !(m isa Quantity); m = m*unit end
+    return convert(Quantity{<:Number, dimension(unit)}, m)
+end
+
+function Base.promote(PV::PhysicsVector)
+    return PhysicsVector(promote(PV.x, PV.y, PV.z))
+end
