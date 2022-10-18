@@ -36,7 +36,7 @@ export SpecificHeatCapacity, ThermalConductivity, ThermalResistance
 export ThermalExpansionCoefficient, TemperatureGradient
 
 include("PhysicsOperators.jl")
-export unitvec, ps_strip
+export unitvec, ps_strip, correct_units
 
 include("PhysicsEquations.jl")
 export kinetic_energy
