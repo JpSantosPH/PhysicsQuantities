@@ -6,12 +6,14 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         elseif i == 3; return PV.z
         end
     end
-    Base.similar(PV::PhysicsVector) = PhysicsVector(PV.x, PV.y, PV.z)
+    Base.showarg(io::IO, PV::PhysicsVector, toplevel) = print(io, physicstype(PV))
+    Base.similar(PV::PhysicsVector) = physics(PV.x, PV.y, PV.z)
+    Base.collect(PV::PhysicsVector) = [PV.x, PV.y, PV.z]
     function Base.setindex!(PV::PhysicsVector, val, i::Integer)
         val = ps_strip(val)
-        if     i == 1; return PhysicsVector(val,  PV.y, PV.z)
-        elseif i == 2; return PhysicsVector(PV.x, val,  PV.z)
-        elseif i == 3; return PhysicsVector(PV.x, PV.y, val )
+        if     i == 1; return physics(val,  PV.y, PV.z)
+        elseif i == 2; return physics(PV.x, val,  PV.z)
+        elseif i == 3; return physics(PV.x, PV.y, val )
         end
     end
 
@@ -24,7 +26,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = promote(x, y, z)
             return GeneralVector(x, y, z)
         end
-        Base.showarg(io::IO, V::GeneralVector, toplevel) = print(io, GeneralVector)
         GeneralVector( (x, y, z) ) = GeneralVector(x, y, z)
         GeneralVector() = GeneralVector(0.0, 0.0, 0.0)
 
@@ -33,12 +34,13 @@ abstract type PhysicsVector <: AbstractVector{Number} end
         y::T
         z::T
     end
+        Base.showarg(io::IO, CC::CartesianCoordinate, toplevel) = print(io, CartesianCoordinate)
         function CartesianCoordinate(x::Number=0, y::Number=0, z::Number=0)
             x, y, z = convert.(Float64, (x, y, z))
             return CartesianCoordinate(x, y, z)
         end
+        CartesianCoordinate((x, y, z)) = CartesianCoordinate(x, y, z)
         CartesianCoordinate(args) = CartesianCoordinate(args...)
-        Base.showarg(io::IO, V::CartesianCoordinate, toplevel) = print(io, CartesianCoordinate)
 
     struct Position{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
         x::Quantity{A, dimension(u"m"), Unitful.FreeUnits{D, dimension(u"m"), nothing}}
@@ -49,7 +51,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"m")
             return Position(x, y, z)
         end
-        Base.showarg(io::IO, V::Position, toplevel) = print(io, Position)
         Position(args) = Position(args...)
 
     struct Force{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -61,7 +62,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"N")
             return Force(x, y, z)
         end
-        Base.showarg(io::IO, V::Force, toplevel) = print(io, Force)
         Force(args) = Force(args...)
 
     struct Velocity{A,B,C,D,E,F}  <: PhysicsVector where {A,B,C,D,E,F}
@@ -73,7 +73,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"m/s")
             return Velocity(x, y, z)
         end
-        Base.showarg(io::IO, V::Velocity, toplevel) = print(io, Velocity)
         Velocity(args) = Velocity(args...)
 
     struct Acceleration{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -85,9 +84,8 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"m/s^2")
             return Acceleration(x, y, z)
         end
-        Base.showarg(io::IO, V::Acceleration, toplevel) = print(io, Acceleration)
         Acceleration(args) = Acceleration(args...)
-    
+
     struct Jerk{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
         x::Quantity{A, dimension(u"m/s^3"), Unitful.FreeUnits{D, dimension(u"m/s^3"), nothing}}
         y::Quantity{B, dimension(u"m/s^3"), Unitful.FreeUnits{E, dimension(u"m/s^3"), nothing}}
@@ -97,7 +95,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"m/s^3")
             return Jerk(x, y, z)
         end
-        Base.showarg(io::IO, V::Jerk, toplevel) = print(io, Jerk)
         Jerk(args) = Jerk(args...)
 
     struct Snap{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -109,7 +106,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"m/s^4")
             return Snap(x, y, z)
         end
-        Base.showarg(io::IO, V::Snap, toplevel) = print(io, Snap)
         Snap(args) = Snap(args...)
 
     struct AngularVelocity{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -121,7 +117,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"rad/s")
             return AngularVelocity(x, y, z)
         end
-        Base.showarg(io::IO, V::AngularVelocity, toplevel) = print(io, AngularVelocity)
         AngularVelocity(args) = AngularVelocity(args...)
 
     struct AngularAcceleration{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -133,7 +128,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"rad/s^2")
             return AngularAcceleration(x, y, z)
         end
-        Base.showarg(io::IO, V::AngularAcceleration, toplevel) = print(io, AngularAcceleration)
         AngularAcceleration(args) = AngularAcceleration(args...)
 
     struct Momentum{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -145,9 +139,8 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"kg*m/s")
             return Momentum(x, y, z)
         end
-        Base.showarg(io::IO, V::Momentum, toplevel) = print(io, Momentum)
         Momentum(args) = Momentum(args...)
-        
+
     struct AngularMomentum{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
         x::Quantity{A, dimension(u"N*m*s"), Unitful.FreeUnits{D, dimension(u"N*m*s"), nothing}}
         y::Quantity{B, dimension(u"N*m*s"), Unitful.FreeUnits{E, dimension(u"N*m*s"), nothing}}
@@ -157,7 +150,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"N*m*s")
             return AngularMomentum(x, y, z)
         end
-        Base.showarg(io::IO, V::AngularMomentum, toplevel) = print(io, AngularMomentum)
         AngularMomentum(args) = AngularMomentum(args...)
 
     struct Torque{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -169,7 +161,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"N*m")
             return Torque(x, y, z)
         end
-        Base.showarg(io::IO, V::Torque, toplevel) = print(io, Torque)
         Torque(args) = Torque(args...)
 
     struct ElectricDisplacementField{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -181,7 +172,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"C/m^2")
             return ElectricDisplacementField(x, y, z)
         end
-        Base.showarg(io::IO, V::ElectricDisplacementField, toplevel) = print(io, ElectricDisplacementField)
         ElectricDisplacementField(args) = ElectricDisplacementField(args...)
 
     struct CurrentDensity{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -193,7 +183,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"A/m^2")
             return CurrentDensity(x, y, z)
         end
-        Base.showarg(io::IO, V::CurrentDensity, toplevel) = print(io, CurrentDensity)
         CurrentDensity(args) = CurrentDensity(args...)
 
     struct ElectricFieldStrength{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -205,7 +194,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"N/C")
             return ElectricFieldStrength(x, y, z)
         end
-        Base.showarg(io::IO, V::ElectricFieldStrength, toplevel) = print(io, ElectricFieldStrength)
         ElectricFieldStrength(args) = ElectricFieldStrength(args...)
 
     struct MagneticFieldStrength{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -217,7 +205,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"A/m")
             return MagneticFieldStrength(x, y, z)
         end
-        Base.showarg(io::IO, V::MagneticFieldStrength, toplevel) = print(io, MagneticFieldStrength)
         MagneticFieldStrength(args) = MagneticFieldStrength(args...)
 
     struct MagneticDipoleMoment{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -229,7 +216,6 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"J/T")
             return MagneticDipoleMoment(x, y, z)
         end
-        Base.showarg(io::IO, V::MagneticDipoleMoment, toplevel) = print(io, MagneticDipoleMoment)
         MagneticDipoleMoment(args) = MagneticDipoleMoment(args...)
 
     struct MagneticVectorPotential{A,B,C,D,E,F} <: PhysicsVector where {A,B,C,D,E,F}
@@ -241,5 +227,4 @@ abstract type PhysicsVector <: AbstractVector{Number} end
             x, y, z = correct_units(x, y, z, u"Wb/m")
             return MagneticVectorPotential(x, y, z)
         end
-        Base.showarg(io::IO, V::MagneticVectorPotential, toplevel) = print(io, MagneticVectorPotential)
         MagneticVectorPotential(args) = MagneticVectorPotential(args...)

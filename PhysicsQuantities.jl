@@ -42,5 +42,6 @@ include("PhysicsEquations.jl")
 export kinetic_energy
 
 include("PhysicsCases.jl")
+export physics, physicstype
 
 end # end of module
