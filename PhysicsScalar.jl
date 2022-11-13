@@ -1,5 +1,5 @@
 abstract type PhysicsScalar <: Number end
-    Base.show(io::IO, PS::PhysicsScalar) = print(io, physicstype(PS),"(", PS.m, ")")
+    Base.show(io::IO, PS::PhysicsScalar) = print(io, typeof(PS)," ", PS.m)
     Base.collect(PS::PhysicsScalar) = PS.m
     Base.getindex(PS::PhysicsScalar, i::Integer) = if i == 1; return PS.m end
 
@@ -7,722 +7,721 @@ abstract type PhysicsScalar <: Number end
         m::T
     end
 
-    struct Time{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"s"), Unitful.FreeUnits{B, dimension(u"s"), nothing}}
-    end
+    struct Time <: PhysicsScalar
+        m
         function Time(m::Number=0.0u"s")
             m = correct_units(m, u"s")
-            return Time(m)
+            return new(m)
         end
-
-    struct Length{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m"), Unitful.FreeUnits{B, dimension(u"m"), nothing}}
     end
+
+    struct Length <: PhysicsScalar
+        m
         function Length(m::Number=0.0u"m")
             m = correct_units(m, u"m")
-            return Length(m)
+            return new(m)
         end
-
-    struct Mass{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"kg"), Unitful.FreeUnits{B, dimension(u"kg"), nothing}}
     end
+
+    struct Mass <: PhysicsScalar
+        m
         function Mass(m::Number=0.0u"kg")
             m = correct_units(m, u"kg")
-            return Mass(m)
+            return new(m)
         end
-
-    struct Current{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"A"), Unitful.FreeUnits{B, dimension(u"A"), nothing}}
     end
+
+    struct Current <: PhysicsScalar
+        m
         function Current(m::Number=0.0u"A")
             m = correct_units(m, u"A")
-            return Current(m)
+            return new(m)
         end
-
-    struct Temperature{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"K"), Unitful.FreeUnits{B, dimension(u"K"), nothing}}
     end
+
+    struct Temperature <: PhysicsScalar
+        m
         function Temperature(m::Number=273.15u"K")
             m = correct_units(m, u"K")
             if m ≤ 0u"K"; error("Physics Error") end
-            return Temperature(m)
+            return new(m)
         end
-
-    struct Substance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"mol"), Unitful.FreeUnits{B, dimension(u"mol"), nothing}}
     end
+
+    struct Substance <: PhysicsScalar
+        m
         function Substance(m::Number=0.0u"mol")
             m = correct_units(m, u"mol")
-            return Substance(m)
+            return new(m)
         end
-
-    struct Luminous{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"cd"), Unitful.FreeUnits{B, dimension(u"cd"), nothing}}
     end
+
+    struct Luminous <: PhysicsScalar
+        m
         function Luminous(m::Number=0.0u"cd")
             m = correct_units(m, u"cd")
-            return Luminous(m)
+            return new(m)
         end
-
-    struct Frequency{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Hz"), Unitful.FreeUnits{B, dimension(u"Hz"), nothing}}
     end
+
+    struct Frequency <: PhysicsScalar
+        m
         function Frequency(m::Number=0.0u"Hz")
             m = correct_units(m, u"Hz")
-            return Frequency(m)
+            return new(m)
         end
-
-    struct Angle{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"rad"), Unitful.FreeUnits{B, dimension(u"rad"), nothing}}
     end
+
+    struct Angle <: PhysicsScalar
+        m
         function Angle(m::Number=0.0u"rad")
             m = correct_units(m, u"rad")
-            return Angle(m)
+            return new(m)
         end
-
-    struct Pressure{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"kPa"), Unitful.FreeUnits{B, dimension(u"kPa"), nothing}}
     end
+
+    struct Pressure <: PhysicsScalar
+        m
         function Pressure(m::Number=100.0u"kPa")
             m = correct_units(m, u"kPa")
-            return Pressure(m)
+            return new(m)
         end
-
-    struct Energy{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J"), Unitful.FreeUnits{B, dimension(u"J"), nothing}}
     end
+
+    struct Energy <: PhysicsScalar
+        m
         function Energy(m::Number=0.0u"J")
             m = correct_units(m, u"J")
-            return Energy(m)
+            return new(m)
         end
-
-    struct Power{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"W"), Unitful.FreeUnits{B, dimension(u"W"), nothing}}
     end
+
+    struct Power <: PhysicsScalar
+        m
         function Power(m::Number=0.0u"W")
             m = correct_units(m, u"W")
-            return Power(m)
+            return new(m)
         end
-
-    struct Charge{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"C"), Unitful.FreeUnits{B, dimension(u"C"), nothing}}
     end
+
+    struct Charge <: PhysicsScalar
+        m
         function Charge(m::Number=0.0u"C")
             m = correct_units(m, u"C")
-            return Charge(m)
+            return new(m)
         end
-
-    struct Voltage{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"V"), Unitful.FreeUnits{B, dimension(u"V"), nothing}}
     end
+
+    struct Voltage <: PhysicsScalar
+        m
         function Voltage(m::Number=0.0u"V")
             m = correct_units(m, u"V")
-            return Voltage(m)
+            return new(m)
         end
-
-    struct Capacitance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"F"), Unitful.FreeUnits{B, dimension(u"F"), nothing}}
     end
+
+    struct Capacitance <: PhysicsScalar
+        m
         function Capacitance(m::Number=0.0u"F")
             m = correct_units(m, u"F")
-            return Capacitance(m)
+            return new(m)
         end
-
-    struct Resistance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Ω"), Unitful.FreeUnits{B, dimension(u"Ω"), nothing}}
     end
+
+    struct Resistance <: PhysicsScalar
+        m
         function Resistance(m::Number=0.0u"Ω")
             m = correct_units(m, u"Ω")
-            return Resistance(m)
+            return new(m)
         end
-
-    struct Conductance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"S"), Unitful.FreeUnits{B, dimension(u"S"), nothing}}
     end
+
+    struct Conductance <: PhysicsScalar
+        m
         function Conductance(m::Number=0.0u"S")
             m = correct_units(m, u"S")
-            return Conductance(m)
+            return new(m)
         end
-
-    struct MagneticFlux{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Wb"), Unitful.FreeUnits{B, dimension(u"Wb"), nothing}}
     end
+
+    struct MagneticFlux <: PhysicsScalar
+        m
         function MagneticFlux(m::Number=0.0u"Wb")
             m = correct_units(m, u"Wb")
-            return MagneticFlux(m)
+            return new(m)
         end
-
-    struct Induction{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"T"), Unitful.FreeUnits{B, dimension(u"T"), nothing}}
     end
+
+    struct Induction <: PhysicsScalar
+        m
         function Induction(m::Number=0.0u"T")
             m = correct_units(m, u"T")
-            return Induction(m)
+            return new(m)
         end
-
-    struct Inductance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"H"), Unitful.FreeUnits{B, dimension(u"H"), nothing}}
     end
+
+    struct Inductance <: PhysicsScalar
+        m
         function Inductance(m::Number=0.0u"H")
             m = correct_units(m, u"H")
-            return Inductance(m)
+            return new(m)
         end
-
-    struct LuminousFlux{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"lm"), Unitful.FreeUnits{B, dimension(u"lm"), nothing}}
     end
+
+    struct LuminousFlux <: PhysicsScalar
+        m
         function LuminousFlux(m::Number=0.0u"lm")
             m = correct_units(m, u"lm")
             m = uconvert(u"lm", m)
-            return LuminousFlux(m)
+            return new(m)
         end
-
-    struct Illuminance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"lx"), Unitful.FreeUnits{B, dimension(u"lx"), nothing}}
     end
+
+    struct Illuminance <: PhysicsScalar
+        m
         function Illuminance(m::Number=0.0u"lx")
             m = correct_units(m, u"lx")
-            return Illuminance(m)
+            return new(m)
         end
-
-    struct Radioactivity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Bq"), Unitful.FreeUnits{B, dimension(u"Bq"), nothing}}
     end
+
+    struct Radioactivity <: PhysicsScalar
+        m
         function Radioactivity(m::Number=0.0u"Bq")
             m = correct_units(m, u"Bq")
             m = uconvert(u"Bq", m)
-            return Radioactivity(m)
+            return new(m)
         end
-
-    struct AbsorbedDose{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Gy"), Unitful.FreeUnits{B, dimension(u"Gy"), nothing}}
     end
+
+    struct AbsorbedDose <: PhysicsScalar
+        m
         function AbsorbedDose(m::Number=0.0u"Gy")
             m = correct_units(m, u"Gy")
             m = uconvert(u"Gy", m)
-            return AbsorbedDose(m)
+            return new(m)
         end
-
-    struct EquivalentDose{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Sv"), Unitful.FreeUnits{B, dimension(u"Sv"), nothing}}
     end
+
+    struct EquivalentDose <: PhysicsScalar
+        m
         function EquivalentDose(m::Number=0.0u"Sv")
             m = correct_units(m, u"Sv")
             m = uconvert(u"Sv", m)
-            return EquivalentDose(m)
+            return new(m)
         end
-
-    struct CatalyticActivity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"kat"), Unitful.FreeUnits{B, dimension(u"kat"), nothing}}
     end
+
+    struct CatalyticActivity <: PhysicsScalar
+        m
         function CatalyticActivity(m::Number=0.0u"kat")
             m = correct_units(m, u"kat")
-            return CatalyticActivity(m)
+            return new(m)
         end
-
-    struct Speed{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m/s"), Unitful.FreeUnits{B, dimension(u"m/s"), nothing}}
     end
+
+    struct Speed <: PhysicsScalar
+        m
         function Speed(m::Number=0.0u"m/s")
             m = correct_units(m, u"m/s")
-            return Speed(m)
+            return new(m)
         end
-
-    struct FrequencyDrift{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Hz/s"), Unitful.FreeUnits{B, dimension(u"Hz/s"), nothing}}
     end
+
+    struct FrequencyDrift <: PhysicsScalar
+        m
         function FrequencyDrift(m::Number=0.0u"Hz/s")
             m = correct_units(m, u"Hz/s")
-            return FrequencyDrift(m)
+            return new(m)
         end
-
-    struct VolumetricFlow{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m^3/s"), Unitful.FreeUnits{B, dimension(u"m^3/s"), nothing}}
     end
+
+    struct VolumetricFlow <: PhysicsScalar
+        m
         function VolumetricFlow(m::Number=0.0u"m^3/s")
             m = correct_units(m, u"m^3/s")
-            return VolumetricFlow(m)
+            return new(m)
         end
-
-    struct Area{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m^2"), Unitful.FreeUnits{B, dimension(u"m^2"), nothing}}
     end
+
+    struct Area <: PhysicsScalar
+        m
         function Area(m::Number=0.0u"m^2")
             m = correct_units(m, u"m^2")
-            return Area(m)
+            return new(m)
         end
-
-    struct Volume{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m^3"), Unitful.FreeUnits{B, dimension(u"m^3"), nothing}}
     end
+
+    struct Volume <: PhysicsScalar
+        m
         function Volume(m::Number=0.0u"m^3")
             m = correct_units(m, u"m^3")
-            return Volume(m)
+            return new(m)
         end
-
-    struct Wavenumber{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m^-1"), Unitful.FreeUnits{B, dimension(u"m^-1"), nothing}}
     end
+
+    struct Wavenumber <: PhysicsScalar
+        m
         function Wavenumber(m::Number=0.0u"m^-1")
             m = correct_units(m, u"m^-1")
-            return Wavenumber(m)
+            return new(m)
         end
-
-    struct LinearDensity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"kg/m"), Unitful.FreeUnits{B, dimension(u"kg/m"), nothing}}
     end
+
+    struct LinearDensity <: PhysicsScalar
+        m
         function LinearDensity(m::Number=0.0u"kg/m")
             m = correct_units(m, u"kg/m")
-            return LinearDensity(m)
+            return new(m)
         end
-
-    struct AreaDensity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"kg/m^2"), Unitful.FreeUnits{B, dimension(u"kg/m^2"), nothing}}
     end
+
+    struct AreaDensity <: PhysicsScalar
+        m
         function AreaDensity(m::Number=0.0u"kg/m^2")
             m = correct_units(m, u"kg/m^2")
-            return AreaDensity(m)
+            return new(m)
         end
-
-    struct Density{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"kg/m^3"), Unitful.FreeUnits{B, dimension(u"kg/m^3"), nothing}}
     end
+
+    struct Density <: PhysicsScalar
+        m
         function Density(m::Number=0.0u"kg/m^3")
             m = correct_units(m, u"kg/m^3")
-            return Density(m)
+            return new(m)
         end
-
-    struct SpecificVolume{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m^3/kg"), Unitful.FreeUnits{B, dimension(u"m^3/kg"), nothing}}
     end
+
+    struct SpecificVolume <: PhysicsScalar
+        m
         function SpecificVolume(m::Number=0.0u"m^3/kg")
             m = correct_units(m, u"m^3/kg")
-            return SpecificVolume(m)
+            return new(m)
         end
-
-    struct Action{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J*s"), Unitful.FreeUnits{B, dimension(u"J*s"), nothing}}
     end
+
+    struct Action <: PhysicsScalar
+        m
         function Action(m::Number=0.0u"J*s")
             m = correct_units(m, u"J*s")
-            return Action(m)
+            return new(m)
         end
-
-    struct SpecificEnergy{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J/kg"), Unitful.FreeUnits{B, dimension(u"J/kg"), nothing}}
     end
+
+    struct SpecificEnergy <: PhysicsScalar
+        m
         function SpecificEnergy(m::Number=0.0u"J/kg")
             m = correct_units(m, u"J/kg")
-            return SpecificEnergy(m)
+            return new(m)
         end
-
-    struct EnergyDensity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J/m^3"), Unitful.FreeUnits{B, dimension(u"J/m^3"), nothing}}
     end
+
+    struct EnergyDensity <: PhysicsScalar
+        m
         function EnergyDensity(m::Number=0.0u"J/m^3")
             m = correct_units(m, u"J/m^3")
             m = uconvert(u"J/m^3", m)
-            return EnergyDensity(m)
+            return new(m)
         end
-
-    struct SurfaceTension{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"N/m"), Unitful.FreeUnits{B, dimension(u"N/m"), nothing}}
     end
+
+    struct SurfaceTension <: PhysicsScalar
+        m
         function SurfaceTension(m::Number=0.0u"N/m")
             m = correct_units(m, u"N/m")
-            return SurfaceTension(m)
+            return new(m)
         end
-
-    struct KinematicViscosity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m^2/s"), Unitful.FreeUnits{B, dimension(u"m^2/s"), nothing}}
     end
+
+    struct KinematicViscosity <: PhysicsScalar
+        m
         function KinematicViscosity(m::Number=0.0u"m^2/s")
             m = correct_units(m, u"m^2/s")
             m = uconvert(u"m^2/s", m)
-            return KinematicViscosity(m)
+            return new(m)
         end
-
-    struct DynamicViscosity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Pa*s"), Unitful.FreeUnits{B, dimension(u"Pa*s"), nothing}}
     end
+
+    struct DynamicViscosity <: PhysicsScalar
+        m
         function DynamicViscosity(m::Number=0.0u"Pa*s")
             m = correct_units(m, u"Pa*s")
-            return DynamicViscosity(m)
+            return new(m)
         end
-
-    struct MassFLowRate{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"kg/s"), Unitful.FreeUnits{B, dimension(u"kg/s"), nothing}}
     end
+
+    struct MassFLowRate <: PhysicsScalar
+        m
         function MassFLowRate(m::Number=0.0u"kg/s")
             m = correct_units(m, u"kg/s")
-            return MassFLowRate(m)
+            return new(m)
         end
-
-    struct AbsorbedDoseRate{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Gy/s"), Unitful.FreeUnits{B, dimension(u"Gy/s"), nothing}}
     end
+
+    struct AbsorbedDoseRate <: PhysicsScalar
+        m
         function AbsorbedDoseRate(m::Number=0.0u"Gy/s")
             m = correct_units(m, u"Gy/s")
-            return AbsorbedDoseRate(m)
+            return new(m)
         end
-
-    struct FuelEfficiency{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m/m^3"), Unitful.FreeUnits{B, dimension(u"m/m^3"), nothing}}
     end
+
+    struct FuelEfficiency <: PhysicsScalar
+        m
         function FuelEfficiency(m::Number=0.0u"m/m^3")
             m = correct_units(m, u"m/m^3")
-            return FuelEfficiency(m)
+            return new(m)
         end
-
-    struct EnergyFluxDensity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J/(m^2*s)"), Unitful.FreeUnits{B, dimension(u"J/(m^2*s)"), nothing}}
     end
+
+    struct EnergyFluxDensity <: PhysicsScalar
+        m
         function EnergyFluxDensity(m::Number=0.0u"J/(m^2*s)")
             m = correct_units(m, u"J/(m^2*s)")
-            return EnergyFluxDensity(m)
+            return new(m)
         end
-
-    struct Compressibility{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Pa^-1"), Unitful.FreeUnits{B, dimension(u"Pa^-1"), nothing}}
     end
+
+    struct Compressibility <: PhysicsScalar
+        m
         function Compressibility(m::Number=0.0u"Pa^-1")
             m = correct_units(m, u"Pa^-1")
-            return Compressibility(m)
+            return new(m)
         end
-
-    struct MomentOfInertia{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"kg*m^2"), Unitful.FreeUnits{B, dimension(u"kg*m^2"), nothing}}
     end
+
+    struct MomentOfInertia <: PhysicsScalar
+        m
         function MomentOfInertia(m::Number=0.0u"kg*m^2")
             m = correct_units(m, u"kg*m^2")
-            return MomentOfInertia(m)
+            return new(m)
         end
-
-    struct SpecificAngularMomentum{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"N*m*s/kg"), Unitful.FreeUnits{B, dimension(u"N*m*s/kg"), nothing}}
     end
+
+    struct SpecificAngularMomentum <: PhysicsScalar
+        m
         function SpecificAngularMomentum(m::Number=0.0u"N*m*s/kg")
             m = correct_units(m, u"N*m*s/kg")
-            return SpecificAngularMomentum(m)
+            return new(m)
         end
-
-    struct SpectralPower{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"W/m"), Unitful.FreeUnits{B, dimension(u"W/m"), nothing}}
     end
+
+    struct SpectralPower <: PhysicsScalar
+        m
         function SpectralPower(m::Number=0.0u"W/m")
             m = correct_units(m, u"W/m")
-            return SpectralPower(m)
+            return new(m)
         end
-
-    struct Irradiance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"W/m^2"), Unitful.FreeUnits{B, dimension(u"W/m^2"), nothing}}
     end
+
+    struct Irradiance <: PhysicsScalar
+        m
         function Irradiance(m::Number=0.0u"W/m^2")
             m = correct_units(m, u"W/m^2")
             m = uconvert(u"W/m^2", m)
-            return Irradiance(m)
+            return new(m)
         end
-
-    struct SpectralIrradiance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"W/m^3"), Unitful.FreeUnits{B, dimension(u"W/m^3"), nothing}}
     end
+
+    struct SpectralIrradiance <: PhysicsScalar
+        m
         function SpectralIrradiance(m::Number=0.0u"W/m^3")
             m = correct_units(m, u"W/m^3")
-            return SpectralIrradiance(m)
+            return new(m)
         end
-
-    struct RadiantIntensity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"W/sr"), Unitful.FreeUnits{B, dimension(u"W/sr"), nothing}}
     end
+
+    struct RadiantIntensity <: PhysicsScalar
+        m
         function RadiantIntensity(m::Number=0.0u"W/sr")
             m = correct_units(m, u"W/sr")
             m = uconvert(u"W/sr", m)
-            return RadiantIntensity(m)
+            return new(m)
         end
-
-    struct SpectralIntensity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"W/(sr*m)"), Unitful.FreeUnits{B, dimension(u"W/(sr*m)"), nothing}}
     end
+
+    struct SpectralIntensity <: PhysicsScalar
+        m
         function SpectralIntensity(m::Number=0.0u"W/(sr*m)")
             m = correct_units(m, u"W/(sr*m)")
             m = uconvert(u"W/(sr*m)", m)
-            return SpectralIntensity(m)
+            return new(m)
         end
-
-    struct Radiance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"W/(sr*m^2)"), Unitful.FreeUnits{B, dimension(u"W/(sr*m^2)"), nothing}}
     end
+
+    struct Radiance <: PhysicsScalar
+        m
         function Radiance(m::Number=0.0u"W/(sr*m^2)")
             m = correct_units(m, u"W/(sr*m^2)")
             m = uconvert(u"W/(sr*m^2)", m)
-            return Radiance(m)
+            return new(m)
         end
-
-    struct SpectralRadiance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"W/(sr*m^3)"), Unitful.FreeUnits{B, dimension(u"W/(sr*m^3)"), nothing}}
     end
+
+    struct SpectralRadiance <: PhysicsScalar
+        m
         function SpectralRadiance(m::Number=0.0u"W/(sr*m^3)")
             m = correct_units(m, u"W/(sr*m^3)")
             m = uconvert(u"W/(sr*m^3)", m)
-            return SpectralRadiance(m)
+            return new(m)
         end
-
-    struct RadiantExposure{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J/m^2"), Unitful.FreeUnits{B, dimension(u"J/m^2"), nothing}}
     end
+
+    struct RadiantExposure <: PhysicsScalar
+        m
         function RadiantExposure(m::Number=0.0u"J/m^2")
             m = correct_units(m, u"J/m^2")
             m = uconvert(u"J/m^2", m)
-            return RadiantExposure(m)
+            return new(m)
         end
-
-    struct Molarity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"mol/m^3"), Unitful.FreeUnits{B, dimension(u"mol/m^3"), nothing}}
     end
+
+    struct Molarity <: PhysicsScalar
+        m
         function Molarity(m::Number=0.0u"mol/m^3")
             m = correct_units(m, u"mol/m^3")
-            return Molarity(m)
+            return new(m)
         end
-
-        struct MolarVolume{A,B} <: PhysicsScalar where {A,B}
-            m::Quantity{A, dimension(u"m^3/mol"), Unitful.FreeUnits{B, dimension(u"m^3/mol"), nothing}}
-        end
-            function MolarVolume(m::Number=0.0u"m^3/mol")
-                m = correct_units(m, u"m^3/mol")
-
-                return MolarVolume(m)
-            end
-
-    struct MolarHeatCapacity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J/(K*mol)"), Unitful.FreeUnits{B, dimension(u"J/(K*mol)"), nothing}}
     end
+
+    struct MolarVolume <: PhysicsScalar
+        m
+        function MolarVolume(m::Number=0.0u"m^3/mol")
+            m = correct_units(m, u"m^3/mol")
+            return new(m)
+        end
+    end
+
+    struct MolarHeatCapacity <: PhysicsScalar
+        m
         function MolarHeatCapacity(m::Number=0.0u"J/(K*mol)")
             m = correct_units(m, u"J/(K*mol)")
-            return MolarHeatCapacity(m)
+            return new(m)
         end
-
-    struct MolarEnergy{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J/mol"), Unitful.FreeUnits{B, dimension(u"J/mol"), nothing}}
     end
+
+    struct MolarEnergy <: PhysicsScalar
+        m
         function MolarEnergy(m::Number=0.0u"J/mol")
             m = correct_units(m, u"J/mol")
-            return MolarEnergy(m)
+            return new(m)
         end
-
-    struct MolarConductivity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"S*m^2/mol"), Unitful.FreeUnits{B, dimension(u"S*m^2/mol"), nothing}}
     end
+
+    struct MolarConductivity <: PhysicsScalar
+        m
         function MolarConductivity(m::Number=0.0u"S*m^2/mol")
             m = correct_units(m, u"S*m^2/mol")
-            return MolarConductivity(m)
+            return new(m)
         end
-
-    struct Molality{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"mol/kg"), Unitful.FreeUnits{B, dimension(u"mol/kg"), nothing}}
     end
+
+    struct Molality <: PhysicsScalar
+        m
         function Molality(m::Number=0.0u"mol/kg")
             m = correct_units(m, u"mol/kg")
-            return Molality(m)
+            return new(m)
         end
-
-    struct MolarMass{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"kg/mol"), Unitful.FreeUnits{B, dimension(u"kg/mol"), nothing}}
     end
+
+    struct MolarMass <: PhysicsScalar
+        m
         function MolarMass(m::Number=0.0u"kg/mol")
             m = correct_units(m, u"kg/mol")
-            return MolarMass(m)
+            return new(m)
         end
-
-    struct CatalyticEfficiency{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m^3/(mol*s)"), Unitful.FreeUnits{B, dimension(u"m^3/(mol*s)"), nothing}}
     end
+
+    struct CatalyticEfficiency <: PhysicsScalar
+        m
         function CatalyticEfficiency(m::Number=0.0u"m^3/(mol*s)")
             m = correct_units(m, u"m^3/(mol*s)")
-            return CatalyticEfficiency(m)
+            return new(m)
         end
-
-    struct VolumeChargeDensity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"C/m^3"), Unitful.FreeUnits{B, dimension(u"C/m^3"), nothing}}
     end
+
+    struct VolumeChargeDensity <: PhysicsScalar
+        m
         function VolumeChargeDensity(m::Number=0.0u"C/m^3")
             m = correct_units(m, u"C/m^3")
-            return VolumeChargeDensity(m)
+            return new(m)
         end
-
-    struct AreaChargeDensity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"C/m^2"), Unitful.FreeUnits{B, dimension(u"C/m^2"), nothing}}
     end
+
+    struct AreaChargeDensity <: PhysicsScalar
+        m
         function AreaChargeDensity(m::Number=0.0u"C/m^2")
             m = correct_units(m, u"C/m^2")
-            return AreaChargeDensity(m)
+            return new(m)
         end
-
-    struct LinearChargeDensity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"C/m"), Unitful.FreeUnits{B, dimension(u"C/m"), nothing}}
     end
+
+    struct LinearChargeDensity <: PhysicsScalar
+        m
         function LinearChargeDensity(m::Number=0.0u"C/m")
             m = correct_units(m, u"C/m")
-            return LinearChargeDensity(m)
+            return new(m)
         end
-
-    struct Conductivity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"S/m"), Unitful.FreeUnits{B, dimension(u"S/m"), nothing}}
     end
+
+    struct Conductivity <: PhysicsScalar
+        m
         function Conductivity(m::Number=0.0u"S/m")
             m = correct_units(m, u"S/m")
-            return Conductivity(m)
+            return new(m)
         end
-
-    struct Permittivity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"F/m"), Unitful.FreeUnits{B, dimension(u"F/m"), nothing}}
     end
+
+    struct Permittivity <: PhysicsScalar
+        m
         function Permittivity(m::Number=0.0u"F/m")
             m = correct_units(m, u"F/m")
-            return Permittivity(m)
+            return new(m)
         end
-
-    struct MagneticPermittivity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"H/m"), Unitful.FreeUnits{B, dimension(u"H/m"), nothing}}
     end
+
+    struct MagneticPermittivity <: PhysicsScalar
+        m
         function MagneticPermittivity(m::Number=0.0u"H/m")
             m = correct_units(m, u"H/m")
-            return MagneticPermittivity(m)
+            return new(m)
         end
-
-    struct Exposure{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"C/kg"), Unitful.FreeUnits{B, dimension(u"C/kg"), nothing}}
     end
+
+    struct Exposure <: PhysicsScalar
+        m
         function Exposure(m::Number=0.0u"C/kg")
             m = correct_units(m, u"C/kg")
-            return Exposure(m)
+            return new(m)
         end
-
-    struct Resistivity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"Ω*m"), Unitful.FreeUnits{B, dimension(u"Ω*m"), nothing}}
     end
+
+    struct Resistivity <: PhysicsScalar
+        m
         function Resistivity(m::Number=0.0u"Ω*m")
             m = correct_units(m, u"Ω*m")
-            return Resistivity(m)
+            return new(m)
         end
-
-    struct ElectronMobility{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m^2/(V*s)"), Unitful.FreeUnits{B, dimension(u"m^2/(V*s)"), nothing}}
     end
+
+    struct ElectronMobility <: PhysicsScalar
+        m
         function ElectronMobility(m::Number=0.0u"m^2/(V*s)")
             m = correct_units(m, u"m^2/(V*s)")
-            return ElectronMobility(m)
+            return new(m)
         end
-
-    struct MagneticReluctance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"H^-1"), Unitful.FreeUnits{B, dimension(u"H^-1"), nothing}}
     end
+
+    struct MagneticReluctance <: PhysicsScalar
+        m
         function MagneticReluctance(m::Number=0.0u"H^-1")
             m = correct_units(m, u"H^-1")
-            return MagneticReluctance(m)
+            return new(m)
         end
-
-    struct MagneticRrigidity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"T*m"), Unitful.FreeUnits{B, dimension(u"T*m"), nothing}}
     end
+
+    struct MagneticRrigidity <: PhysicsScalar
+        m
         function MagneticRrigidity(m::Number=0.0u"T*m")
             m = correct_units(m, u"T*m")
-            return MagneticRrigidity(m)
+            return new(m)
         end
-
-    struct MagnetomotiveForce{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"A*rad"), Unitful.FreeUnits{B, dimension(u"A*rad"), nothing}}
     end
+
+    struct MagnetomotiveForce <: PhysicsScalar
+        m
         function MagnetomotiveForce(m::Number=0.0u"A*rad")
             m = correct_units(m, u"A*rad")
             m = uconvert(u"A*rad", m)
-            return MagnetomotiveForce(m)
+            return new(m)
         end
-
-    struct MagneticSusceptibility{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"m/H"), Unitful.FreeUnits{B, dimension(u"m/H"), nothing}}
     end
+
+    struct MagneticSusceptibility <: PhysicsScalar
+        m
         function MagneticSusceptibility(m::Number=0.0u"m/H")
             m = correct_units(m, u"m/H")
-            return MagneticSusceptibility(m)
+            return new(m)
         end
-
-    struct LuminousEnergy{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"lm*s"), Unitful.FreeUnits{B, dimension(u"lm*s"), nothing}}
     end
+
+    struct LuminousEnergy <: PhysicsScalar
+        m
         function LuminousEnergy(m::Number=0.0u"lm*s")
             m = correct_units(m, u"lm*s")
-            return LuminousEnergy(m)
+            return new(m)
         end
-
-    struct LuminousExposure{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"lx*s"), Unitful.FreeUnits{B, dimension(u"lx*s"), nothing}}
     end
+
+    struct LuminousExposure <: PhysicsScalar
+        m
         function LuminousExposure(m::Number=0.0u"lx*s")
             m = correct_units(m, u"lx*s")
-            return LuminousExposure(m)
+            return new(m)
         end
-
-    struct Luminance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"cd/m^2"), Unitful.FreeUnits{B, dimension(u"cd/m^2"), nothing}}
     end
+
+    struct Luminance <: PhysicsScalar
+        m
         function Luminance(m::Number=0.0u"cd/m^2")
             m = correct_units(m, u"cd/m^2")
             m = uconvert(u"cd/m^2", m)
-            return Luminance(m)
+            return new(m)
         end
-
-    struct LuminousEfficacy{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"lm/W"), Unitful.FreeUnits{B, dimension(u"lm/W"), nothing}}
     end
+
+    struct LuminousEfficacy <: PhysicsScalar
+        m
         function LuminousEfficacy(m::Number=0.0u"lm/W")
             m = correct_units(m, u"lm/W")
-            return LuminousEfficacy(m)
+            return new(m)
         end
-
-    struct HeatCapacity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J/K"), Unitful.FreeUnits{B, dimension(u"J/K"), nothing}}
     end
+
+    struct HeatCapacity <: PhysicsScalar
+        m
         function HeatCapacity(m::Number=0.0u"J/K")
             m = correct_units(m, u"J/K")
-            return HeatCapacity(m)
+            return new(m)
         end
-
-    struct SpecificHeatCapacity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"J/(K*kg)"), Unitful.FreeUnits{B, dimension(u"J/(K*kg)"), nothing}}
     end
+
+    struct SpecificHeatCapacity <: PhysicsScalar
+        m
         function SpecificHeatCapacity(m::Number=0.0u"J/(K*kg)")
             m = correct_units(m, u"J/(K*kg)")
-            return SpecificHeatCapacity(m)
+            return new(m)
         end
-
-    struct ThermalConductivity{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"W/(m*K)"), Unitful.FreeUnits{B, dimension(u"W/(m*K)"), nothing}}
     end
+
+    struct ThermalConductivity <: PhysicsScalar
+        m
         function ThermalConductivity(m::Number=0.0u"W/(m*K)")
             m = correct_units(m, u"W/(m*K)")
-            return ThermalConductivity(m)
+            return new(m)
         end
-
-    struct ThermalResistance{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"K/W"), Unitful.FreeUnits{B, dimension(u"K/W"), nothing}}
     end
+
+    struct ThermalResistance <: PhysicsScalar
+        m
         function ThermalResistance(m::Number=0.0u"K/W")
             m = correct_units(m, u"K/W")
-            return ThermalResistance(m)
+            return new(m)
         end
-
-    struct ThermalExpansionCoefficient{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"K^-1"), Unitful.FreeUnits{B, dimension(u"K^-1"), nothing}}
     end
+
+    struct ThermalExpansionCoefficient <: PhysicsScalar
+        m
         function ThermalExpansionCoefficient(m::Number=0.0u"K^-1")
             m = correct_units(m, u"K^-1")
-            return ThermalExpansionCoefficient(m)
+            return new(m)
         end
-
-    struct TemperatureGradient{A,B} <: PhysicsScalar where {A,B}
-        m::Quantity{A, dimension(u"K/m"), Unitful.FreeUnits{B, dimension(u"K/m"), nothing}}
     end
+
+    struct TemperatureGradient <: PhysicsScalar
+        m
         function TemperatureGradient(m::Number=0.0u"K/m")
             m = correct_units(m, u"K/m")
-            return TemperatureGradient(m)
+            return new(m)
         end
+    end

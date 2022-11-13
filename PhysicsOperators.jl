@@ -45,8 +45,7 @@ function LinearAlgebra.norm(PV::PhysicsVector)
     return physics(sqrt(PV.x^2 + PV.y^2 + PV.z^2))
 end
 function Base.:*(M::AbstractMatrix, PV::PhysicsVector)
-    i, k = size(M)
-    if k ≠ 3 || i ≠ 3
+    if size(M) != (3, 3)
         return error("DimensionMismatch: matrix must have a dimension of (3,3)")
     end
 
@@ -60,8 +59,7 @@ function Base.:*(M::AbstractMatrix, PV::PhysicsVector)
     return physics(x, y, z)
 end
 function Base.:*(PV::PhysicsVector, M::AbstractMatrix)
-    i, k = size(M)
-    if k ≠ 3 || i ≠ 3
+    if size(M) != (3, 3)
         return error("DimensionMismatch: matrix must have a dimension of (3,3)")
     end
 
@@ -75,7 +73,6 @@ function Base.:*(PV::PhysicsVector, M::AbstractMatrix)
     return physics(x, y, z)
 end
 
-### PhysicsScalar ###
 function Base.:+(PS₁::PhysicsScalar, PS₂::PhysicsScalar)
     return physics(PS₁.m + PS₂.m)
 end
@@ -201,10 +198,13 @@ function Base.isless(PS::PhysicsScalar, AQ::Unitful.AbstractQuantity)
     return isless(PS.m, AQ)
 end
 
-Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector}) = Broadcast.ArrayStyle{PhysicsVector}()
+function Base.Broadcast.BroadcastStyle(::Type{<:PhysicsVector})
+    return Broadcast.ArrayStyle{PhysicsVector}()
+end
 function Base.similar(bc::Broadcast.Broadcasted{Broadcast.ArrayStyle{PhysicsVector}}, ::Type{ElType}) where ElType
     return physics(ps_strip(bc))
 end
+
 function ps_strip(x::Number)
     if x isa PhysicsScalar; x = x.m end
     return x
@@ -218,7 +218,6 @@ end
 function ps_strip( (x, y, z) )
     return ps_strip(x, y, z)
 end
-
 function Unitful.dimension(PS::PhysicsScalar)
     return dimension(PS.m)
 end
@@ -231,22 +230,19 @@ end
 function Unitful.uconvert(a::Unitful.Units, PV::PhysicsVector)
     return physics(uconvert(a, PV.x), uconvert(a, PV.y), uconvert(a, PV.z))
 end
-
-function correct_units(x::Number, y::Number, z::Number, unit::Unitful.Units)
-    if !(x isa Quantity); x = x*unit end
-    if !(y isa Quantity); y = y*unit end
-    if !(z isa Quantity); z = z*unit end
-    x = convert(Quantity{<:Number, dimension(unit)}, x)
-    y = convert(Quantity{<:Number, dimension(unit)}, y)
-    z = convert(Quantity{<:Number, dimension(unit)}, z)
-    return x, y, z
-end
-
 function correct_units(m::Number, unit::Unitful.Units)
-    if !(m isa Quantity); m = m*unit end
-    return convert(Quantity{<:Number, dimension(unit)}, m)
+	if m isa Quantity
+		return m::Quantity{typeof(m.val), dimension(unit)}
+	else
+		return m*unit
+	end
 end
-
+function correct_units(x::Number, y::Number, z::Number, unit::Unitful.Units)
+    return correct_units.((x, y, z), unit)
+end
+function correct_units(PV::PhysicsScalar, unit::Unitful.Units)
+    return correct_units(PV.m, unit)
+end
 function Base.promote(PV::PhysicsVector)
     return physics(promote(PV.x, PV.y, PV.z))
 end

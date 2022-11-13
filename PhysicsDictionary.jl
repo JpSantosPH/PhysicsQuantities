@@ -1,4 +1,4 @@
-vector_dict = Dict(
+const vector_dict = Dict(
     u"m"        => Position,
     u"N"        => Force,
     u"m/s"      => Velocity,
@@ -18,7 +18,7 @@ vector_dict = Dict(
     u"Wb/m"     => MagneticVectorPotential,
 )
 
-scalar_dict = Dict(
+const scalar_dict = Dict(
     u"s"            => Time,
     u"m"            => Length,
     u"kg"           => Mass,
